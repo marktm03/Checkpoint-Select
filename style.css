@@ -7277,3 +7277,501 @@ body:not(.vista-detallada) .datos-juego {
 
     color: var(--text-soft);
 }
+
+/* =========================================================
+   RESPONSIVE FINAL
+   ========================================================= */
+
+/* TABLET */
+@media (max-width: 900px) {
+
+    .hero {
+        height: 520px;
+    }
+
+    .hero-contenido {
+        max-width: 600px;
+    }
+
+    .linea-hero {
+        width: min(580px, 100%);
+    }
+
+    .presentacion-juego {
+        grid-template-columns: 220px minmax(0, 1fr);
+    }
+
+    .seccion-valoracion {
+        padding: 30px;
+    }
+}
+
+
+/* MÓVIL */
+@media (max-width: 650px) {
+
+    /* ---------- CABECERA ---------- */
+
+    .cabecera {
+        padding: 15px 16px;
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .menu {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px;
+    }
+
+    .menu a,
+    .menu .cambiar-usuario {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+
+
+    /* ---------- HERO ---------- */
+
+    .hero {
+        height: 520px;
+        min-height: 520px;
+
+        padding: 30px 20px;
+
+        align-items: center;
+    }
+
+    .hero-contenido {
+        width: 100%;
+        max-width: 100%;
+
+        transform: translateY(45px);
+    }
+
+    .hero h1 {
+        font-size: clamp(38px, 12vw, 47px);
+        letter-spacing: -1.8px;
+    }
+
+    .linea-hero {
+        width: 100%;
+        max-width: 100%;
+        height: 3px;
+    }
+
+    .descripcion {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .hero .boton-principal {
+        margin-top: 24px;
+        width: 100%;
+    }
+
+
+    /* ---------- BIBLIOTECA ---------- */
+
+    .coleccion {
+        padding: 55px 16px 80px;
+    }
+
+    .titulo-seccion {
+        gap: 18px;
+        margin-bottom: 28px;
+    }
+
+    .titulo-seccion h2 {
+        font-size: 29px;
+    }
+
+    .titulo-seccion h2::after {
+        width: 180px;
+    }
+
+    .selector-anio {
+        width: 100%;
+    }
+
+    .grid-juegos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .info-juego {
+        padding: 13px;
+    }
+
+    .info-juego h3 {
+        font-size: 15px;
+    }
+
+    .datos-juego {
+        flex-direction: column;
+        gap: 4px;
+        font-size: 11px;
+    }
+
+    .nota-portada {
+        right: 8px;
+        bottom: 8px;
+
+        min-width: 45px;
+        padding: 7px 8px;
+
+        font-size: 14px;
+    }
+
+
+    /* ---------- FICHA DE JUEGO ---------- */
+
+    .pagina-juego {
+        padding: 45px 16px 80px;
+    }
+
+    .presentacion-juego {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    .zona-portada {
+        width: min(270px, 100%);
+        margin: 0 auto;
+    }
+
+    .informacion-ficha h1 {
+        font-size: clamp(38px, 11vw, 50px);
+        letter-spacing: -1.5px;
+    }
+
+    .subtitulo-juego {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .datos-principales {
+        grid-template-columns: 1fr;
+    }
+
+    .seccion-valoracion {
+        padding: 22px 18px;
+        border-radius: 16px;
+    }
+
+    .encabezado-valoracion {
+        gap: 25px;
+    }
+
+    .encabezado-valoracion h2 {
+        font-size: 27px;
+    }
+
+    .nota-final {
+        width: 115px;
+        height: 115px;
+        flex-basis: 115px;
+    }
+
+    .lista-valoraciones {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .analisis-juego {
+        margin-top: 55px;
+    }
+
+    .cabecera-analisis h2 {
+        font-size: 31px;
+    }
+
+    .texto-analisis {
+        padding: 22px 18px;
+    }
+
+
+    /* ---------- FOOTER ---------- */
+
+    .pie {
+        padding: 35px 20px;
+    }
+}
+
+
+/* MÓVILES MUY PEQUEÑOS */
+@media (max-width: 400px) {
+
+    .logo {
+        font-size: 19px;
+    }
+
+    .menu a,
+    .menu .cambiar-usuario {
+        padding: 8px 7px;
+        font-size: 11px;
+    }
+
+    .hero {
+        height: 500px;
+        min-height: 500px;
+    }
+
+    .grid-juegos {
+        grid-template-columns: 1fr;
+    }
+
+    .titulo-seccion h2 {
+        font-size: 27px;
+    }
+}
+
+@media (max-width: 650px) {
+
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .hero {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .hero-contenido {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .hero h1 {
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: break-word;
+    }
+
+    .linea-hero {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .descripcion {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* =========================================================
+   AJUSTE MÓVILES ESTRECHOS - 360px
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    /* Los dos select siguen compartiendo fila */
+    .selector-anio,
+    .selector-orden {
+        min-width: 0 !important;
+        font-size: 12px;
+        padding-left: 12px;
+        padding-right: 28px;
+    }
+
+    /* Segunda fila: dirección + favoritos + vistas */
+    .controles-biblioteca {
+        column-gap: 8px;
+    }
+
+    .boton-direccion {
+        width: 42px;
+        min-width: 42px;
+        height: 42px;
+    }
+
+    .control-favoritos {
+        min-width: 0;
+        margin-left: 0;
+    }
+
+    .filtro-favoritos {
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    /* Botones de vista algo más compactos */
+    .selector-vista {
+        gap: 4px;
+        margin-left: 0;
+    }
+
+    .boton-vista {
+        width: 34px;
+        height: 42px;
+        padding: 6px;
+    }
+}
+
+/* =========================================================
+   BIBLIOTECA - RESPONSIVE MÓVIL FINAL
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    /* Contenedor de controles */
+    .titulo-seccion .controles-biblioteca {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) auto;
+        gap: 12px 10px;
+        align-items: center;
+    }
+
+
+    /* AÑADIR JUEGO:
+       ocupa una fila completa */
+    .titulo-seccion .boton-anadir-juego {
+        grid-column: 1 / -1;
+
+        width: 100%;
+        min-width: 0;
+        height: 48px;
+
+        margin: 0;
+        padding: 0 18px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* FILTRO POR AÑO */
+    .titulo-seccion .grupo-filtro-anio {
+        grid-column: 1 / 2;
+        grid-row: 2;
+
+        width: 100%;
+        min-width: 0;
+
+        position: relative;
+    }
+
+    .titulo-seccion .texto-filtros {
+        position: absolute;
+        left: 0;
+        bottom: calc(100% + 5px);
+
+        font-size: 9px;
+        white-space: nowrap;
+    }
+
+
+    /* AÑO + ORDEN:
+       comparten una fila completa */
+    .titulo-seccion .grupo-filtro-anio,
+    .titulo-seccion .selector-orden {
+        height: 44px;
+    }
+
+    .titulo-seccion .grupo-filtro-anio {
+        grid-column: 1 / 2;
+    }
+
+    .titulo-seccion .selector-anio {
+        width: 100% !important;
+        min-width: 0 !important;
+        height: 44px;
+
+        padding-left: 12px;
+        padding-right: 28px;
+
+        font-size: 12px;
+    }
+
+    .titulo-seccion .selector-orden {
+        grid-column: 2 / -1;
+        grid-row: 2;
+
+        width: 100% !important;
+        min-width: 0 !important;
+        height: 44px;
+
+        padding-left: 12px;
+        padding-right: 28px;
+
+        font-size: 12px;
+    }
+
+
+    /* TERCERA FILA:
+       dirección | favoritos | vistas */
+    .titulo-seccion .control-direccion {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .titulo-seccion .boton-direccion {
+        width: 42px;
+        min-width: 42px;
+        height: 42px;
+    }
+
+
+    .titulo-seccion .control-favoritos {
+        grid-column: 2;
+        grid-row: 3;
+
+        width: 100%;
+        min-width: 0;
+
+        margin: 0;
+    }
+
+    .titulo-seccion .filtro-favoritos {
+        width: 100%;
+        height: 42px;
+
+        padding: 0 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        white-space: nowrap;
+        font-size: 11px;
+    }
+
+
+    .titulo-seccion .selector-vista {
+        grid-column: 3;
+        grid-row: 3;
+
+        margin: 0;
+        gap: 3px;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .titulo-seccion .boton-vista {
+        width: 30px;
+        height: 42px;
+        padding: 5px;
+    }
+
+    .titulo-seccion .separador-vista {
+        height: 22px;
+    }
+}
