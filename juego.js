@@ -8,7 +8,7 @@
 // NOMBRES DE LAS CATEGORÍAS
 // ==========================================
 
-const nombresCategorias = {
+let nombresCategorias = {
     historia: "Historia",
     graficos: "Gráficos",
     tecnico: "Apartado técnico visual",
@@ -19,6 +19,65 @@ const nombresCategorias = {
     dificultad: "Dificultad",
     diversion: "Diversión"
 };
+
+// ==========================================
+// CATEGORÍAS PERSONALIZADAS - ESTELA
+// ==========================================
+
+async function configurarCategoriasUsuario() {
+
+    try {
+
+        const {
+            data: { user },
+            error
+        } = await supabaseClient.auth.getUser();
+
+
+        if (error || !user) {
+            return;
+        }
+
+
+        const ID_ESTELA =
+            "bb88520e-c78e-4fd4-a6d1-bf1e2db29f49";
+
+
+        if (user.id !== ID_ESTELA) {
+            return;
+        }
+
+
+        // Para Estela:
+        // "gameplay" sigue siendo el nombre interno,
+        // pero visualmente representa Narrativa.
+        //
+        // "tecnico" sigue siendo el nombre interno,
+        // pero visualmente representa Apartado visual.
+
+        nombresCategorias = {
+            historia: "Historia",
+            gameplay: "Narrativa",
+            graficos: "Gráficos",
+            tecnico: "Apartado visual",
+            jugabilidad: "Jugabilidad",
+            musica: "Música / Sonido",
+            personajes: "Personajes",
+            dificultad: "Dificultad",
+            diversion: "Diversión"
+        };
+
+
+    } catch (error) {
+
+        console.error(
+            "Error configurando categorías:",
+            error
+        );
+
+    }
+
+}
 
 
 // ==========================================
@@ -1004,6 +1063,12 @@ function crearAnalisis(opinion) {
 async function cargarJuego(juego) {
 
     // ======================================
+// CONFIGURAR CATEGORÍAS DEL USUARIO
+// ======================================
+
+await configurarCategoriasUsuario();
+
+    // ======================================
     // CARGAR IMÁGENES
     // ======================================
 
@@ -1129,7 +1194,7 @@ async function cargarJuego(juego) {
 );
 
 // ======================================
-// ESTRELLA DE JUEGO DESTACADO
+// FAVORITO DESDE LA FICHA
 // ======================================
 
 const estrellaDestacado =
@@ -1139,10 +1204,111 @@ const estrellaDestacado =
 
 if (estrellaDestacado) {
 
-    estrellaDestacado.style.display =
-        juego.destacado
-            ? "block"
-            : "none";
+    // Estado actual
+    let esFavorito =
+        juego.destacado === true;
+
+
+    // ==================================
+    // ACTUALIZAR ASPECTO DE LA ESTRELLA
+    // ==================================
+
+    function actualizarEstrella() {
+
+        estrellaDestacado.textContent =
+            esFavorito
+                ? "★"
+                : "☆";
+
+        estrellaDestacado.classList.toggle(
+            "activo",
+            esFavorito
+        );
+
+        estrellaDestacado.setAttribute(
+            "aria-label",
+            esFavorito
+                ? "Quitar de favoritos"
+                : "Añadir a favoritos"
+        );
+
+        estrellaDestacado.title =
+            esFavorito
+                ? "Quitar de favoritos"
+                : "Añadir a favoritos";
+    }
+
+
+    actualizarEstrella();
+
+
+    // ==================================
+    // CAMBIAR FAVORITO AL PULSAR
+    // ==================================
+
+    estrellaDestacado.addEventListener(
+        "click",
+        async () => {
+
+            const nuevoEstado =
+                !esFavorito;
+
+            estrellaDestacado.disabled =
+                true;
+
+            try {
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .from("juegos")
+                        .update({
+                            destacado:
+                                nuevoEstado
+                        })
+                        .eq(
+                            "id",
+                            juego.id
+                        );
+
+
+                if (error) {
+
+                    console.error(
+                        "Error actualizando favorito:",
+                        error
+                    );
+
+                    return;
+                }
+
+
+                // Actualizamos el estado local
+                esFavorito =
+                    nuevoEstado;
+
+                juego.destacado =
+                    nuevoEstado;
+
+                actualizarEstrella();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error inesperado actualizando favorito:",
+                    error
+                );
+
+            } finally {
+
+                estrellaDestacado.disabled =
+                    false;
+            }
+
+        }
+    );
 }
 
 

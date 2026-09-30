@@ -325,6 +325,10 @@ img {
     z-index: 2;
 
     transform: translateY(100px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .hero h1 {
@@ -6399,24 +6403,84 @@ body.tema-juego-activo.tiene-fondo-juego
         translate(32%, -32%)
         rotate(8deg);
 
+    /* Quitamos el aspecto normal de botón */
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    font-family: inherit;
     font-size: 65px;
     line-height: 1;
 
-    color: #ffd21c;
+    /* NO FAVORITO */
+    color: rgba(255, 255, 255, 0.32);
 
     text-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.55),
-    0 0 7px rgba(255, 210, 28, 0.55),
-    0 0 13px rgba(255, 190, 0, 0.25);
+        0 1px 3px rgba(0, 0, 0, 0.55);
 
     filter:
-        drop-shadow(0 3px 4px rgba(0, 0, 0, 0.55));
+        drop-shadow(
+            0 3px 4px
+            rgba(0, 0, 0, 0.55)
+        );
 
     z-index: 5;
 
-    pointer-events: none;
+    cursor: pointer;
 
-    display: none;
+    display: block;
+
+    transition:
+        color 0.2s ease,
+        text-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* ======================================
+   FAVORITO ACTIVO
+   ====================================== */
+
+.estrella-destacado-ficha.activo {
+    color: #ffd21c;
+
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.55),
+        0 0 7px rgba(255, 210, 28, 0.55),
+        0 0 13px rgba(255, 190, 0, 0.25);
+}
+
+
+/* ======================================
+   HOVER
+   ====================================== */
+
+.estrella-destacado-ficha:hover {
+    transform:
+        translate(32%, -32%)
+        rotate(8deg)
+        scale(1.10);
+}
+
+
+/* ======================================
+   AL PULSAR
+   ====================================== */
+
+.estrella-destacado-ficha:active {
+    transform:
+        translate(32%, -32%)
+        rotate(8deg)
+        scale(0.94);
+}
+
+
+/* Mientras Supabase está actualizando */
+.estrella-destacado-ficha:disabled {
+    cursor: wait;
+    opacity: 0.65;
 }
 
 /* =========================================================
@@ -6981,6 +7045,10 @@ body.tema-juego-activo.tiene-fondo-juego
 .vista-detallada .panel-notas {
     flex: 1;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     background: linear-gradient(
         160deg,
         #202329,
@@ -7110,6 +7178,42 @@ body.tema-juego-activo.tiene-fondo-juego
 }
 
 /* ==========================================
+   TÍTULOS LARGOS EN VISTA DETALLADA
+   ========================================== */
+
+/* Título normal: mantiene el tamaño actual */
+
+
+/* Título largo */
+
+.vista-detallada .info-juego h3.titulo-largo {
+    font-size: 16px;
+    line-height: 1.18;
+}
+
+
+/* Título muy largo */
+
+.vista-detallada .info-juego h3.titulo-muy-largo {
+    font-size: 14px;
+    line-height: 1.15;
+}
+
+/* ==========================================
+   TÍTULOS LARGOS EN VISTA SENCILLA
+   ========================================== */
+
+.vista-sencilla .info-juego h3.titulo-largo {
+    font-size: 17px;
+    line-height: 1.18;
+}
+
+.vista-sencilla .info-juego h3.titulo-muy-largo {
+    font-size: 15px;
+    line-height: 1.15;
+}
+
+/* ==========================================
    FECHAS VISTA DETALLADA
    ========================================== */
 
@@ -7163,11 +7267,37 @@ body:not(.vista-detallada) .info-juego {
     box-sizing: border-box;
 }
 
+
+/* ==========================================
+   TÍTULO
+   ========================================== */
+
 body:not(.vista-detallada) .info-juego h3 {
     min-height: 45px;
 
     margin: 0;
 }
+
+
+/* Título largo */
+
+body:not(.vista-detallada) .info-juego h3.titulo-largo {
+    font-size: 16px;
+    line-height: 1.15;
+}
+
+
+/* Título muy largo */
+
+body:not(.vista-detallada) .info-juego h3.titulo-muy-largo {
+    font-size: 13px;
+    line-height: 1.12;
+}
+
+
+/* ==========================================
+   HORAS Y FECHAS SIEMPRE ABAJO
+   ========================================== */
 
 body:not(.vista-detallada) .datos-juego {
     margin-top: auto;
@@ -7773,5 +7903,571 @@ body:not(.vista-detallada) .datos-juego {
 
     .titulo-seccion .separador-vista {
         height: 22px;
+    }
+}
+
+/* ==========================================
+   ESTADÍSTICAS GLOBALES
+   ========================================== */
+
+.estadisticas-globales {
+    display: flex;
+    align-items: stretch;
+
+    gap: 9px;
+
+    margin-top: 18px;
+
+    width: fit-content;
+}
+
+
+/* ==========================================
+   TARJETA DE ESTADÍSTICA
+   ========================================== */
+
+.estadistica-global {
+    position: relative;
+    overflow: hidden;
+
+    width: 145px;
+    min-height: 54px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 8px 12px 8px 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 28, 34, 0.92),
+            rgba(16, 18, 22, 0.88)
+        );
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 6px 18px
+        rgba(0, 0, 0, 0.22);
+
+    backdrop-filter:
+        blur(6px);
+}
+
+
+/* ==========================================
+   LÍNEA NARANJA LATERAL
+   ========================================== */
+
+.estadistica-global::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+
+    width: 3px;
+
+    background:
+        var(--orange);
+
+    border-radius:
+        0 4px 4px 0;
+}
+
+
+/* ==========================================
+   NÚMERO
+   ========================================== */
+
+.numero-estadistica {
+    display: block;
+
+    color:
+        var(--orange);
+
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+
+    letter-spacing: -0.4px;
+}
+
+
+/* ==========================================
+   TEXTO
+   ========================================== */
+
+.texto-estadistica {
+    display: block;
+
+    margin-top: 4px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.65
+        );
+
+    font-size: 7.5px;
+    font-weight: 800;
+    line-height: 1.2;
+
+    letter-spacing: 0.7px;
+}
+
+/* =========================================================
+   BIBLIOTECA — CONTROLES FINALES
+   ========================================================= */
+
+
+/* ==========================================
+   CONTENEDOR DE CONTROLES
+   ========================================== */
+
+.titulo-seccion .controles-biblioteca {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    width: auto;
+    flex: 1;
+}
+
+
+/* ==========================================
+   GRUPOS DE CONTROL
+   AÑO / PLATAFORMA / ORDENAR POR
+   ========================================== */
+
+.titulo-seccion .grupo-control-biblioteca {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 6px;
+
+    margin: 0;
+}
+
+
+/* ==========================================
+   ETIQUETAS SUPERIORES
+   ========================================== */
+
+.titulo-seccion
+.grupo-control-biblioteca
+> .texto-filtros {
+
+    position: static;
+
+    display: block;
+
+    margin: 0;
+    padding: 0;
+
+    color:
+        rgba(255, 255, 255, 0.45);
+
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+
+    letter-spacing: 1.4px;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================
+   SELECTORES
+   ========================================== */
+
+.titulo-seccion
+.controles-biblioteca
+select {
+
+    height: 42px;
+
+    margin: 0;
+
+    padding:
+        0
+        28px
+        0
+        12px;
+
+    box-sizing: border-box;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            160deg,
+            #202329,
+            #181b20
+        );
+
+    color: #f4f6f8;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* AÑO */
+
+.titulo-seccion .selector-anio {
+    width: 165px;
+    min-width: 165px;
+}
+
+
+/* PLATAFORMA */
+
+.titulo-seccion .selector-plataforma {
+    width: 205px;
+    min-width: 205px;
+}
+
+
+/* ORDENAR POR */
+
+.titulo-seccion .selector-orden {
+    width: 210px;
+    min-width: 210px;
+}
+
+
+/* ==========================================
+   HOVER / FOCUS
+   ========================================== */
+
+.titulo-seccion
+.controles-biblioteca
+select:hover {
+
+    background: #171e27;
+
+    border-color:
+        rgba(255, 106, 48, 0.55);
+}
+
+
+.titulo-seccion
+.controles-biblioteca
+select:focus {
+
+    border-color: #ff6a30;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 106, 48, 0.10);
+}
+
+
+/* Opciones */
+
+.titulo-seccion
+.controles-biblioteca
+option {
+
+    background: #121820;
+    color: #f4f6f8;
+}
+
+
+/* ==========================================
+   BOTÓN AÑADIR JUEGO
+   ========================================== */
+
+.titulo-seccion .boton-anadir-juego {
+    height: 42px;
+    min-height: 42px;
+
+    margin: 0;
+
+    align-self: flex-end;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================
+   BOTÓN DIRECCIÓN
+   ========================================== */
+
+.titulo-seccion .control-direccion {
+    display: flex;
+    align-items: center;
+
+    margin: 0;
+
+    align-self: flex-end;
+}
+
+
+.titulo-seccion .boton-direccion {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ==========================================
+   FAVORITOS
+   ========================================== */
+
+.titulo-seccion .control-favoritos {
+    display: flex;
+    align-items: center;
+
+    margin: 0;
+
+    align-self: flex-end;
+}
+
+
+.titulo-seccion .filtro-favoritos {
+    height: 42px;
+
+    margin: 0;
+
+    padding:
+        0
+        13px;
+
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   SELECTOR DE VISTA
+   ========================================== */
+
+.titulo-seccion .selector-vista {
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    margin: 0;
+
+    align-self: flex-end;
+}
+
+
+/* =========================================================
+   TABLET / PANTALLAS MEDIANAS
+   ========================================================= */
+
+@media (max-width: 1250px) {
+
+    .titulo-seccion {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 24px;
+    }
+
+
+    .titulo-seccion
+    .controles-biblioteca {
+
+        width: 100%;
+
+        justify-content: flex-start;
+
+        flex-wrap: wrap;
+
+        row-gap: 16px;
+    }
+}
+
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .titulo-seccion
+    .controles-biblioteca {
+
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 1fr);
+
+        gap: 16px 10px;
+
+        width: 100%;
+
+        align-items: end;
+    }
+
+
+    /* ======================================
+       AÑADIR JUEGO
+       ====================================== */
+
+    .titulo-seccion .boton-anadir-juego {
+        grid-column: 1 / -1;
+
+        width: 100%;
+
+        justify-self: stretch;
+    }
+
+
+    /* ======================================
+       GRUPOS
+       ====================================== */
+
+    .titulo-seccion
+    .grupo-control-biblioteca {
+
+        width: 100%;
+        min-width: 0;
+    }
+
+
+    /* Año */
+
+    .titulo-seccion
+    .grupo-filtro-anio {
+
+        grid-column: 1;
+    }
+
+
+    /* Plataforma */
+
+    .titulo-seccion
+    .grupo-filtro-plataforma {
+
+        grid-column: 2;
+    }
+
+
+    /* Orden */
+
+    .titulo-seccion
+    .grupo-ordenacion {
+
+        grid-column: 1 / -1;
+    }
+
+
+    /* ======================================
+       SELECTORES
+       ====================================== */
+
+    .titulo-seccion .selector-anio,
+    .titulo-seccion .selector-plataforma,
+    .titulo-seccion .selector-orden {
+
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+
+    /* ======================================
+       DIRECCIÓN
+       ====================================== */
+
+    .titulo-seccion .control-direccion {
+        grid-column: 1;
+    }
+
+
+    /* ======================================
+       FAVORITOS
+       ====================================== */
+
+    .titulo-seccion .control-favoritos {
+        grid-column: 2;
+
+        width: 100%;
+    }
+
+
+    .titulo-seccion .filtro-favoritos {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+
+    /* ======================================
+       VISTAS
+       ====================================== */
+
+    .titulo-seccion .selector-vista {
+        grid-column: 1 / -1;
+
+        justify-self: flex-end;
+    }
+}
+
+
+/* =========================================================
+   MÓVILES MUY PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .titulo-seccion
+    .controles-biblioteca {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .titulo-seccion .boton-anadir-juego,
+    .titulo-seccion .grupo-filtro-anio,
+    .titulo-seccion .grupo-filtro-plataforma,
+    .titulo-seccion .grupo-ordenacion,
+    .titulo-seccion .control-direccion,
+    .titulo-seccion .control-favoritos,
+    .titulo-seccion .selector-vista {
+
+        grid-column: 1;
+    }
+
+
+    .titulo-seccion .selector-vista {
+        justify-self: flex-start;
     }
 }

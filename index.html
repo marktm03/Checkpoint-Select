@@ -53,30 +53,70 @@
 <main>
 
     <!-- ======================================
-         HERO
-         ====================================== -->
+     HERO
+     ====================================== -->
 
-    <section class="hero">
+<section class="hero">
 
-        <div class="hero-contenido">
+    <div class="hero-contenido">
 
-            <h1>
-                Cada juego deja<br>
-                <span>
-                    su propio checkpoint.
+        <h1>
+            Cada juego deja<br>
+            <span>
+                su propio checkpoint.
+            </span>
+        </h1>
+
+        <div class="linea-hero"></div>
+
+        <p class="descripcion">
+            Mi colección personal de videojuegos,
+            puntuaciones y análisis.
+        </p>
+
+
+        <!-- ==================================
+             ESTADÍSTICAS GENERALES
+             ================================== -->
+
+        <div class="estadisticas-globales">
+
+            <div class="estadistica-global">
+
+                <span
+                    class="numero-estadistica"
+                    id="total-juegos"
+                >
+                    0
                 </span>
-            </h1>
 
-            <div class="linea-hero"></div>
+                <span class="texto-estadistica">
+                    JUEGOS COMPLETADOS
+                </span>
 
-            <p class="descripcion">
-                Mi colección personal de videojuegos,
-                puntuaciones y análisis.
-            </p>
+            </div>
+
+
+            <div class="estadistica-global">
+
+                <span
+                    class="numero-estadistica"
+                    id="total-horas"
+                >
+                    0
+                </span>
+
+                <span class="texto-estadistica">
+                    HORAS JUGADAS
+                </span>
+
+            </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
     <!-- ======================================
@@ -128,86 +168,119 @@
                 </a>
 
 
-                <!-- FILTRO POR AÑO -->
-
-                <div class="grupo-filtro-anio">
-
-                    <span class="texto-filtros">
-                        FILTRAR POR
-                    </span>
-
-                    <select
-                        class="selector-anio"
-                        id="selector-anio"
-                    >
-                        <option value="todos">
-                            Todos los años
-                        </option>
-                    </select>
-
-                </div>
+                <!-- ==========================================
+     FILTROS Y ORDENACIÓN
+     ========================================== -->
 
 
-                <!-- ORDENAR POR -->
+<!-- FILTRO POR AÑO -->
 
-                <select
-                    class="selector-orden"
-                    id="selector-orden"
-                >
+<div class="grupo-control-biblioteca grupo-filtro-anio">
 
-                    <option value="anadido">
-                        Orden de añadido
-                    </option>
+    <span class="texto-filtros">
+        AÑO
+    </span>
 
-                    <option value="notaFinal">
-                        Nota final
-                    </option>
+    <select
+        class="selector-anio"
+        id="selector-anio"
+    >
+        <option value="todos">
+            Todos los años
+        </option>
+    </select>
 
-                    <option value="fecha">
-                        Fecha de finalización
-                    </option>
+</div>
 
-                    <option value="horas">
-                        Horas jugadas
-                    </option>
 
-                    <option value="historia">
-                        Historia
-                    </option>
+<!-- FILTRO POR PLATAFORMA -->
 
-                    <option value="graficos">
-                        Gráficos
-                    </option>
+<div class="grupo-control-biblioteca grupo-filtro-plataforma">
 
-                    <option value="tecnico">
-                        Apartado técnico visual
-                    </option>
+    <span class="texto-filtros">
+        PLATAFORMA
+    </span>
 
-                    <option value="gameplay">
-                        Gameplay
-                    </option>
+    <select
+        class="selector-plataforma"
+        id="selector-plataforma"
+    >
+        <option value="todas">
+            Todas las plataformas
+        </option>
+    </select>
 
-                    <option value="jugabilidad">
-                        Jugabilidad
-                    </option>
+</div>
 
-                    <option value="musica">
-                        Música / Sonido
-                    </option>
 
-                    <option value="personajes">
-                        Personajes
-                    </option>
+<!-- ORDENAR POR -->
 
-                    <option value="dificultad">
-                        Dificultad
-                    </option>
+<div class="grupo-control-biblioteca grupo-ordenacion">
 
-                    <option value="diversion">
-                        Diversión
-                    </option>
+    <span class="texto-filtros">
+        ORDENAR POR
+    </span>
 
-                </select>
+    <select
+        class="selector-orden"
+        id="selector-orden"
+    >
+
+        <option value="anadido">
+            Orden de añadido
+        </option>
+
+        <option value="notaFinal">
+            Nota final
+        </option>
+
+        <option value="fecha">
+            Fecha de finalización
+        </option>
+
+        <option value="horas">
+            Horas jugadas
+        </option>
+
+        <option value="historia">
+            Historia
+        </option>
+
+        <option value="graficos">
+            Gráficos
+        </option>
+
+        <option value="tecnico">
+            Apartado técnico visual
+        </option>
+
+        <option value="gameplay">
+            Gameplay
+        </option>
+
+        <option value="jugabilidad">
+            Jugabilidad
+        </option>
+
+        <option value="musica">
+            Música / Sonido
+        </option>
+
+        <option value="personajes">
+            Personajes
+        </option>
+
+        <option value="dificultad">
+            Dificultad
+        </option>
+
+        <option value="diversion">
+            Diversión
+        </option>
+
+    </select>
+
+</div>
 
 
                 <!-- DIRECCIÓN DEL ORDEN -->

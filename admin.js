@@ -2316,3 +2316,107 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+// ==========================================
+// CATEGORÍAS PERSONALIZADAS - ESTELA
+// ==========================================
+
+async function configurarCategoriasUsuario() {
+
+    try {
+
+        const {
+            data: { user },
+            error
+        } =
+            await supabaseClient.auth.getUser();
+
+
+        if (error || !user) {
+            return;
+        }
+
+
+        // Cuenta de Estela
+        const ID_ESTELA =
+            "bb88520e-c78e-4fd4-a6d1-bf1e2db29f49";
+
+
+        if (user.id !== ID_ESTELA) {
+            return;
+        }
+
+
+        // ======================================
+        // CAMBIAR NOMBRES
+        // ======================================
+
+        const labelGameplay =
+            document.querySelector(
+                "#label-gameplay"
+            );
+
+        const labelTecnico =
+            document.querySelector(
+                "#label-tecnico"
+            );
+
+
+        if (labelGameplay) {
+
+            labelGameplay.textContent =
+                "Narrativa";
+
+        }
+
+
+        if (labelTecnico) {
+
+            labelTecnico.textContent =
+                "Apartado visual";
+
+        }
+
+
+        // ======================================
+        // MOVER NARRATIVA DESPUÉS DE HISTORIA
+        // ======================================
+
+        const bloqueHistoria =
+            document.querySelector(
+                '[data-categoria="historia"]'
+            );
+
+        const bloqueGameplay =
+            document.querySelector(
+                '[data-categoria="gameplay"]'
+            );
+
+
+        if (
+            bloqueHistoria &&
+            bloqueGameplay
+        ) {
+
+            bloqueHistoria.insertAdjacentElement(
+                "afterend",
+                bloqueGameplay
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Error configurando categorías del usuario:",
+            error
+        );
+
+    }
+
+}
+
+
+// Aplicar personalización
+configurarCategoriasUsuario();

@@ -17,7 +17,7 @@ const mensajeVacio =
 const selectorAnio =
     document.querySelector("#selector-anio");
 
-    const selectorOrden =
+const selectorOrden =
     document.querySelector("#selector-orden");
 
 const botonDireccion =
@@ -28,298 +28,20 @@ const soloFavoritos =
 
 
 // ==========================================
-// LISTA DE JUEGOS
+// ESTADO DE LA BIBLIOTECA
 // ==========================================
 
 let juegos = [];
 
+let usuarioEsEstela = false;
+
 
 // ==========================================
-// CARGAR JUEGOS DESDE SUPABASE
+// CONSTANTES
 // ==========================================
-
-async function cargarJuegosDesdeSupabase() {
-
-    try {
-
-        // Obtenemos el usuario que ha iniciado sesión
-        const {
-            data: { user },
-            error: errorUsuario
-        } = await supabaseClient.auth.getUser();
-
-
-        if (errorUsuario) {
-
-            console.error(
-                "Error obteniendo el usuario:",
-                errorUsuario
-            );
-
-            return;
-        }
-
-
-        if (!user) {
-
-            console.error(
-                "No hay ningún usuario conectado."
-            );
-
-            juegos = [];
-
-            return;
-        }
-
-        
-// ======================================
-// PORTADA SEGÚN USUARIO
-// ======================================
 
 const ID_ESTELA =
     "bb88520e-c78e-4fd4-a6d1-bf1e2db29f49";
-
-const hero =
-    document.querySelector(".hero");
-
-if (hero) {
-
-    if (user.id === ID_ESTELA) {
-
-        hero.classList.add(
-            "portada-estela"
-        );
-
-    } else {
-
-        hero.classList.remove(
-            "portada-estela"
-        );
-
-    }
-
-    hero.classList.add(
-    "hero-listo"
-);
-
-}
-
-
-// ======================================
-// NOMBRE DEL USUARIO
-// ======================================
-
-const nombreUsuario =
-    document.getElementById(
-        "nombre-usuario"
-    );
-
-if (nombreUsuario) {
-
-    if (user.id === ID_ESTELA) {
-
-        nombreUsuario.textContent =
-            "Estela";
-
-    } else {
-
-        nombreUsuario.textContent =
-            "Marcos";
-
-    }
-
-}
-
-
-// ======================================
-// CARGAR JUEGOS DEL USUARIO
-// ======================================
-
-// Pedimos a Supabase únicamente los juegos
-// pertenecientes al usuario conectado
-
-const {
-    data,
-    error
-} = await supabaseClient
-    .from("juegos")
-    .select("*")
-    .eq("usuario_id", user.id);
-
-
-if (error) {
-
-    console.error(
-        "Error cargando juegos desde Supabase:",
-        error
-    );
-
-    juegos = [];
-
-    return;
-}
-
-
-// ======================================
-// ADAPTAMOS LOS NOMBRES DE SUPABASE
-// AL FORMATO QUE USA CHECKPOINT SELECT
-// ======================================
-
-juegos = (data || []).map(
-    (juego) => ({
-
-        id:
-            juego.id,
-
-        createdAt:
-            juego.created_at,
-
-        titulo:
-            juego.titulo,
-
-        plataforma:
-            juego.plataforma,
-
-        anio:
-            juego.anio_juego,
-
-        horas:
-            juego.horas,
-
-        fechaInicio:
-            juego.fecha_inicio,
-
-        fechaFin:
-            juego.fecha_fin,
-
-        notaFinal:
-            juego.nota_final,
-
-
-        // ==============================
-        // NOTAS POR CATEGORÍA
-        // ==============================
-
-        historia:
-            juego.historia,
-
-        graficos:
-            juego.graficos,
-
-        tecnico:
-            juego.tecnico,
-
-        gameplay:
-            juego.gameplay,
-
-        jugabilidad:
-            juego.jugabilidad,
-
-        musica:
-            juego.musica,
-
-        personajes:
-            juego.personajes,
-
-        dificultad:
-            juego.dificultad,
-
-        diversion:
-            juego.diversion,
-
-
-        // ==============================
-        // OPINIÓN
-        // ==============================
-
-        opinion:
-            juego.opinion,
-
-
-        // ==============================
-        // COLORES
-        // ==============================
-
-        colorPrincipal:
-            juego.color_principal,
-
-        colorSecundario:
-            juego.color_secundario,
-
-        colorAcento:
-            juego.color_acento,
-
-
-        // ==============================
-        // OTROS DATOS
-        // ==============================
-
-        destacado:
-            juego.destacado,
-
-        // Las imágenes vienen directamente
-        // de Supabase Storage
-
-        portada:
-            juego.portada_url,
-
-        fondo:
-            juego.fondo_url
-
-    })
-);
-
-
-console.log(
-    "Juegos cargados desde Supabase:",
-    juegos
-);
-
-
-} catch (error) {
-
-    console.error(
-        "Error inesperado cargando los juegos:",
-        error
-    );
-
-    juegos = [];
-
-}
-
-}
-
-
-// ==========================================
-// ORDENAR POR FECHA
-// ==========================================
-
-// ==========================================
-// ORDENAR POR ORDEN DE AÑADIDO
-// ==========================================
-
-function ordenarJuegosPorFecha() {
-
-    juegos.sort((a, b) => {
-
-        if (!a.createdAt && !b.createdAt) {
-            return 0;
-        }
-
-        if (!a.createdAt) {
-            return 1;
-        }
-
-        if (!b.createdAt) {
-            return -1;
-        }
-
-        return (
-            new Date(a.createdAt) -
-            new Date(b.createdAt)
-        );
-    });
-}
 
 
 // ==========================================
@@ -347,60 +69,126 @@ function formatearFecha(fecha) {
     );
 }
 
-function formatearPeriodoJuego(fechaInicio, fechaFin) {
+
+// ==========================================
+// FORMATEAR PERIODO DEL JUEGO
+// ==========================================
+
+function formatearPeriodoJuego(
+    fechaInicio,
+    fechaFin
+) {
 
     if (!fechaInicio && !fechaFin) {
         return "";
     }
 
-    const formatearMesAnio = (fecha) => {
+    const formatearMesAnio =
+        (fecha) => {
 
-        if (!fecha) {
-            return null;
-        }
+            if (!fecha) {
+                return null;
+            }
 
-        const [anio, mes] =
-            fecha.split("-");
+            const [anio, mes] =
+                fecha.split("-");
 
-        const meses = [
-            "ene", "feb", "mar", "abr",
-            "may", "jun", "jul", "ago",
-            "sep", "oct", "nov", "dic"
-        ];
+            const meses = [
+                "ene",
+                "feb",
+                "mar",
+                "abr",
+                "may",
+                "jun",
+                "jul",
+                "ago",
+                "sep",
+                "oct",
+                "nov",
+                "dic"
+            ];
 
-        return `${meses[Number(mes) - 1]} ${anio}`;
-    };
+            return (
+                meses[
+                    Number(mes) - 1
+                ] +
+                " " +
+                anio
+            );
+        };
 
 
     const inicio =
-        formatearMesAnio(fechaInicio);
+        formatearMesAnio(
+            fechaInicio
+        );
 
     const fin =
-        formatearMesAnio(fechaFin);
+        formatearMesAnio(
+            fechaFin
+        );
 
-
-    // Si solo tenemos fecha final
 
     if (!inicio) {
         return fin;
     }
 
-
-    // Si todavía no hay fecha final
-
     if (!fin) {
-        return `${inicio} — En curso`;
+        return (
+            inicio +
+            " — En curso"
+        );
     }
-
-
-    // Si empezó y terminó el mismo mes
 
     if (inicio === fin) {
         return inicio;
     }
 
+    return (
+        inicio +
+        " — " +
+        fin
+    );
+}
 
-    return `${inicio} — ${fin}`;
+
+// ==========================================
+// FORMATEAR FECHA CORTA
+// ==========================================
+
+function formatearFechaCorta(
+    fechaValor
+) {
+
+    if (!fechaValor) {
+        return "";
+    }
+
+    const [anio, mes] =
+        fechaValor.split("-");
+
+    const meses = [
+        "ene",
+        "feb",
+        "mar",
+        "abr",
+        "may",
+        "jun",
+        "jul",
+        "ago",
+        "sep",
+        "oct",
+        "nov",
+        "dic"
+    ];
+
+    return (
+        meses[
+            Number(mes) - 1
+        ] +
+        " " +
+        anio
+    );
 }
 
 
@@ -413,7 +201,9 @@ function formatearNota(nota) {
     const numero =
         Number(nota);
 
-    if (Number.isNaN(numero)) {
+    if (
+        Number.isNaN(numero)
+    ) {
         return "--";
     }
 
@@ -424,20 +214,537 @@ function formatearNota(nota) {
 
 
 // ==========================================
+// FORMATEAR HORAS
+// ==========================================
+
+function formatearHoras(horas) {
+
+    const numero =
+        Number(horas) || 0;
+
+    return (
+        numero.toLocaleString(
+            "es-ES",
+            {
+                maximumFractionDigits: 1
+            }
+        ) +
+        " h"
+    );
+}
+
+
+// ==========================================
+// COLOR SEGÚN LA NOTA
+// ==========================================
+
+function obtenerColorNota(
+    nota
+) {
+
+    const numeroNota =
+        Number(nota);
+
+    if (numeroNota < 4) {
+        return "#d32f2f";
+    }
+
+    if (numeroNota < 5) {
+        return "#f4511e";
+    }
+
+    if (numeroNota < 6) {
+        return "#f9a825";
+    }
+
+    if (numeroNota < 7) {
+        return "#c0ca33";
+    }
+
+    if (numeroNota < 8) {
+        return "#7cb342";
+    }
+
+    if (numeroNota < 9) {
+        return "#15803d";
+    }
+
+    return "#00e676";
+}
+
+
+// ==========================================
+// CARGAR JUEGOS DESDE SUPABASE
+// ==========================================
+
+async function cargarJuegosDesdeSupabase() {
+
+    try {
+
+        // ======================================
+        // OBTENER USUARIO
+        // ======================================
+
+        const {
+            data: { user },
+            error: errorUsuario
+        } =
+            await supabaseClient.auth.getUser();
+
+
+        if (errorUsuario) {
+
+            console.error(
+                "Error obteniendo el usuario:",
+                errorUsuario
+            );
+
+            return;
+        }
+
+
+        if (!user) {
+
+            console.error(
+                "No hay ningún usuario conectado."
+            );
+
+            juegos = [];
+
+            return;
+        }
+
+
+        // ======================================
+        // COMPROBAR SI ES ESTELA
+        // ======================================
+
+        usuarioEsEstela =
+            user.id === ID_ESTELA;
+
+
+        // ======================================
+        // PERSONALIZAR SELECTOR PARA ESTELA
+        // ======================================
+
+        configurarSelectorEstela();
+
+
+        // ======================================
+        // PORTADA SEGÚN USUARIO
+        // ======================================
+
+        const hero =
+            document.querySelector(
+                ".hero"
+            );
+
+        if (hero) {
+
+            hero.classList.toggle(
+                "portada-estela",
+                usuarioEsEstela
+            );
+
+            hero.classList.add(
+                "hero-listo"
+            );
+        }
+
+
+        // ======================================
+        // NOMBRE DEL USUARIO
+        // ======================================
+
+        const nombreUsuario =
+            document.getElementById(
+                "nombre-usuario"
+            );
+
+        if (nombreUsuario) {
+
+            nombreUsuario.textContent =
+                usuarioEsEstela
+                    ? "Estela"
+                    : "Marcos";
+        }
+
+
+        // ======================================
+        // CARGAR JUEGOS DEL USUARIO
+        // ======================================
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("juegos")
+                .select("*")
+                .eq(
+                    "usuario_id",
+                    user.id
+                );
+
+
+        if (error) {
+
+            console.error(
+                "Error cargando juegos desde Supabase:",
+                error
+            );
+
+            juegos = [];
+
+            return;
+        }
+
+
+        // ======================================
+        // ADAPTAR DATOS DE SUPABASE
+        // ======================================
+
+        juegos =
+            (data || []).map(
+                (juego) => ({
+
+                    id:
+                        juego.id,
+
+                    createdAt:
+                        juego.created_at,
+
+                    titulo:
+                        juego.titulo,
+
+                    plataforma:
+                        juego.plataforma,
+
+                    anio:
+                        juego.anio_juego,
+
+                    horas:
+                        juego.horas,
+
+                    fechaInicio:
+                        juego.fecha_inicio,
+
+                    fechaFin:
+                        juego.fecha_fin,
+
+                    notaFinal:
+                        juego.nota_final,
+
+                    historia:
+                        juego.historia,
+
+                    graficos:
+                        juego.graficos,
+
+                    tecnico:
+                        juego.tecnico,
+
+                    gameplay:
+                        juego.gameplay,
+
+                    jugabilidad:
+                        juego.jugabilidad,
+
+                    musica:
+                        juego.musica,
+
+                    personajes:
+                        juego.personajes,
+
+                    dificultad:
+                        juego.dificultad,
+
+                    diversion:
+                        juego.diversion,
+
+                    opinion:
+                        juego.opinion,
+
+                    colorPrincipal:
+                        juego.color_principal,
+
+                    colorSecundario:
+                        juego.color_secundario,
+
+                    colorAcento:
+                        juego.color_acento,
+
+                    destacado:
+                        juego.destacado,
+
+                    portada:
+                        juego.portada_url,
+
+                    fondo:
+                        juego.fondo_url
+
+                })
+            );
+
+            // ======================================
+// CARGAR SELECTOR DE PLATAFORMAS
+// ======================================
+
+cargarSelectorPlataformas();
+
+
+        console.log(
+            "Juegos cargados desde Supabase:",
+            juegos
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error inesperado cargando los juegos:",
+            error
+        );
+
+        juegos = [];
+    }
+}
+
+// ==========================================
+// CARGAR PLATAFORMAS EN EL SELECTOR
+// ==========================================
+
+function cargarSelectorPlataformas() {
+
+    const selectorPlataforma =
+        document.getElementById(
+            "selector-plataforma"
+        );
+
+
+    if (!selectorPlataforma) {
+        return;
+    }
+
+
+    // ======================================
+    // LIMPIAR SELECTOR
+    // ======================================
+
+    selectorPlataforma.innerHTML = "";
+
+
+    // Opción inicial
+
+    const opcionTodas =
+        document.createElement(
+            "option"
+        );
+
+    opcionTodas.value =
+        "todas";
+
+    opcionTodas.textContent =
+        "Todas las plataformas";
+
+    selectorPlataforma.appendChild(
+        opcionTodas
+    );
+
+
+    // ======================================
+    // OBTENER PLATAFORMAS ÚNICAS
+    // ======================================
+
+    const plataformas =
+        [
+            ...new Set(
+                juegos
+                    .map(
+                        (juego) =>
+                            juego.plataforma
+                    )
+                    .filter(
+                        (plataforma) =>
+                            plataforma !== null &&
+                            plataforma !== undefined &&
+                            plataforma.trim() !== ""
+                    )
+            )
+        ];
+
+
+    // Orden alfabético
+
+    plataformas.sort(
+        (a, b) =>
+            a.localeCompare(
+                b,
+                "es",
+                {
+                    sensitivity: "base"
+                }
+            )
+    );
+
+
+    // ======================================
+    // CREAR OPCIONES
+    // ======================================
+
+    plataformas.forEach(
+        (plataforma) => {
+
+            const opcion =
+                document.createElement(
+                    "option"
+                );
+
+            opcion.value =
+                plataforma;
+
+            opcion.textContent =
+                plataforma;
+
+            selectorPlataforma.appendChild(
+                opcion
+            );
+        }
+    );
+}
+
+
+// ==========================================
+// CONFIGURAR SELECTOR DE ESTELA
+// ==========================================
+
+function configurarSelectorEstela() {
+
+    if (
+        !usuarioEsEstela ||
+        !selectorOrden
+    ) {
+        return;
+    }
+
+
+    const opcionGameplay =
+        selectorOrden.querySelector(
+            'option[value="gameplay"]'
+        );
+
+    const opcionTecnico =
+        selectorOrden.querySelector(
+            'option[value="tecnico"]'
+        );
+
+
+    if (opcionGameplay) {
+
+        opcionGameplay.textContent =
+            "Narrativa";
+    }
+
+
+    if (opcionTecnico) {
+
+        opcionTecnico.textContent =
+            "Apartado visual";
+    }
+
+
+    // ======================================
+    // ORDEN DE LAS CATEGORÍAS DE ESTELA
+    // ======================================
+
+    const opcionHistoria =
+        selectorOrden.querySelector(
+            'option[value="historia"]'
+        );
+
+    const opcionNarrativa =
+        selectorOrden.querySelector(
+            'option[value="gameplay"]'
+        );
+
+    const opcionGraficos =
+        selectorOrden.querySelector(
+            'option[value="graficos"]'
+        );
+
+    const opcionVisual =
+        selectorOrden.querySelector(
+            'option[value="tecnico"]'
+        );
+
+
+    if (
+        opcionHistoria &&
+        opcionNarrativa
+    ) {
+
+        opcionHistoria
+            .insertAdjacentElement(
+                "afterend",
+                opcionNarrativa
+            );
+    }
+
+
+    if (
+        opcionGraficos &&
+        opcionVisual
+    ) {
+
+        opcionGraficos
+            .insertAdjacentElement(
+                "afterend",
+                opcionVisual
+            );
+    }
+}
+
+
+// ==========================================
+// ORDEN INICIAL
+// ==========================================
+
+function ordenarJuegosPorFecha() {
+
+    juegos.sort(
+        (a, b) => {
+
+            if (
+                !a.createdAt &&
+                !b.createdAt
+            ) {
+                return 0;
+            }
+
+            if (!a.createdAt) {
+                return 1;
+            }
+
+            if (!b.createdAt) {
+                return -1;
+            }
+
+            return (
+                new Date(a.createdAt) -
+                new Date(b.createdAt)
+            );
+        }
+    );
+}
+
+
+// ==========================================
 // OBTENER PORTADA
 // ==========================================
 
-async function obtenerPortadaJuego(juego) {
-
-    /*
-        Las imágenes ya están almacenadas
-        en Supabase Storage.
-
-        juego.portada contiene directamente
-        la URL guardada en portada_url.
-
-        Ya NO buscamos imágenes en IndexedDB.
-    */
+async function obtenerPortadaJuego(
+    juego
+) {
 
     if (!juego.portada) {
 
@@ -454,18 +761,356 @@ async function obtenerPortadaJuego(juego) {
 
 
 // ==========================================
+// ACTUALIZAR FAVORITO EN SUPABASE
+// ==========================================
+
+async function actualizarDestacado(
+    juego,
+    nuevoEstado
+) {
+
+    const { error } =
+        await supabaseClient
+            .from("juegos")
+            .update({
+                destacado:
+                    nuevoEstado
+            })
+            .eq(
+                "id",
+                juego.id
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Error al actualizar destacado:",
+            error
+        );
+
+        return false;
+    }
+
+
+    juego.destacado =
+        nuevoEstado;
+
+    return true;
+}
+
+
+// ==========================================
+// ELIMINAR JUEGO
+// ==========================================
+
+async function eliminarJuego(
+    juego
+) {
+
+    const confirmar =
+        window.confirm(
+            `¿Seguro que quieres eliminar "${juego.titulo}"?\n\nEsta acción no se puede deshacer.`
+        );
+
+
+    if (!confirmar) {
+        return false;
+    }
+
+
+    try {
+
+        const {
+            data: { user }
+        } =
+            await supabaseClient.auth.getUser();
+
+
+        if (!user) {
+            return false;
+        }
+
+
+        const { error } =
+            await supabaseClient
+                .from("juegos")
+                .delete()
+                .eq(
+                    "id",
+                    juego.id
+                )
+                .eq(
+                    "usuario_id",
+                    user.id
+                );
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        // Quitamos también el juego
+        // del array local
+
+        juegos =
+            juegos.filter(
+                (elemento) =>
+                    elemento.id !==
+                    juego.id
+            );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Error al eliminar el juego:",
+            error
+        );
+
+        alert(
+            "No se ha podido eliminar el juego."
+        );
+
+        return false;
+    }
+}
+
+
+// ==========================================
+// CREAR PANEL DE NOTAS
+// ==========================================
+
+function crearPanelNotas(
+    juego
+) {
+
+    const panelNotas =
+        document.createElement(
+            "div"
+        );
+
+    panelNotas.classList.add(
+        "panel-notas"
+    );
+
+
+    const mostrarNota =
+        (valor) => {
+
+            if (
+                valor === null ||
+                valor === undefined ||
+                valor === ""
+            ) {
+                return "—";
+            }
+
+            return valor;
+        };
+
+
+    // ======================================
+    // CATEGORÍAS SEGÚN USUARIO
+    // ======================================
+
+    const categorias =
+        usuarioEsEstela
+            ? [
+                {
+                    clave: "historia",
+                    nombre: "HISTORIA"
+                },
+                {
+                    clave: "gameplay",
+                    nombre: "NARRATIVA"
+                },
+                {
+                    clave: "graficos",
+                    nombre: "GRÁFICOS"
+                },
+                {
+                    clave: "tecnico",
+                    nombre: "APARTADO VISUAL"
+                },
+                {
+                    clave: "jugabilidad",
+                    nombre: "JUGABILIDAD"
+                },
+                {
+                    clave: "musica",
+                    nombre: "MÚSICA / SONIDO"
+                },
+                {
+                    clave: "personajes",
+                    nombre: "PERSONAJES"
+                },
+                {
+                    clave: "dificultad",
+                    nombre: "DIFICULTAD"
+                },
+                {
+                    clave: "diversion",
+                    nombre: "DIVERSIÓN"
+                }
+            ]
+            : [
+                {
+                    clave: "historia",
+                    nombre: "HISTORIA"
+                },
+                {
+                    clave: "graficos",
+                    nombre: "GRÁFICOS"
+                },
+                {
+                    clave: "tecnico",
+                    nombre: "APAR. TEC. VISUAL"
+                },
+                {
+                    clave: "gameplay",
+                    nombre: "GAMEPLAY"
+                },
+                {
+                    clave: "jugabilidad",
+                    nombre: "JUGABILIDAD"
+                },
+                {
+                    clave: "musica",
+                    nombre: "MÚSICA / SONIDO"
+                },
+                {
+                    clave: "personajes",
+                    nombre: "PERSONAJES"
+                },
+                {
+                    clave: "dificultad",
+                    nombre: "DIFICULTAD"
+                },
+                {
+                    clave: "diversion",
+                    nombre: "DIVERSIÓN"
+                }
+            ];
+
+
+    categorias.forEach(
+        (categoria) => {
+
+            const fila =
+                document.createElement(
+                    "div"
+                );
+
+            fila.classList.add(
+                "fila-nota"
+            );
+
+            fila.dataset.categoria =
+                categoria.clave;
+
+
+            const nombre =
+                document.createElement(
+                    "span"
+                );
+
+            nombre.textContent =
+                categoria.nombre;
+
+
+            const valor =
+                document.createElement(
+                    "strong"
+                );
+
+            valor.textContent =
+                mostrarNota(
+                    juego[
+                        categoria.clave
+                    ]
+                );
+
+
+            fila.appendChild(
+                nombre
+            );
+
+            fila.appendChild(
+                valor
+            );
+
+            panelNotas.appendChild(
+                fila
+            );
+        }
+    );
+
+
+    // ======================================
+    // DESTACAR CATEGORÍA DE ORDENACIÓN
+    // ======================================
+
+    const categoriaOrden =
+        selectorOrden.value;
+
+    const categoriasNotas = [
+        "historia",
+        "graficos",
+        "tecnico",
+        "gameplay",
+        "jugabilidad",
+        "musica",
+        "personajes",
+        "dificultad",
+        "diversion"
+    ];
+
+
+    if (
+        categoriasNotas.includes(
+            categoriaOrden
+        )
+    ) {
+
+        const filaDestacada =
+            panelNotas.querySelector(
+                `[data-categoria="${categoriaOrden}"]`
+            );
+
+        if (filaDestacada) {
+
+            filaDestacada.classList.add(
+                "fila-nota-destacada"
+            );
+        }
+    }
+
+
+    return panelNotas;
+}
+
+
+// ==========================================
 // CREAR TARJETA DE JUEGO
 // ==========================================
 
-async function crearTarjetaJuego(juego) {
-
+async function crearTarjetaJuego(
+    juego
+) {
 
     // ======================================
     // ENLACE
     // ======================================
 
     const enlace =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
     enlace.classList.add(
         "enlace-juego"
@@ -477,18 +1122,27 @@ async function crearTarjetaJuego(juego) {
 
 
     // ======================================
-    // TARJETA
+    // CONTENEDOR GENERAL
     // ======================================
 
     const contenedorTarjeta =
-    document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-contenedorTarjeta.classList.add(
-    "contenedor-tarjeta"
-);
+    contenedorTarjeta.classList.add(
+        "contenedor-tarjeta"
+    );
+
+
+    // ======================================
+    // TARJETA
+    // ======================================
 
     const tarjeta =
-        document.createElement("article");
+        document.createElement(
+            "article"
+        );
 
     tarjeta.classList.add(
         "tarjeta-juego"
@@ -500,7 +1154,9 @@ contenedorTarjeta.classList.add(
     // ======================================
 
     const contenedorPortada =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     contenedorPortada.classList.add(
         "contenedor-portada"
@@ -512,7 +1168,9 @@ contenedorTarjeta.classList.add(
     // ======================================
 
     const portada =
-        document.createElement("img");
+        document.createElement(
+            "img"
+        );
 
     portada.classList.add(
         "portada-juego"
@@ -539,123 +1197,17 @@ contenedorTarjeta.classList.add(
         portada.removeAttribute(
             "src"
         );
-
     }
-
-    // ======================================
-// BOTÓN DESTACADO
-// ======================================
-
-const botonDestacado =
-    document.createElement("button");
-
-botonDestacado.classList.add(
-    "boton-destacado"
-);
-
-botonDestacado.type = "button";
-
-// Si ya está destacado, mostramos la estrella activa
-if (juego.destacado === true) {
-    botonDestacado.classList.add("activo");
-}
-
-botonDestacado.setAttribute(
-    "aria-label",
-    "Añadir a juegos destacados"
-);
-
-botonDestacado.innerHTML = `
-    <svg viewBox="0 0 24 24">
-        <path
-            d="M12 2.7
-               14.8 8.4
-               21.1 9.3
-               16.6 13.7
-               17.7 20
-               12 17
-               6.3 20
-               7.4 13.7
-               2.9 9.3
-               9.2 8.4
-               Z"
-        />
-    </svg>
-`;
-
-botonDestacado.addEventListener(
-    "click",
-    async (evento) => {
-
-        evento.preventDefault();
-        evento.stopPropagation();
-
-        const nuevoEstado =
-            !botonDestacado.classList.contains(
-                "activo"
-            );
-
-        // Guardamos el cambio en Supabase
-        const { error } =
-            await supabaseClient
-                .from("juegos")
-                .update({
-                    destacado: nuevoEstado
-                })
-                .eq(
-                    "id",
-                    juego.id
-                );
-
-        if (error) {
-
-            console.error(
-                "Error al actualizar destacado:",
-                error
-            );
-
-            return;
-        }
-
-        // Actualizamos también el objeto local
-        juego.destacado =
-            nuevoEstado;
-
-        // Cambiamos visualmente la estrella
-        botonDestacado.classList.toggle(
-            "activo",
-            nuevoEstado
-        );
-
-        botonDestacado.setAttribute(
-            "aria-label",
-            nuevoEstado
-                ? "Quitar de juegos destacados"
-                : "Añadir a juegos destacados"
-        );
-
-        // Animación
-        botonDestacado.classList.remove(
-            "animando"
-        );
-
-        void botonDestacado.offsetWidth;
-
-        botonDestacado.classList.add(
-            "animando"
-        );
-    }
-);
-
-
 
 
     // ======================================
-    // NOTA
+    // NOTA FINAL
     // ======================================
 
     const nota =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     nota.classList.add(
         "nota-portada"
@@ -666,393 +1218,362 @@ botonDestacado.addEventListener(
             juego.notaFinal
         );
 
-    // COLOR SEGÚN LA NOTA
+    nota.style.background =
+        obtenerColorNota(
+            juego.notaFinal
+        );
 
-const numeroNota =
-    Number(juego.notaFinal);
 
-let colorNota;
+    // ======================================
+    // ESTRELLA DE FAVORITOS
+    // ======================================
 
-if (numeroNota < 4) {
-    colorNota = "#ef4444";
-} else if (numeroNota < 5) {
-    colorNota = "#f97316";
-} else if (numeroNota < 6) {
-    colorNota = "#eab308";
-} else if (numeroNota < 7) {
-    colorNota = "#84cc16";
-} else if (numeroNota < 8) {
-    colorNota = "#22c55e";
-} else if (numeroNota < 9) {
-    colorNota = "#10b981";
-} else {
-    colorNota = "#00e676";
-}
+    const botonDestacado =
+        document.createElement(
+            "button"
+        );
 
-nota.style.background =
-    colorNota;
-
-// ======================================
-// BOTÓN MENÚ
-// ======================================
-
-const botonMenu =
-    document.createElement("button");
-
-botonMenu.classList.add(
-    "boton-menu-juego"
-);
-
-botonMenu.type = "button";
-
-botonMenu.setAttribute(
-    "aria-label",
-    "Opciones del juego"
-);
-
-botonMenu.innerHTML = `
-    <span>⋮</span>
-`;
-
-// Creamos el menú que aparecerá al pulsar los tres puntos
-
-const menuOpciones =
-    document.createElement("div");
-
-menuOpciones.classList.add(
-    "menu-opciones-juego"
-);
-
-menuOpciones.innerHTML = `
-    <button
-        type="button"
-        class="opcion-editar"
-    >
-        Editar juego
-    </button>
-
-    <button
-        type="button"
-        class="opcion-eliminar"
-    >
-        Eliminar juego
-    </button>
-`;
-
-const botonEditar =
-    menuOpciones.querySelector(
-        ".opcion-editar"
+    botonDestacado.classList.add(
+        "boton-destacado"
     );
 
-botonEditar.addEventListener(
-    "click",
-    (evento) => {
+    botonDestacado.type =
+        "button";
 
-        evento.preventDefault();
-        evento.stopPropagation();
 
-        window.location.href =
-            `admin.html?id=${juego.id}`;
+    if (
+        juego.destacado === true
+    ) {
+
+        botonDestacado.classList.add(
+            "activo"
+        );
     }
-);
 
-const botonEliminar =
-    menuOpciones.querySelector(
-        ".opcion-eliminar"
+
+    botonDestacado.setAttribute(
+        "aria-label",
+        juego.destacado
+            ? "Quitar de juegos destacados"
+            : "Añadir a juegos destacados"
     );
 
-    botonEliminar.addEventListener(
-    "click",
-    (evento) => {
 
-        evento.preventDefault();
-        evento.stopPropagation();
+    botonDestacado.innerHTML = `
+        <svg viewBox="0 0 24 24">
+            <path
+                d="
+                    M12 2.7
+                    14.8 8.4
+                    21.1 9.3
+                    16.6 13.7
+                    17.7 20
+                    12 17
+                    6.3 20
+                    7.4 13.7
+                    2.9 9.3
+                    9.2 8.4
+                    Z
+                "
+            />
+        </svg>
+    `;
 
-        const confirmar =
-            window.confirm(
-                `¿Seguro que quieres eliminar "${juego.titulo}"?\n\nEsta acción no se puede deshacer.`
-            );
 
-        if (!confirmar) {
-            return;
-        }
+    botonDestacado.addEventListener(
+        "click",
+        async (evento) => {
 
-        const botonEliminar =
-    menuOpciones.querySelector(
-        ".opcion-eliminar"
-    );
+            evento.preventDefault();
+            evento.stopPropagation();
 
-botonEliminar.addEventListener(
-    "click",
-    async (evento) => {
 
-        evento.preventDefault();
-        evento.stopPropagation();
+            const nuevoEstado =
+                !juego.destacado;
 
-        // Preguntamos antes de borrar
-        const confirmar =
-            window.confirm(
-                `¿Seguro que quieres eliminar "${juego.titulo}"?\n\nEsta acción no se puede deshacer.`
-            );
 
-        // Si pulsa Cancelar, no hacemos nada
-        if (!confirmar) {
-            return;
-        }
+            const actualizado =
+                await actualizarDestacado(
+                    juego,
+                    nuevoEstado
+                );
 
-        try {
 
-            // Obtenemos el usuario que tiene la sesión iniciada
-            const {
-                data: { user }
-            } =
-                await supabaseClient.auth.getUser();
-
-            if (!user) {
+            if (!actualizado) {
                 return;
             }
 
-            // Eliminamos el juego de Supabase
-            const {
-                error
-            } =
-                await supabaseClient
-                    .from("juegos")
-                    .delete()
-                    .eq(
-                        "id",
-                        juego.id
-                    )
-                    .eq(
-                        "usuario_id",
-                        user.id
-                    );
 
-            if (error) {
-                throw error;
+            botonDestacado.classList.toggle(
+                "activo",
+                nuevoEstado
+            );
+
+
+            botonDestacado.setAttribute(
+                "aria-label",
+                nuevoEstado
+                    ? "Quitar de juegos destacados"
+                    : "Añadir a juegos destacados"
+            );
+
+
+            // Reiniciamos animación
+
+            botonDestacado.classList.remove(
+                "animando"
+            );
+
+            void botonDestacado.offsetWidth;
+
+            botonDestacado.classList.add(
+                "animando"
+            );
+
+
+            // Si estamos viendo únicamente
+            // favoritos y lo quitamos,
+            // refrescamos la biblioteca
+
+            if (
+                soloFavoritos.checked &&
+                !nuevoEstado
+            ) {
+
+                await actualizarBiblioteca();
             }
-
-            // Quitamos la tarjeta de la pantalla
-            enlace.remove();
-
-        } catch (error) {
-
-            console.error(
-                "Error al eliminar el juego:",
-                error
-            );
-
-            alert(
-                "No se ha podido eliminar el juego."
-            );
         }
-    }
-);
-    }
-);
+    );
 
-botonMenu.addEventListener(
-    "click",
-    (evento) => {
-
-        evento.preventDefault();
-        evento.stopPropagation();
-
-        // Comprobamos si este menú ya estaba abierto
-        const estabaAbierto =
-            menuOpciones.classList.contains(
-                "abierto"
-            );
-
-        // Cerramos cualquier menú que esté abierto
-        document
-            .querySelectorAll(
-                ".menu-opciones-juego.abierto"
-            )
-            .forEach(
-                (menu) => {
-                    menu.classList.remove(
-                        "abierto"
-                    );
-                }
-            );
-
-        // Si este menú estaba cerrado, lo abrimos
-        if (!estabaAbierto) {
-            menuOpciones.classList.add(
-                "abierto"
-            );
-        }
-
-    }
-);
-
-document.addEventListener(
-    "click",
-    (evento) => {
-
-        if (
-            !menuOpciones.contains(evento.target) &&
-            !botonMenu.contains(evento.target)
-        ) {
-            menuOpciones.classList.remove(
-                "abierto"
-            );
-        }
-
-    }
-);
 
     // ======================================
-    // PORTADA + NOTA
+    // BOTÓN MENÚ
+    // ======================================
+
+    const botonMenu =
+        document.createElement(
+            "button"
+        );
+
+    botonMenu.classList.add(
+        "boton-menu-juego"
+    );
+
+    botonMenu.type =
+        "button";
+
+    botonMenu.setAttribute(
+        "aria-label",
+        "Opciones del juego"
+    );
+
+    botonMenu.innerHTML =
+        "<span>⋮</span>";
+
+
+    // ======================================
+    // MENÚ DE OPCIONES
+    // ======================================
+
+    const menuOpciones =
+        document.createElement(
+            "div"
+        );
+
+    menuOpciones.classList.add(
+        "menu-opciones-juego"
+    );
+
+    menuOpciones.innerHTML = `
+        <button
+            type="button"
+            class="opcion-editar"
+        >
+            Editar juego
+        </button>
+
+        <button
+            type="button"
+            class="opcion-eliminar"
+        >
+            Eliminar juego
+        </button>
+    `;
+
+
+    // ======================================
+    // EDITAR
+    // ======================================
+
+    const botonEditar =
+        menuOpciones.querySelector(
+            ".opcion-editar"
+        );
+
+    botonEditar.addEventListener(
+        "click",
+        (evento) => {
+
+            evento.preventDefault();
+            evento.stopPropagation();
+
+            window.location.href =
+                `admin.html?id=${juego.id}`;
+        }
+    );
+
+
+    // ======================================
+    // ELIMINAR
+    // ======================================
+
+    const botonEliminar =
+        menuOpciones.querySelector(
+            ".opcion-eliminar"
+        );
+
+    botonEliminar.addEventListener(
+        "click",
+        async (evento) => {
+
+            evento.preventDefault();
+            evento.stopPropagation();
+
+
+            const eliminado =
+                await eliminarJuego(
+                    juego
+                );
+
+
+            if (!eliminado) {
+                return;
+            }
+
+
+            await actualizarBiblioteca();
+
+            crearSelectorAnios();
+        }
+    );
+
+
+    // ======================================
+    // ABRIR / CERRAR MENÚ
+    // ======================================
+
+    botonMenu.addEventListener(
+        "click",
+        (evento) => {
+
+            evento.preventDefault();
+            evento.stopPropagation();
+
+
+            const estabaAbierto =
+                menuOpciones.classList.contains(
+                    "abierto"
+                );
+
+
+            document
+                .querySelectorAll(
+                    ".menu-opciones-juego.abierto"
+                )
+                .forEach(
+                    (menu) => {
+
+                        menu.classList.remove(
+                            "abierto"
+                        );
+                    }
+                );
+
+
+            if (!estabaAbierto) {
+
+                menuOpciones.classList.add(
+                    "abierto"
+                );
+            }
+        }
+    );
+
+
+    // Evitamos crear un document.addEventListener
+    // nuevo por cada tarjeta.
+    // El cierre global está al final del archivo.
+
+
+    // ======================================
+    // MONTAR PORTADA
     // ======================================
 
     contenedorPortada.appendChild(
-    portada
-);
+        portada
+    );
 
-contenedorPortada.appendChild(
-    nota
-);
+    contenedorPortada.appendChild(
+        nota
+    );
 
-contenedorPortada.appendChild(
-    botonDestacado
-);
+    contenedorPortada.appendChild(
+        botonDestacado
+    );
 
-contenedorPortada.appendChild(
-    botonMenu
-);
+    contenedorPortada.appendChild(
+        botonMenu
+    );
 
-contenedorPortada.appendChild(
-    menuOpciones
-);
+    contenedorPortada.appendChild(
+        menuOpciones
+    );
 
-const mostrarNota = (valor) => {
-    return valor === null ||
-           valor === undefined ||
-           valor === ""
-        ? "—"
-        : valor;
-};
-
-// ======================================
-// PANEL DE NOTAS DETALLADAS
-// ======================================
-
-const panelNotas =
-    document.createElement("div");
-
-panelNotas.classList.add(
-    "panel-notas"
-);
-
-panelNotas.innerHTML = `
-    <div class="fila-nota" data-categoria="historia">
-        <span>HISTORIA</span>
-        <strong>${mostrarNota(juego.historia)}</strong>
-    </div>
-
-    <div class="fila-nota" data-categoria="graficos">
-        <span>GRÁFICOS</span>
-        <strong>${mostrarNota(juego.graficos)}</strong>
-    </div>
-
-    <div class="fila-nota" data-categoria="tecnico">
-        <span>APAR. TEC. VISUAL</span>
-        <strong>${mostrarNota(juego.tecnico)}</strong>
-    </div>
-
-    <div class="fila-nota" data-categoria="gameplay">
-        <span>GAMEPLAY</span>
-        <strong>${mostrarNota(juego.gameplay)}</strong>
-    </div>
-
-    <div class="fila-nota" data-categoria="jugabilidad">
-        <span>JUGABILIDAD</span>
-        <strong>${mostrarNota(juego.jugabilidad)}</strong>
-    </div>
-
-    <div class="fila-nota" data-categoria="musica">
-        <span>MÚSICA / SONIDO</span>
-        <strong>${mostrarNota(juego.musica)}</strong>
-    </div>
-
-    <div class="fila-nota" data-categoria="personajes">
-        <span>PERSONAJES</span>
-        <strong>${mostrarNota(juego.personajes)}</strong>
-    </div>
-
-    <div class="fila-nota" data-categoria="dificultad">
-        <span>DIFICULTAD</span>
-        <strong>${mostrarNota(juego.dificultad)}</strong>
-    </div>
-
-    <div class="fila-nota" data-categoria="diversion">
-        <span>DIVERSIÓN</span>
-        <strong>${mostrarNota(juego.diversion)}</strong>
-    </div>
-`;
-
-// ======================================
-// DESTACAR CATEGORÍA USADA PARA ORDENAR
-// ======================================
-
-const categoriaOrden =
-    selectorOrden.value;
-
-const categoriasNotas = [
-    "historia",
-    "graficos",
-    "tecnico",
-    "gameplay",
-    "jugabilidad",
-    "musica",
-    "personajes",
-    "dificultad",
-    "diversion"
-];
-
-if (
-    categoriasNotas.includes(
-        categoriaOrden
-    )
-) {
-
-    const filaDestacada =
-        panelNotas.querySelector(
-            `[data-categoria="${categoriaOrden}"]`
-        );
-
-    if (filaDestacada) {
-
-        filaDestacada.classList.add(
-            "fila-nota-destacada"
-        );
-
-    }
-}
 
     // ======================================
-    // INFORMACIÓN
+    // INFORMACIÓN DEL JUEGO
     // ======================================
 
     const informacion =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     informacion.classList.add(
         "info-juego"
     );
 
 
-    // ======================================
-    // TÍTULO
-    // ======================================
+    /// ======================================
+// TÍTULO
+// ======================================
 
-    const titulo =
-        document.createElement("h3");
+const titulo =
+    document.createElement(
+        "h3"
+    );
 
-    titulo.textContent =
-        juego.titulo;
+titulo.textContent =
+    juego.titulo;
+
+
+// Ajustar tamaño según longitud del título
+
+const longitudTitulo =
+    juego.titulo.length;
+
+if (longitudTitulo > 38) {
+
+    titulo.classList.add(
+        "titulo-muy-largo"
+    );
+
+} else if (longitudTitulo > 27) {
+
+    titulo.classList.add(
+        "titulo-largo"
+    );
+}
 
 
     // ======================================
@@ -1060,7 +1581,9 @@ if (
     // ======================================
 
     const datos =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     datos.classList.add(
         "datos-juego"
@@ -1070,113 +1593,107 @@ if (
     // HORAS
 
     const horas =
-        document.createElement("span");
+        document.createElement(
+            "span"
+        );
 
     horas.textContent =
         juego.horas +
         " horas";
 
 
-    // FECHA INICIO - FINALIZACIÓN
+    // FECHAS
 
-const fecha =
-    document.createElement("span");
+    const fecha =
+        document.createElement(
+            "span"
+        );
 
-const periodoFormateado =
-    formatearPeriodoJuego(
-        juego.fechaInicio,
-        juego.fechaFin
-    );
+    const periodoFormateado =
+        formatearPeriodoJuego(
+            juego.fechaInicio,
+            juego.fechaFin
+        );
 
-fecha.textContent =
-    periodoFormateado;
+    fecha.textContent =
+        periodoFormateado;
 
-fecha.dataset.periodo =
-    periodoFormateado;
+    fecha.dataset.periodo =
+        periodoFormateado;
 
-    const formatearFechaCorta = (fechaValor) => {
+    fecha.dataset.inicio =
+        formatearFechaCorta(
+            juego.fechaInicio
+        );
 
-    if (!fechaValor) {
-        return "";
-    }
+    fecha.dataset.fin =
+        formatearFechaCorta(
+            juego.fechaFin
+        );
 
-    const [anio, mes] =
-        fechaValor.split("-");
-
-    const meses = [
-        "ene", "feb", "mar", "abr",
-        "may", "jun", "jul", "ago",
-        "sep", "oct", "nov", "dic"
-    ];
-
-    return `${meses[Number(mes) - 1]} ${anio}`;
-};
-
-fecha.dataset.inicio =
-    formatearFechaCorta(
-        juego.fechaInicio
-    );
-
-fecha.dataset.fin =
-    formatearFechaCorta(
-        juego.fechaFin
-    );
 
     const fechaInicioDetalle =
-    document.createElement("span");
+        document.createElement(
+            "span"
+        );
 
-fechaInicioDetalle.classList.add(
-    "fecha-inicio-detalle"
-);
+    fechaInicioDetalle.classList.add(
+        "fecha-inicio-detalle"
+    );
 
-fechaInicioDetalle.textContent =
-    fecha.dataset.inicio;
-
-
-const fechaFinDetalle =
-    document.createElement("span");
-
-fechaFinDetalle.classList.add(
-    "fecha-fin-detalle"
-);
-
-if (
-    juego.fechaInicio &&
-    juego.fechaFin &&
-    juego.fechaInicio !== juego.fechaFin
-) {
-
-    fechaFinDetalle.textContent =
-        fecha.dataset.fin;
-
-} else if (
-    juego.fechaInicio &&
-    !juego.fechaFin
-) {
-
-    fechaFinDetalle.textContent =
-        "En curso";
-
-} else {
-
-    fechaFinDetalle.textContent =
-        "";
-}
-
-// AÑADIMOS LAS DOS FECHAS AL SPAN PRINCIPAL
-
-fecha.appendChild(
-    fechaInicioDetalle
-);
-
-fecha.appendChild(
-    fechaFinDetalle
-);
+    fechaInicioDetalle.textContent =
+        fecha.dataset.inicio;
 
 
-    // ======================================
-    // MONTAMOS DATOS
-    // ======================================
+    const fechaFinDetalle =
+        document.createElement(
+            "span"
+        );
+
+    fechaFinDetalle.classList.add(
+        "fecha-fin-detalle"
+    );
+
+
+    if (
+        juego.fechaInicio &&
+        juego.fechaFin &&
+        juego.fechaInicio !==
+            juego.fechaFin
+    ) {
+
+        fechaFinDetalle.textContent =
+            fecha.dataset.fin;
+
+    } else if (
+        juego.fechaInicio &&
+        !juego.fechaFin
+    ) {
+
+        fechaFinDetalle.textContent =
+            "En curso";
+
+    } else {
+
+        fechaFinDetalle.textContent =
+            "";
+    }
+
+
+    // Quitamos el texto inicial
+    // porque ahora añadimos spans internos
+
+    fecha.textContent = "";
+
+
+    fecha.appendChild(
+        fechaInicioDetalle
+    );
+
+    fecha.appendChild(
+        fechaFinDetalle
+    );
+
 
     datos.appendChild(
         horas
@@ -1185,6 +1702,7 @@ fecha.appendChild(
     datos.appendChild(
         fecha
     );
+
 
     informacion.appendChild(
         titulo
@@ -1196,55 +1714,67 @@ fecha.appendChild(
 
 
     // ======================================
-// MONTAMOS TARJETA
-// ======================================
+    // PANEL DE NOTAS
+    // ======================================
 
-// Dentro de la tarjeta dejamos
-// exactamente lo que ya tenía
-tarjeta.appendChild(
-    contenedorPortada
-);
+    const panelNotas =
+        crearPanelNotas(
+            juego
+        );
 
-tarjeta.appendChild(
-    informacion
-);
 
-// La tarjeta normal va dentro
-// del nuevo contenedor
-contenedorTarjeta.appendChild(
-    tarjeta
-);
+    // ======================================
+    // MONTAR TARJETA
+    // ======================================
 
-// El panel de notas va AL LADO,
-// no dentro de tarjeta-juego
-contenedorTarjeta.appendChild(
-    panelNotas
-);
+    tarjeta.appendChild(
+        contenedorPortada
+    );
 
-// Todo el conjunto va dentro del enlace
-enlace.appendChild(
-    contenedorTarjeta
-);
+    tarjeta.appendChild(
+        informacion
+    );
 
-return enlace;
+
+    contenedorTarjeta.appendChild(
+        tarjeta
+    );
+
+    contenedorTarjeta.appendChild(
+        panelNotas
+    );
+
+
+    enlace.appendChild(
+        contenedorTarjeta
+    );
+
+
+    return enlace;
 }
 
 
 // ==========================================
-// MOSTRAR LOS JUEGOS
+// MOSTRAR JUEGOS
 // ==========================================
 
-async function mostrarJuegos(listaJuegos) {
+async function mostrarJuegos(
+    listaJuegos
+) {
 
     // Limpiamos la biblioteca
-    gridJuegos.innerHTML = "";
+
+    gridJuegos.innerHTML =
+        "";
 
 
     // ======================================
     // SI NO EXISTEN JUEGOS
     // ======================================
 
-    if (listaJuegos.length === 0) {
+    if (
+        listaJuegos.length === 0
+    ) {
 
         mensajeVacio.style.display =
             "block";
@@ -1252,20 +1782,36 @@ async function mostrarJuegos(listaJuegos) {
         return;
     }
 
+
     mensajeVacio.style.display =
         "none";
 
 
     // ======================================
-    // COMPROBAR SI MOSTRAMOS TODOS LOS AÑOS
+    // DECIDIR SI SEPARAMOS POR AÑOS
     // ======================================
+    //
+    // IMPORTANTE:
+    //
+    // Las barras de 2026, 2025, etc.
+    // SOLO aparecen cuando:
+    //
+    // - Está seleccionado "Todos los años"
+    // - Está seleccionado "Orden de añadido"
+    //
+    // Si ordenamos por nota, horas,
+    // gráficos, narrativa, etc.,
+    // desaparecen las divisiones por años.
 
     const mostrarPorAnios =
-        selectorAnio.value === "todos";
+        selectorAnio.value ===
+            "todos" &&
+        selectorOrden.value ===
+            "anadido";
 
 
     // ======================================
-    // SI HAY UN AÑO CONCRETO SELECCIONADO
+    // MOSTRAR TODOS JUNTOS
     // ======================================
 
     if (!mostrarPorAnios) {
@@ -1282,25 +1828,28 @@ async function mostrarJuegos(listaJuegos) {
 
             );
 
+
         tarjetas.forEach(
             (tarjeta) => {
 
                 gridJuegos.appendChild(
                     tarjeta
                 );
-
             }
         );
+
 
         return;
     }
 
 
     // ======================================
-    // AGRUPAR JUEGOS POR AÑO
+    // AGRUPAR POR AÑO DE FINALIZACIÓN
     // ======================================
 
-    const juegosPorAnio = {};
+    const juegosPorAnio =
+        {};
+
 
     listaJuegos.forEach(
         (juego) => {
@@ -1309,44 +1858,104 @@ async function mostrarJuegos(listaJuegos) {
                 return;
             }
 
+
             const anio =
-                juego.fechaFin.split("-")[0];
+                juego.fechaFin
+                    .split("-")[0];
 
-            if (!juegosPorAnio[anio]) {
 
-                juegosPorAnio[anio] = [];
+            if (
+                !juegosPorAnio[
+                    anio
+                ]
+            ) {
 
+                juegosPorAnio[
+                    anio
+                ] = [];
             }
 
-            juegosPorAnio[anio].push(
+
+            juegosPorAnio[
+                anio
+            ].push(
                 juego
             );
-
         }
     );
 
 
     // ======================================
     // ORDENAR AÑOS
-    // MÁS RECIENTE → MÁS ANTIGUO
     // ======================================
 
     const anios =
-        Object.keys(juegosPorAnio)
-            .sort(
-                (a, b) =>
-                    Number(b) - Number(a)
+        Object.keys(
+            juegosPorAnio
+        )
+        .sort(
+            (a, b) =>
+                Number(b) -
+                Number(a)
+        );
+
+
+    // ======================================
+    // CREAR SECCIONES
+    // ======================================
+
+    for (
+        const anio
+        of anios
+    ) {
+
+        // ==================================
+        // JUEGOS DE ESTE AÑO
+        // ==================================
+
+        const juegosDeEsteAnio =
+            juegosPorAnio[
+                anio
+            ];
+
+
+        // ==================================
+        // ESTADÍSTICAS DEL AÑO
+        // ==================================
+
+        const cantidadJuegos =
+            juegosDeEsteAnio.length;
+
+
+        const horasTotalesAnio =
+            juegosDeEsteAnio.reduce(
+                (
+                    total,
+                    juego
+                ) => {
+
+                    const horas =
+                        Number(
+                            juego.horas
+                        );
+
+                    return (
+                        total +
+                        (
+                            Number.isFinite(
+                                horas
+                            )
+                                ? horas
+                                : 0
+                        )
+                    );
+                },
+                0
             );
 
 
-    // ======================================
-    // CREAR CADA SECCIÓN DE AÑO
-    // ======================================
-
-    for (const anio of anios) {
-
         // ==================================
-        // ENCABEZADO DEL AÑO
+        // ENCABEZADO
         // ==================================
 
         const encabezado =
@@ -1366,19 +1975,36 @@ async function mostrarJuegos(listaJuegos) {
             "true"
         );
 
+
         encabezado.innerHTML = `
-            <span class="numero-anio">${anio}</span>
+            <span class="numero-anio">
+                ${anio}
+            </span>
+
+            <span class="estadisticas-anio">
+                ${cantidadJuegos}
+                ${
+                    cantidadJuegos === 1
+                        ? "juego"
+                        : "juegos"
+                }
+                ·
+                ${formatearHoras(
+                    horasTotalesAnio
+                )}
+            </span>
+
             <span class="linea-anio"></span>
-            <span class="flecha-anio">▼</span>
+
+            <span class="flecha-anio">
+                ▼
+            </span>
         `;
 
 
         // ==================================
-        // JUEGOS DEL AÑO
+        // CREAR TARJETAS
         // ==================================
-
-        const juegosDeEsteAnio =
-            juegosPorAnio[anio];
 
         const tarjetasDelAnio =
             await Promise.all(
@@ -1403,7 +2029,7 @@ async function mostrarJuegos(listaJuegos) {
 
 
         // ==================================
-        // AÑADIR TARJETAS
+        // AÑADIR JUEGOS
         // ==================================
 
         tarjetasDelAnio.forEach(
@@ -1412,13 +2038,12 @@ async function mostrarJuegos(listaJuegos) {
                 gridJuegos.appendChild(
                     tarjeta
                 );
-
             }
         );
 
 
         // ==================================
-        // PLEGAR / DESPLEGAR AÑO
+        // PLEGAR / DESPLEGAR
         // ==================================
 
         encabezado.addEventListener(
@@ -1426,14 +2051,12 @@ async function mostrarJuegos(listaJuegos) {
             () => {
 
                 const estaPlegado =
-                    encabezado.classList.toggle(
-                        "plegado"
-                    );
+                    encabezado
+                        .classList
+                        .toggle(
+                            "plegado"
+                        );
 
-
-                // Ocultamos o mostramos
-                // únicamente los juegos
-                // pertenecientes a este año
 
                 tarjetasDelAnio.forEach(
                     (tarjeta) => {
@@ -1442,19 +2065,15 @@ async function mostrarJuegos(listaJuegos) {
                             estaPlegado
                                 ? "none"
                                 : "";
-
                     }
                 );
 
-
-                // ==================================
-                // CAMBIAR FLECHA
-                // ==================================
 
                 const flecha =
                     encabezado.querySelector(
                         ".flecha-anio"
                     );
+
 
                 if (flecha) {
 
@@ -1462,13 +2081,8 @@ async function mostrarJuegos(listaJuegos) {
                         estaPlegado
                             ? "▶"
                             : "▼";
-
                 }
 
-
-                // ==================================
-                // ACCESIBILIDAD
-                // ==================================
 
                 encabezado.setAttribute(
                     "aria-expanded",
@@ -1476,18 +2090,101 @@ async function mostrarJuegos(listaJuegos) {
                         ? "false"
                         : "true"
                 );
-
             }
         );
-
     }
-
 }
 
 
 // ==========================================
-// CREAR SELECTOR DE AÑOS
+// ACTUALIZAR ESTADÍSTICAS GLOBALES
 // ==========================================
+
+function actualizarEstadisticasGlobales() {
+
+    const elementoJuegos =
+        document.getElementById(
+            "total-juegos"
+        );
+
+    const elementoHoras =
+        document.getElementById(
+            "total-horas"
+        );
+
+
+    if (
+        !elementoJuegos ||
+        !elementoHoras
+    ) {
+        return;
+    }
+
+
+    // ======================================
+    // JUEGOS COMPLETADOS
+    // ======================================
+    //
+    // Consideramos completado un juego
+    // cuando tiene fecha de finalización.
+
+    const juegosCompletados =
+        juegos.filter(
+            (juego) =>
+                juego.fechaFin
+        );
+
+
+    // ======================================
+    // HORAS TOTALES
+    // ======================================
+
+    const horasTotales =
+        juegosCompletados.reduce(
+            (
+                total,
+                juego
+            ) => {
+
+                const horas =
+                    Number(
+                        juego.horas
+                    );
+
+
+                return (
+                    total +
+                    (
+                        Number.isFinite(
+                            horas
+                        )
+                            ? horas
+                            : 0
+                    )
+                );
+            },
+            0
+        );
+
+
+    // ======================================
+    // MOSTRAR RESULTADOS
+    // ======================================
+
+    elementoJuegos.textContent =
+        juegosCompletados.length;
+
+
+    elementoHoras.textContent =
+    horasTotales
+        .toLocaleString(
+            "es-ES",
+            {
+                maximumFractionDigits: 1,
+                useGrouping: true
+            }
+        );
+}
 
 // ==========================================
 // CREAR SELECTOR DE AÑOS
@@ -1495,30 +2192,39 @@ async function mostrarJuegos(listaJuegos) {
 
 function crearSelectorAnios() {
 
-    // Eliminamos los años anteriores,
-    // pero conservamos "Todos los años"
+    // Eliminamos opciones anteriores
+    // excepto "Todos los años"
 
     while (
-        selectorAnio.options.length > 1
+        selectorAnio.options.length >
+            1
     ) {
-        selectorAnio.remove(1);
+
+        selectorAnio.remove(
+            1
+        );
     }
 
 
-    // Sacamos el año de fechaInicio
+    // ======================================
+    // OBTENER AÑOS
+    // ======================================
 
     const anios =
         juegos
             .map(
                 (juego) => {
 
-                    if (!juego.fechaFin) {
-    return null;
-}
+                    if (
+                        !juego.fechaFin
+                    ) {
+                        return null;
+                    }
 
-return Number(
-    juego.fechaFin.split("-")[0]
-);
+                    return Number(
+                        juego.fechaFin
+                            .split("-")[0]
+                    );
                 }
             )
             .filter(
@@ -1527,13 +2233,21 @@ return Number(
             );
 
 
-    // Quitamos años repetidos
+    // ======================================
+    // ELIMINAR REPETIDOS
+    // ======================================
 
     const aniosUnicos =
-        [...new Set(anios)];
+        [
+            ...new Set(
+                anios
+            )
+        ];
 
 
-    // Ordenamos de más reciente a más antiguo
+    // ======================================
+    // ORDENAR
+    // ======================================
 
     aniosUnicos.sort(
         (a, b) =>
@@ -1541,13 +2255,17 @@ return Number(
     );
 
 
-    // Creamos las opciones del selector
+    // ======================================
+    // CREAR OPCIONES
+    // ======================================
 
     aniosUnicos.forEach(
         (anio) => {
 
             const opcion =
-                document.createElement("option");
+                document.createElement(
+                    "option"
+                );
 
             opcion.value =
                 anio;
@@ -1562,17 +2280,22 @@ return Number(
     );
 }
 
+
 // ==========================================
 // ORDENAR BIBLIOTECA
 // ==========================================
 
-function ordenarListaJuegos(lista) {
+function ordenarListaJuegos(
+    lista
+) {
 
     const criterio =
         selectorOrden.value;
 
     const direccion =
-    botonDireccion.dataset.direccion;
+        botonDireccion
+            .dataset
+            .direccion;
 
     const multiplicador =
         direccion === "asc"
@@ -1580,25 +2303,114 @@ function ordenarListaJuegos(lista) {
             : -1;
 
 
+    // ======================================
+    // CATEGORÍAS DE VALORACIÓN
+    // ======================================
+
+    const categoriasValoracion = [
+        "historia",
+        "narrativa",
+        "graficos",
+        "tecnico",
+        "gameplay",
+        "jugabilidad",
+        "musica",
+        "personajes",
+        "dificultad",
+        "diversion"
+    ];
+
+
+    // ======================================
+    // FECHA DE AÑADIDO
+    // ======================================
+
+    function obtenerFechaAnadido(
+        juego
+    ) {
+
+        if (!juego.createdAt) {
+            return null;
+        }
+
+        const fecha =
+            new Date(
+                juego.createdAt
+            ).getTime();
+
+        return Number.isNaN(fecha)
+            ? null
+            : fecha;
+    }
+
+
+    // ======================================
+    // DESEMPATE POR ORDEN DE AÑADIDO
+    // Más reciente primero
+    // ======================================
+
+    function desempatarPorAnadido(
+        a,
+        b
+    ) {
+
+        const fechaA =
+            obtenerFechaAnadido(a);
+
+        const fechaB =
+            obtenerFechaAnadido(b);
+
+
+        if (
+            fechaA === null &&
+            fechaB === null
+        ) {
+            return 0;
+        }
+
+        if (fechaA === null) {
+            return 1;
+        }
+
+        if (fechaB === null) {
+            return -1;
+        }
+
+
+        return fechaB - fechaA;
+    }
+
+
+    // ======================================
+    // ORDENAR
+    // ======================================
+
     return [...lista].sort(
         (a, b) => {
+
 
             // ==================================
             // ORDEN DE AÑADIDO
             // ==================================
 
-            if (criterio === "anadido") {
+            if (
+                criterio ===
+                "anadido"
+            ) {
 
                 const fechaA =
-                    a.createdAt
-                        ? new Date(a.createdAt).getTime()
-                        : null;
+                    obtenerFechaAnadido(a);
 
                 const fechaB =
-                    b.createdAt
-                        ? new Date(b.createdAt).getTime()
-                        : null;
+                    obtenerFechaAnadido(b);
 
+
+                if (
+                    fechaA === null &&
+                    fechaB === null
+                ) {
+                    return 0;
+                }
 
                 if (fechaA === null) {
                     return 1;
@@ -1610,8 +2422,10 @@ function ordenarListaJuegos(lista) {
 
 
                 return (
-                    fechaA - fechaB
-                ) * multiplicador;
+                    fechaA -
+                    fechaB
+                ) *
+                multiplicador;
             }
 
 
@@ -1619,21 +2433,36 @@ function ordenarListaJuegos(lista) {
             // FECHA DE FINALIZACIÓN
             // ==================================
 
-            if (criterio === "fecha") {
+            if (
+                criterio ===
+                "fecha"
+            ) {
 
                 const fechaA =
-                    a.fecha
+                    a.fechaFin
                         ? new Date(
-                            a.fecha + "-01T00:00:00"
+                            a.fechaFin
                         ).getTime()
                         : null;
 
                 const fechaB =
-                    b.fecha
+                    b.fechaFin
                         ? new Date(
-                            b.fecha + "-01T00:00:00"
+                            b.fechaFin
                         ).getTime()
                         : null;
+
+
+                if (
+                    fechaA === null &&
+                    fechaB === null
+                ) {
+
+                    return desempatarPorAnadido(
+                        a,
+                        b
+                    );
+                }
 
 
                 if (fechaA === null) {
@@ -1645,14 +2474,28 @@ function ordenarListaJuegos(lista) {
                 }
 
 
-                return (
-                    fechaA - fechaB
-                ) * multiplicador;
+                const diferencia =
+                    (
+                        fechaA -
+                        fechaB
+                    ) *
+                    multiplicador;
+
+
+                if (diferencia !== 0) {
+                    return diferencia;
+                }
+
+
+                return desempatarPorAnadido(
+                    a,
+                    b
+                );
             }
 
 
             // ==================================
-            // RESTO DE CRITERIOS NUMÉRICOS
+            // RESTO DE CRITERIOS
             // ==================================
 
             const valorA =
@@ -1661,8 +2504,6 @@ function ordenarListaJuegos(lista) {
             const valorB =
                 b[criterio];
 
-
-            // Los "NO APLICA" siempre al final
 
             const vacioA =
                 valorA === null ||
@@ -1675,9 +2516,20 @@ function ordenarListaJuegos(lista) {
                 valorB === "";
 
 
-            if (vacioA && vacioB) {
-                return 0;
+            // Los valores vacíos SIEMPRE
+            // se quedan al final
+
+            if (
+                vacioA &&
+                vacioB
+            ) {
+
+                return desempatarPorAnadido(
+                    a,
+                    b
+                );
             }
+
 
             if (vacioA) {
                 return 1;
@@ -1688,13 +2540,105 @@ function ordenarListaJuegos(lista) {
             }
 
 
-            return (
-                Number(valorA) -
-                Number(valorB)
-            ) * multiplicador;
+            // ==================================
+            // CRITERIO PRINCIPAL
+            // ==================================
+
+            const diferenciaPrincipal =
+                (
+                    Number(valorA) -
+                    Number(valorB)
+                ) *
+                multiplicador;
+
+
+            if (
+                diferenciaPrincipal !== 0
+            ) {
+
+                return diferenciaPrincipal;
+            }
+
+
+            // ==================================
+            // DESEMPATE DE CATEGORÍAS
+            // NOTA FINAL
+            // ==================================
+
+            if (
+                categoriasValoracion.includes(
+                    criterio
+                )
+            ) {
+
+                const notaFinalA =
+                    Number(
+                        a.notaFinal
+                    );
+
+                const notaFinalB =
+                    Number(
+                        b.notaFinal
+                    );
+
+
+                const notaFinalValidaA =
+                    !Number.isNaN(
+                        notaFinalA
+                    );
+
+                const notaFinalValidaB =
+                    !Number.isNaN(
+                        notaFinalB
+                    );
+
+
+                if (
+                    notaFinalValidaA &&
+                    notaFinalValidaB &&
+                    notaFinalA !==
+                    notaFinalB
+                ) {
+
+                    // Mejor nota final primero
+
+                    return (
+                        notaFinalB -
+                        notaFinalA
+                    );
+                }
+
+
+                if (
+                    notaFinalValidaA &&
+                    !notaFinalValidaB
+                ) {
+                    return -1;
+                }
+
+
+                if (
+                    !notaFinalValidaA &&
+                    notaFinalValidaB
+                ) {
+                    return 1;
+                }
+            }
+
+
+            // ==================================
+            // ÚLTIMO DESEMPATE
+            // ORDEN DE AÑADIDO
+            // ==================================
+
+            return desempatarPorAnadido(
+                a,
+                b
+            );
         }
     );
 }
+
 
 // ==========================================
 // APLICAR FILTROS Y ORDENACIÓN
@@ -1702,56 +2646,105 @@ function ordenarListaJuegos(lista) {
 
 async function actualizarBiblioteca() {
 
+    // ======================================
+    // VALORES DE LOS FILTROS
+    // ======================================
+
     const anioSeleccionado =
         selectorAnio.value;
 
+
+    const selectorPlataforma =
+        document.getElementById(
+            "selector-plataforma"
+        );
+
+
+    const plataformaSeleccionada =
+        selectorPlataforma
+            ? selectorPlataforma.value
+            : "todas";
+
+
+    // Partimos siempre de todos los juegos
 
     let juegosFiltrados =
         [...juegos];
 
 
     // ======================================
-// FILTRAR POR AÑO
-// ======================================
+    // FILTRAR POR AÑO
+    // ======================================
 
-if (anioSeleccionado !== "todos") {
+    if (
+        anioSeleccionado !==
+        "todos"
+    ) {
 
-    juegosFiltrados =
-        juegosFiltrados.filter(
-            (juego) => {
+        juegosFiltrados =
+            juegosFiltrados.filter(
+                (juego) => {
 
-                if (!juego.fechaFin) {
-    return false;
-}
+                    if (
+                        !juego.fechaFin
+                    ) {
+                        return false;
+                    }
 
-const anio =
-    Number(
-        juego.fechaFin.split("-")[0]
-    );
 
-                return (
-                    anio ===
-                    Number(anioSeleccionado)
-                );
-            }
-        );
-}
+                    const anio =
+                        Number(
+                            juego.fechaFin
+                                .split("-")[0]
+                        );
+
+
+                    return (
+                        anio ===
+                        Number(
+                            anioSeleccionado
+                        )
+                    );
+                }
+            );
+    }
+
 
     // ======================================
-// MOSTRAR SOLO FAVORITOS
-// ======================================
+    // FILTRAR POR PLATAFORMA
+    // ======================================
 
-if (
-    soloFavoritos &&
-    soloFavoritos.checked
-) {
+    if (
+        plataformaSeleccionada !==
+        "todas"
+    ) {
 
-    juegosFiltrados =
-        juegosFiltrados.filter(
-            (juego) =>
-                juego.destacado === true
-        );
-}
+        juegosFiltrados =
+            juegosFiltrados.filter(
+                (juego) =>
+                    juego.plataforma ===
+                    plataformaSeleccionada
+            );
+    }
+
+
+    // ======================================
+    // SOLO FAVORITOS
+    // ======================================
+
+    if (
+        soloFavoritos &&
+        soloFavoritos.checked
+    ) {
+
+        juegosFiltrados =
+            juegosFiltrados.filter(
+                (juego) =>
+                    juego.destacado ===
+                    true
+            );
+    }
+
 
     // ======================================
     // ORDENAR
@@ -1772,9 +2765,15 @@ if (
     );
 }
 
+
 // ==========================================
-// FILTROS Y ORDENACIÓN
+// EVENTOS DE FILTROS
 // ==========================================
+
+
+// ======================================
+// AÑO
+// ======================================
 
 selectorAnio.addEventListener(
     "change",
@@ -1782,10 +2781,37 @@ selectorAnio.addEventListener(
 );
 
 
+// ======================================
+// PLATAFORMA
+// ======================================
+
+const selectorPlataforma =
+    document.getElementById(
+        "selector-plataforma"
+    );
+
+if (selectorPlataforma) {
+
+    selectorPlataforma.addEventListener(
+        "change",
+        actualizarBiblioteca
+    );
+}
+
+
+// ======================================
+// ORDEN
+// ======================================
+
 selectorOrden.addEventListener(
     "change",
     actualizarBiblioteca
 );
+
+
+// ======================================
+// FAVORITOS
+// ======================================
 
 soloFavoritos.addEventListener(
     "change",
@@ -1793,29 +2819,265 @@ soloFavoritos.addEventListener(
 );
 
 
+// ==========================================
+// CAMBIAR DIRECCIÓN
+// ==========================================
+
 botonDireccion.addEventListener(
     "click",
     async () => {
 
         const direccionActual =
-            botonDireccion.dataset.direccion;
+            botonDireccion
+                .dataset
+                .direccion;
+
 
         const nuevaDireccion =
-            direccionActual === "asc"
+            direccionActual ===
+                "asc"
                 ? "desc"
                 : "asc";
 
-        botonDireccion.dataset.direccion =
-            nuevaDireccion;
+
+        botonDireccion
+            .dataset
+            .direccion =
+                nuevaDireccion;
+
 
         botonDireccion.classList.toggle(
             "descendente",
-            nuevaDireccion === "desc"
+            nuevaDireccion ===
+                "desc"
         );
+
 
         await actualizarBiblioteca();
     }
 );
+
+
+// ==========================================
+// CERRAR MENÚS AL HACER CLIC FUERA
+// ==========================================
+
+document.addEventListener(
+    "click",
+    (evento) => {
+
+        document
+            .querySelectorAll(
+                ".menu-opciones-juego.abierto"
+            )
+            .forEach(
+                (menu) => {
+
+                    const contenedor =
+                        menu.parentElement;
+
+                    const boton =
+                        contenedor
+                            ?.querySelector(
+                                ".boton-menu-juego"
+                            );
+
+
+                    if (
+                        !menu.contains(
+                            evento.target
+                        ) &&
+                        !boton?.contains(
+                            evento.target
+                        )
+                    ) {
+
+                        menu.classList.remove(
+                            "abierto"
+                        );
+                    }
+                }
+            );
+    }
+);
+
+
+// ==========================================
+// CAMBIO DE VISTA
+// ==========================================
+
+const botonVistaSencilla =
+    document.getElementById(
+        "vista-sencilla"
+    );
+
+const botonVistaDetallada =
+    document.getElementById(
+        "vista-detallada"
+    );
+
+
+if (
+    botonVistaSencilla &&
+    botonVistaDetallada
+) {
+
+    botonVistaSencilla.addEventListener(
+        "click",
+        () => {
+
+            botonVistaSencilla
+                .classList
+                .add(
+                    "activo"
+                );
+
+            botonVistaDetallada
+                .classList
+                .remove(
+                    "activo"
+                );
+
+            document.body
+                .classList
+                .remove(
+                    "vista-detallada"
+                );
+
+
+            localStorage.setItem(
+                "vistaBiblioteca",
+                "sencilla"
+            );
+        }
+    );
+
+
+    botonVistaDetallada.addEventListener(
+        "click",
+        () => {
+
+            botonVistaDetallada
+                .classList
+                .add(
+                    "activo"
+                );
+
+            botonVistaSencilla
+                .classList
+                .remove(
+                    "activo"
+                );
+
+            document.body
+                .classList
+                .add(
+                    "vista-detallada"
+                );
+
+
+            localStorage.setItem(
+                "vistaBiblioteca",
+                "detallada"
+            );
+        }
+    );
+
+
+    // ======================================
+    // RECUPERAR ÚLTIMA VISTA
+    // ======================================
+
+    const vistaGuardada =
+        localStorage.getItem(
+            "vistaBiblioteca"
+        );
+
+
+    if (
+        vistaGuardada ===
+        "detallada"
+    ) {
+
+        document.body
+            .classList
+            .add(
+                "vista-detallada"
+            );
+
+        botonVistaDetallada
+            .classList
+            .add(
+                "activo"
+            );
+
+        botonVistaSencilla
+            .classList
+            .remove(
+                "activo"
+            );
+
+    } else {
+
+        document.body
+            .classList
+            .remove(
+                "vista-detallada"
+            );
+
+        botonVistaSencilla
+            .classList
+            .add(
+                "activo"
+            );
+
+        botonVistaDetallada
+            .classList
+            .remove(
+                "activo"
+            );
+    }
+}
+
+
+// ==========================================
+// CAMBIAR USUARIO
+// ==========================================
+
+const botonCambiarUsuario =
+    document.getElementById(
+        "cambiar-usuario"
+    );
+
+
+if (botonCambiarUsuario) {
+
+    botonCambiarUsuario.addEventListener(
+        "click",
+        async () => {
+
+            const { error } =
+                await supabaseClient
+                    .auth
+                    .signOut();
+
+
+            if (error) {
+
+                console.error(
+                    "Error al cerrar sesión:",
+                    error
+                );
+
+                return;
+            }
+
+
+            window.location.href =
+                "login.html";
+        }
+    );
+}
 
 
 // ==========================================
@@ -1826,21 +3088,27 @@ async function iniciarBiblioteca() {
 
     try {
 
-        // 1. Cargar los juegos del usuario
-        // desde Supabase
+        // 1. Cargar juegos
+
         await cargarJuegosDesdeSupabase();
 
+        // 2. Actualizar estadísticas globales
 
-        // 2. Ordenarlos
+            actualizarEstadisticasGlobales();
+
+
+        // 2. Orden inicial
+
         ordenarJuegosPorFecha();
 
 
-        // 3. Crear automáticamente
-        // los años disponibles
+        // 3. Crear selector de años
+
         crearSelectorAnios();
 
 
-        // 4. Mostrar los juegos
+        // 4. Mostrar biblioteca
+
         await actualizarBiblioteca();
 
 
@@ -1858,151 +3126,13 @@ async function iniciarBiblioteca() {
 
             mensajeVacio.style.display =
                 "block";
-
         }
-
     }
 }
 
-// ======================================
-// CAMBIO DE VISTA
-// ======================================
-
-const botonVistaSencilla =
-    document.getElementById(
-        "vista-sencilla"
-    );
-
-const botonVistaDetallada =
-    document.getElementById(
-        "vista-detallada"
-    );
-
-botonVistaSencilla.addEventListener(
-    "click",
-    () => {
-
-        botonVistaSencilla.classList.add(
-            "activo"
-        );
-
-        botonVistaDetallada.classList.remove(
-            "activo"
-        );
-
-        document.body.classList.remove(
-            "vista-detallada"
-        );
-
-        localStorage.setItem(
-    "vistaBiblioteca",
-    "sencilla"
-);
-
-    }
-);
-
-botonVistaDetallada.addEventListener(
-    "click",
-    () => {
-
-        botonVistaDetallada.classList.add(
-            "activo"
-        );
-
-        botonVistaSencilla.classList.remove(
-            "activo"
-        );
-
-        document.body.classList.add(
-            "vista-detallada"
-        );
-
-        localStorage.setItem(
-    "vistaBiblioteca",
-    "detallada"
-);
-
-    }
-);
-
-// ======================================
-// RECUPERAR ÚLTIMA VISTA UTILIZADA
-// ======================================
-
-const vistaGuardada =
-    localStorage.getItem(
-        "vistaBiblioteca"
-    );
-
-if (vistaGuardada === "detallada") {
-
-    document.body.classList.add(
-        "vista-detallada"
-    );
-
-    botonVistaDetallada.classList.add(
-        "activo"
-    );
-
-    botonVistaSencilla.classList.remove(
-        "activo"
-    );
-
-} else {
-
-    document.body.classList.remove(
-        "vista-detallada"
-    );
-
-    botonVistaSencilla.classList.add(
-        "activo"
-    );
-
-    botonVistaDetallada.classList.remove(
-        "activo"
-    );
-
-}
 
 // ==========================================
 // ARRANCAR CHECKPOINT SELECT
 // ==========================================
 
 iniciarBiblioteca();
-
-// ==========================================
-// CAMBIAR USUARIO
-// ==========================================
-
-const botonCambiarUsuario =
-    document.getElementById(
-        "cambiar-usuario"
-    );
-
-if (botonCambiarUsuario) {
-
-    botonCambiarUsuario.addEventListener(
-        "click",
-        async () => {
-
-            const { error } =
-                await supabaseClient.auth.signOut();
-
-            if (error) {
-
-                console.error(
-                    "Error al cerrar sesión:",
-                    error
-                );
-
-                return;
-            }
-
-            window.location.href =
-    "login.html";
-
-        }
-    );
-
-}
