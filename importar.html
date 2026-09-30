@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Importar imágenes | Checkpoint Select</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #0d1117;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 700px;
+
+            background: #151b23;
+
+            border: 1px solid #273244;
+            border-radius: 16px;
+
+            padding: 35px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .descripcion {
+            color: #9ba7b4;
+            margin-bottom: 35px;
+        }
+
+        .campo {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+
+            background: #0d1117;
+            color: white;
+
+            border: 1px solid #273244;
+            border-radius: 8px;
+
+            padding: 12px;
+        }
+
+        button {
+            width: 100%;
+
+            border: none;
+            border-radius: 8px;
+
+            padding: 15px;
+
+            background: #ff6b2c;
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ff7c43;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #estado {
+            margin-top: 25px;
+
+            line-height: 1.6;
+
+            white-space: pre-line;
+        }
+
+        .aviso {
+            margin-top: 30px;
+
+            padding: 15px;
+
+            background: #0d1117;
+
+            border: 1px solid #273244;
+            border-radius: 8px;
+
+            color: #9ba7b4;
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <main class="contenedor">
+
+        <h1>Recuperar imágenes</h1>
+
+        <p class="descripcion">
+            Importa las portadas y fondos antiguos a Supabase.
+        </p>
+
+
+        <div class="campo">
+
+            <label for="backupJuegos">
+                1. Backup antiguo de juegos
+            </label>
+
+            <input
+                type="file"
+                id="backupJuegos"
+                accept=".json"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="backupImagenes">
+                2. Backup antiguo de imágenes
+            </label>
+
+            <input
+                type="file"
+                id="backupImagenes"
+                accept=".json"
+            >
+
+        </div>
+
+
+        <button id="importarImagenes">
+            IMPORTAR IMÁGENES A SUPABASE
+        </button>
+
+
+        <p id="estado"></p>
+
+
+        <div class="aviso">
+
+            Este proceso no vuelve a crear los videojuegos.
+
+            Únicamente recupera sus portadas y fondos,
+            los sube a Supabase Storage y actualiza
+            portada_url y fondo_url.
+
+        </div>
+
+    </main>
+
+
+    <!-- SUPABASE -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
+
+    <script src="supabase.js"></script>
+
+    <script src="importar.js"></script>
+
+</body>
+
+</html>

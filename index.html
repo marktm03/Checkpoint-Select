@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkpoint Select</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="cabecera">
+
+    <a href="index.html" class="logo">
+        CHECKPOINT <span>SELECT</span>
+    </a>
+
+    <nav class="menu">
+    <a href="index.html">Inicio</a>
+    <a href="#coleccion">Videojuegos</a>
+
+    <button
+    id="cambiar-usuario"
+    class="cambiar-usuario"
+>
+    <span class="icono-usuario">♙</span>
+    <span id="nombre-usuario">Usuario</span>
+    <span class="flecha-usuario">▾</span>
+</button>
+</nav>
+
+</header>
+
+
+<main>
+
+    <section class="hero">
+
+        <div class="hero-contenido">
+
+            <h1>
+                Cada juego deja<br>
+                <span>su propio checkpoint.</span>
+            </h1>
+
+            <div class="linea-hero"></div>
+
+            <p class="descripcion">
+                Mi colección personal de videojuegos,
+                puntuaciones y análisis.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="coleccion" id="coleccion">
+
+        <div class="titulo-seccion">
+
+            <div>
+
+                <p class="etiqueta">
+                    BIBLIOTECA
+                </p>
+
+                <h2>
+                    Mis videojuegos
+                </h2>
+
+                <p class="subtitulo-seccion">
+                    Todos los juegos que han pasado por mis manos.
+                </p>
+
+            </div>
+
+
+            <!-- CONTROLES DE LA BIBLIOTECA -->
+
+            <div class="controles-biblioteca">
+
+                <a href="admin.html" class="boton-anadir-juego">
+                 <span class="icono-anadir"></span>
+                <span class="texto-anadir">AÑADIR JUEGO</span>
+                </a>
+
+
+                <div class="controles-biblioteca">
+
+    <div class="grupo-filtro-anio">
+
+    <span class="texto-filtros">
+        FILTRAR POR
+    </span>
+
+    <select
+        class="selector-anio"
+        id="selector-anio"
+    >
+        <option value="todos">
+            Todos los años
+        </option>
+    </select>
+
+</div>
+
+
+    <select
+        class="selector-orden"
+        id="selector-orden"
+    >
+        <option value="anadido">
+            Orden de añadido
+        </option>
+
+        <option value="notaFinal">
+            Nota final
+        </option>
+
+        <option value="fecha">
+            Fecha de finalización
+        </option>
+
+        <option value="horas">
+            Horas jugadas
+        </option>
+
+        <option value="historia">
+            Historia
+        </option>
+
+        <option value="graficos">
+            Gráficos
+        </option>
+
+        <option value="tecnico">
+            Apartado técnico visual
+        </option>
+
+        <option value="gameplay">
+            Gameplay
+        </option>
+
+        <option value="jugabilidad">
+            Jugabilidad
+        </option>
+
+        <option value="musica">
+            Música / Sonido
+        </option>
+
+        <option value="personajes">
+            Personajes
+        </option>
+
+        <option value="dificultad">
+            Dificultad
+        </option>
+
+        <option value="diversion">
+            Diversión
+        </option>
+    </select>
+
+
+    <div class="control-direccion">
+
+    <button
+        class="boton-direccion"
+        id="boton-direccion"
+        type="button"
+        data-direccion="asc"
+        title="Cambiar dirección"
+        aria-label="Cambiar dirección de ordenación"
+    >
+        <span class="lineas-orden">
+            <i></i>
+            <i></i>
+            <i></i>
+        </span>
+    </button>
+
+</div>
+
+<div class="control-favoritos">
+
+    <label class="filtro-favoritos">
+
+        <input
+            type="checkbox"
+            id="solo-favoritos"
+        >
+
+        <span class="check-favoritos">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M12 2.7
+                       14.8 8.4
+                       21.1 9.3
+                       16.6 13.7
+                       17.7 20
+                       12 17
+                       6.3 20
+                       7.4 13.7
+                       2.9 9.3
+                       9.2 8.4
+                       Z"
+                />
+            </svg>
+        </span>
+
+        <span class="texto-favoritos">
+            Mostrar solo favoritos
+        </span>
+
+    </label>
+
+</div>
+
+<!-- ======================================
+     CAMBIO DE VISTA
+     ====================================== -->
+
+<div class="selector-vista">
+
+    <button
+        class="boton-vista activo"
+        id="vista-sencilla"
+        type="button"
+        aria-label="Vista sencilla"
+        data-tooltip="Vista sencilla"
+    >
+        <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+    </button>
+
+    <span class="separador-vista"></span>
+
+    <button
+        class="boton-vista"
+        id="vista-detallada"
+        type="button"
+        aria-label="Vista detallada"
+        data-tooltip="Vista detallada"
+    >
+        <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="5" height="5" rx="1"/>
+            <line x1="11" y1="6.5" x2="21" y2="6.5"/>
+
+            <rect x="3" y="15" width="5" height="5" rx="1"/>
+            <line x1="11" y1="17.5" x2="21" y2="17.5"/>
+        </svg>
+    </button>
+
+</div>
+
+</div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="grid-juegos"
+            id="grid-juegos"
+        >
+        </div>
+
+
+        <div
+            class="juegos-vacio"
+            id="juegos-vacio"
+            style="display: none;"
+        >
+
+            <p>
+                Tu colección empieza aquí.
+            </p>
+
+            <span>
+                Añade tu primer videojuego.
+            </span>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="pie">
+
+    <div class="logo">
+        CHECKPOINT <span>SELECT</span>
+    </div>
+
+    <p>
+        Mi historia a través de los videojuegos.
+    </p>
+
+</footer>
+
+
+<script src="imagenes-db.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script src="biblioteca.js"></script>
+
+</body>
+
+</html>

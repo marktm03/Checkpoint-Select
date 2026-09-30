@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión | Checkpoint Select</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main>
+        <h1>CHECKPOINT <span>SELECT</span></h1>
+
+        <h2>Iniciar sesión</h2>
+
+        <form id="login-form">
+            <input
+                type="email"
+                id="email"
+                placeholder="Correo electrónico"
+                required
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Contraseña"
+                required
+            >
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <p id="login-error"></p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="login.js"></script>
+
+</body>
+</html>

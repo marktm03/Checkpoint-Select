@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Panel | Checkpoint Select</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="admin-compacto">
+
+
+<!-- ==========================================
+     CABECERA
+     ========================================== -->
+
+<header class="cabecera">
+
+    <a href="index.html" class="logo">
+        CHECKPOINT <span>SELECT</span>
+    </a>
+
+    <nav class="menu">
+        <a href="index.html">Ver web</a>
+        <a href="admin.html">Panel</a>
+    </nav>
+
+</header>
+
+
+<!-- ==========================================
+     PANEL
+     ========================================== -->
+
+<main class="admin-main">
+
+
+    <!-- ======================================
+         INTRODUCCIÓN
+         ====================================== -->
+
+    <section class="admin-intro">
+
+        <p class="etiqueta">
+            PANEL DE CONTROL
+        </p>
+
+        <h1 id="titulo-admin">
+            Añadir videojuego
+        </h1>
+
+        <p id="descripcion-admin">
+            Registra una nueva experiencia en tu colección.
+        </p>
+
+    </section>
+
+
+    <!-- ======================================
+         FORMULARIO
+         ====================================== -->
+
+    <form
+        class="formulario-juego"
+        id="formulario-juego"
+    >
+
+
+        <!-- ==================================
+     01 · INFORMACIÓN GENERAL
+     ================================== -->
+
+<section class="bloque-formulario">
+
+    <div class="cabecera-bloque">
+
+        <span class="numero-bloque">
+            01
+        </span>
+
+        <div>
+            <h2>
+                Información general
+            </h2>
+
+            <p>
+                Los datos principales del videojuego.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="grid-formulario">
+
+
+        <!-- TÍTULO -->
+
+        <div class="campo campo-completo">
+
+            <label for="titulo">
+                Título
+            </label>
+
+            <input
+                type="text"
+                id="titulo"
+                placeholder="Ej. Yakuza 0"
+                required
+            >
+
+        </div>
+
+
+        <!-- PLATAFORMA -->
+
+        <div class="campo">
+
+            <label for="plataforma">
+                Plataforma
+            </label>
+
+            <select
+                id="plataforma"
+                required
+            >
+
+                <option value="">
+                    Seleccionar
+                </option>
+
+                <option value="PC">
+                    PC
+                </option>
+
+                <option value="PlayStation 5">
+                    PlayStation 5
+                </option>
+
+                <option value="PlayStation 4">
+                    PlayStation 4
+                </option>
+
+                <option value="Xbox Series">
+                    Xbox Series
+                </option>
+
+                <option value="Xbox One">
+                    Xbox One
+                </option>
+
+                <option value="Nintendo Switch">
+                    Nintendo Switch
+                </option>
+
+                <option value="Nintendo Switch 2">
+                    Nintendo Switch 2
+                </option>
+
+                <option value="Nintendo 3DS">
+                    Nintendo 3DS
+                </option>
+
+                <option value="Nintendo DS">
+                    Nintendo DS
+                </option>
+
+                <option value="Otra">
+                    Otra
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- AÑO DEL JUEGO -->
+
+        <div class="campo">
+
+            <label for="anio-juego">
+                Año del juego
+            </label>
+
+            <input
+                type="number"
+                id="anio-juego"
+                min="1970"
+                max="2100"
+                placeholder="2015"
+            >
+
+        </div>
+
+
+        <!-- HORAS -->
+
+        <div class="campo">
+
+            <label for="horas">
+                Horas jugadas
+            </label>
+
+            <input
+                type="number"
+                id="horas"
+                min="0"
+                step="0.5"
+                placeholder="45"
+            >
+
+        </div>
+
+
+        <!-- FECHA DE INICIO -->
+
+        <div class="campo">
+
+            <label>
+                Fecha de inicio
+            </label>
+
+            <div class="selector-fecha">
+
+                <select id="mes-inicio">
+
+                    <option value="">
+                        Mes
+                    </option>
+
+                    <option value="01">Enero</option>
+                    <option value="02">Febrero</option>
+                    <option value="03">Marzo</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Mayo</option>
+                    <option value="06">Junio</option>
+                    <option value="07">Julio</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+
+                </select>
+
+
+                <select id="anio-inicio">
+
+                    <option value="">
+                        Año
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- FECHA DE FINALIZACIÓN -->
+
+        <div class="campo">
+
+            <label>
+                Fecha de finalización
+            </label>
+
+            <div class="selector-fecha">
+
+                <select id="mes-fin">
+
+                    <option value="">
+                        Mes
+                    </option>
+
+                    <option value="01">Enero</option>
+                    <option value="02">Febrero</option>
+                    <option value="03">Marzo</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Mayo</option>
+                    <option value="06">Junio</option>
+                    <option value="07">Julio</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+
+                </select>
+
+
+                <select id="anio-fin">
+
+                    <option value="">
+                        Año
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+        <!-- ==================================
+             02 · IDENTIDAD VISUAL
+             ================================== -->
+
+        <section class="bloque-formulario">
+
+            <div class="cabecera-bloque">
+
+                <span class="numero-bloque">
+                    02
+                </span>
+
+                <div>
+
+                    <h2>
+                        Identidad visual
+                    </h2>
+
+                    <p>
+                        Portada, fondo y colores que definirán
+                        la ficha del juego.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="zona-portada-admin">
+
+
+                <!-- ==========================
+                     PORTADA
+                     ========================== -->
+
+                <div class="campo campo-portada">
+
+                    <label for="portada">
+                        Imagen de portada
+                    </label>
+
+                    <p class="ayuda-campo">
+                        Selecciona la portada vertical del videojuego.
+                    </p>
+
+                    <input
+                        type="file"
+                        id="portada"
+                        accept="image/*"
+                    >
+
+                    <p class="ayuda-campo">
+                        Recomendado: JPG, PNG o WEBP en formato vertical.
+                    </p>
+
+                </div>
+
+
+                <!-- PREVIEW PORTADA -->
+
+                <div class="preview-portada">
+
+                    <div
+                        class="preview-vacio"
+                        id="preview-vacio"
+                    >
+
+                        <span style="font-size: 32px;">
+                            🎮
+                        </span>
+
+                        <p>
+                            La portada aparecerá aquí
+                        </p>
+
+                    </div>
+
+
+                    <img
+                        id="imagen-preview"
+                        alt="Previsualización de la portada"
+                        style="display: none;"
+                    >
+
+                </div>
+
+
+
+                <!-- ==========================
+                     PALETA
+                     ========================== -->
+
+                <div class="paleta-portada">
+
+                    <div class="cabecera-paleta">
+
+                        <div>
+
+                            <span class="titulo-paleta">
+                                PALETA DETECTADA
+                            </span>
+
+                            <p>
+                                Los colores se extraen automáticamente
+                                de la portada. También puedes modificarlos
+                                manualmente.
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            class="estado-paleta"
+                            id="estado-paleta"
+                        >
+                            Selecciona una portada
+                        </span>
+
+                    </div>
+
+
+                    <div class="colores-paleta">
+
+
+                        <!-- PRINCIPAL -->
+
+                        <label class="color-paleta">
+
+                            <span>
+                                Principal
+                            </span>
+
+                            <div class="selector-color">
+
+                                <input
+                                    type="color"
+                                    id="color-principal"
+                                    value="#ff6433"
+                                >
+
+                                <strong id="hex-principal">
+                                    #FF6433
+                                </strong>
+
+                            </div>
+
+                        </label>
+
+
+                        <!-- SECUNDARIO -->
+
+                        <label class="color-paleta">
+
+                            <span>
+                                Secundario
+                            </span>
+
+                            <div class="selector-color">
+
+                                <input
+                                    type="color"
+                                    id="color-secundario"
+                                    value="#8f4cff"
+                                >
+
+                                <strong id="hex-secundario">
+                                    #8F4CFF
+                                </strong>
+
+                            </div>
+
+                        </label>
+
+
+                        <!-- ACENTO -->
+
+                        <label class="color-paleta">
+
+                            <span>
+                                Acento
+                            </span>
+
+                            <div class="selector-color">
+
+                                <input
+                                    type="color"
+                                    id="color-acento"
+                                    value="#f0b43c"
+                                >
+
+                                <strong id="hex-acento">
+                                    #F0B43C
+                                </strong>
+
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ==========================
+                     FONDO
+                     ========================== -->
+
+                <div class="fondo-ficha-admin">
+
+                    <div class="cabecera-paleta">
+
+                        <div>
+
+                            <span class="titulo-paleta">
+                                FONDO DE LA FICHA
+                            </span>
+
+                            <p>
+                                Imagen panorámica que aparecerá detrás
+                                de la presentación del videojuego.
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            class="estado-paleta"
+                            id="estado-fondo"
+                        >
+                            Opcional
+                        </span>
+
+                    </div>
+
+
+                    <div class="zona-fondo-admin">
+
+
+                        <!-- ARCHIVO -->
+
+                        <div class="campo campo-portada">
+
+                            <label for="fondo-ficha">
+                                Imagen de fondo
+                            </label>
+
+                            <p class="ayuda-campo">
+                                Elige una captura, artwork o imagen
+                                horizontal relacionada con el videojuego.
+                            </p>
+
+                            <input
+                                type="file"
+                                id="fondo-ficha"
+                                accept="image/*"
+                            >
+
+                            <p class="ayuda-campo">
+                                Recomendado: formato horizontal 16:9.
+                                Por ejemplo, 1920 × 1080.
+                            </p>
+
+                        </div>
+
+
+                        <!-- PREVIEW -->
+
+                        <div class="preview-fondo-ficha">
+
+                            <div
+                                class="preview-vacio"
+                                id="fondo-preview-vacio"
+                            >
+
+                                <span style="font-size: 32px;">
+                                    🖼️
+                                </span>
+
+                                <p>
+                                    El fondo aparecerá aquí
+                                </p>
+
+                            </div>
+
+
+                            <img
+                                id="fondo-preview"
+                                alt="Previsualización del fondo"
+                                style="display: none;"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================
+             03 · MI VALORACIÓN
+             ================================== -->
+
+        <section class="bloque-formulario">
+
+            <div class="cabecera-bloque">
+
+                <span class="numero-bloque">
+                    03
+                </span>
+
+                <div>
+
+                    <h2>
+                        Mi valoración
+                    </h2>
+
+                    <p>
+                        Puntúa cada apartado de 0 a 10
+                        en intervalos de 0,5.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="lista-notas-admin">
+
+
+                <!-- HISTORIA -->
+
+                <div
+                    class="control-nota"
+                    data-categoria="historia"
+                >
+
+                    <div class="cabecera-control-nota">
+
+                        <label>
+                            Historia
+                        </label>
+
+                        <strong class="valor-nota">
+                            5
+                        </strong>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="5"
+                    >
+
+                </div>
+
+
+                <!-- GRÁFICOS -->
+
+                <div
+                    class="control-nota"
+                    data-categoria="graficos"
+                >
+
+                    <div class="cabecera-control-nota">
+
+                        <label>
+                            Gráficos
+                        </label>
+
+                        <strong class="valor-nota">
+                            5
+                        </strong>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="5"
+                    >
+
+                </div>
+
+
+                <!-- TÉCNICO -->
+
+                <div
+                    class="control-nota"
+                    data-categoria="tecnico"
+                >
+
+                    <div class="cabecera-control-nota">
+
+                        <label>
+                            Apartado técnico visual
+                        </label>
+
+                        <strong class="valor-nota">
+                            5
+                        </strong>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="5"
+                    >
+
+                </div>
+
+
+                <!-- GAMEPLAY -->
+
+                <div
+                    class="control-nota"
+                    data-categoria="gameplay"
+                >
+
+                    <div class="cabecera-control-nota">
+
+                        <label>
+                            Gameplay
+                        </label>
+
+                        <strong class="valor-nota">
+                            5
+                        </strong>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="5"
+                    >
+
+                </div>
+
+
+                <!-- JUGABILIDAD -->
+
+                <div
+                    class="control-nota"
+                    data-categoria="jugabilidad"
+                >
+
+                    <div class="cabecera-control-nota">
+
+                        <label>
+                            Jugabilidad
+                        </label>
+
+                        <strong class="valor-nota">
+                            5
+                        </strong>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="5"
+                    >
+
+                </div>
+
+
+                <!-- MÚSICA -->
+
+                <div
+                    class="control-nota"
+                    data-categoria="musica"
+                >
+
+                    <div class="cabecera-control-nota">
+
+                        <label>
+                            Música / Sonido
+                        </label>
+
+                        <strong class="valor-nota">
+                            5
+                        </strong>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="5"
+                    >
+
+                </div>
+
+
+                <!-- PERSONAJES -->
+
+                <div
+                    class="control-nota"
+                    data-categoria="personajes"
+                >
+
+                    <div class="cabecera-control-nota">
+
+                        <label>
+                            Personajes
+                        </label>
+
+                        <strong class="valor-nota">
+                            5
+                        </strong>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="5"
+                    >
+
+                </div>
+
+
+                <!-- DIFICULTAD -->
+
+                <div
+                    class="control-nota"
+                    data-categoria="dificultad"
+                >
+
+                    <div class="cabecera-control-nota">
+
+                        <label>
+                            Dificultad
+                        </label>
+
+                        <strong class="valor-nota">
+                            5
+                        </strong>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="5"
+                    >
+
+                </div>
+
+
+                <!-- DIVERSIÓN -->
+
+                <div
+                    class="control-nota"
+                    data-categoria="diversion"
+                >
+
+                    <div class="cabecera-control-nota">
+
+                        <label>
+                            Diversión
+                        </label>
+
+                        <strong class="valor-nota">
+                            5
+                        </strong>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        min="0"
+                        max="10"
+                        step="0.5"
+                        value="5"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- NOTA FINAL -->
+
+            <div class="resultado-media">
+
+                <span>
+                    NOTA FINAL
+                </span>
+
+                <strong id="nota-final">
+                    5
+                </strong>
+
+                <small>
+                    Media de las 9 categorías
+                </small>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================
+             04 · MI ANÁLISIS
+             ================================== -->
+
+        <section class="bloque-formulario">
+
+            <div class="cabecera-bloque">
+
+                <span class="numero-bloque">
+                    04
+                </span>
+
+                <div>
+
+                    <h2>
+                        Mi análisis
+                    </h2>
+
+                    <p>
+                        Escribe libremente tu opinión y experiencia
+                        con el videojuego.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="campo campo-analisis-unico">
+
+                <label for="opinion">
+                    Análisis / Opinión
+                </label>
+
+                <p class="ayuda-campo">
+                    Puedes escribir tantos párrafos como quieras.
+                    Deja una línea en blanco entre párrafos para
+                    separarlos en la ficha.
+                </p>
+
+                <textarea
+                    id="opinion"
+                    rows="14"
+                    placeholder="Escribe aquí tu análisis del videojuego..."
+                ></textarea>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================
+             GUARDAR
+             ================================== -->
+
+        <div class="acciones-formulario">
+
+            <a
+                href="index.html#coleccion"
+                class="boton-cancelar-admin"
+                id="boton-cancelar"
+            >
+                CANCELAR
+            </a>
+
+
+            <button
+                type="submit"
+                class="boton-principal"
+                id="guardar-juego"
+            >
+                GUARDAR VIDEOJUEGO
+            </button>
+
+        </div>
+
+
+        <!-- ESTADO -->
+
+        <p
+            id="estado-guardado"
+            class="estado-guardado"
+        ></p>
+
+    </form>
+
+</main>
+
+
+
+<!-- ==========================================
+     PIE
+     ========================================== -->
+
+<footer class="pie">
+
+    <div class="logo">
+        CHECKPOINT <span>SELECT</span>
+    </div>
+
+    <p>
+        Mi historia a través de los videojuegos.
+    </p>
+
+</footer>
+
+
+
+<!-- ==========================================
+     JAVASCRIPT
+     ========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+<script src="admin.js"></script>
+
+
+</body>
+
+</html>

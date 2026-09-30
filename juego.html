@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Videojuego | Checkpoint Select</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="pagina-ficha">
+
+
+<!-- =====================================
+     FONDO DINÁMICO DEL JUEGO
+     ===================================== -->
+
+<div class="fondo-juego">
+    <div class="resplandor resplandor-1"></div>
+    <div class="resplandor resplandor-2"></div>
+    <div class="resplandor resplandor-3"></div>
+</div>
+
+
+<!-- =====================================
+     CABECERA
+     ===================================== -->
+
+<header class="cabecera">
+
+    <a href="index.html" class="logo">
+        CHECKPOINT <span>SELECT</span>
+    </a>
+
+    <nav class="menu">
+        <a href="index.html">Inicio</a>
+        <a href="index.html#coleccion">Videojuegos</a>
+    </nav>
+
+</header>
+
+
+<!-- =====================================
+     CONTENIDO PRINCIPAL
+     ===================================== -->
+
+<main class="pagina-juego">
+
+
+    <!-- =====================================
+         PRESENTACIÓN DEL JUEGO
+         ===================================== -->
+
+    <section class="presentacion-juego">
+
+
+        <!-- PORTADA -->
+
+        <div class="zona-portada">
+
+            <div class="marco-portada">
+
+                <img
+                    id="ficha-portada"
+                    class="portada-ficha"
+                    src=""
+                    alt=""
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMACIÓN -->
+
+        <div class="informacion-ficha">
+
+    <div class="cabecera-informacion-juego">
+
+    <p class="etiqueta">
+        VIDEOJUEGO
+    </p>
+
+    <div class="acciones-juego">
+
+        <button
+            id="boton-editar-juego"
+            class="boton-editar-juego"
+            type="button"
+        >
+            EDITAR JUEGO
+        </button>
+
+        <button
+            id="boton-eliminar-juego"
+            class="boton-eliminar-juego"
+            type="button"
+            aria-label="Eliminar videojuego"
+            title="Eliminar videojuego"
+        >
+            <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+>
+    <path
+        d="M3 6h18"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+    />
+
+    <path
+        d="M8 6V4h8v2"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+
+    <path
+        d="M19 6l-1 14H6L5 6"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linejoin="round"
+    />
+
+    <path
+        d="M10 10v6M14 10v6"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+    />
+</svg>
+        </button>
+
+    </div>
+
+</div>
+
+
+            <h1 id="ficha-titulo">
+                Cargando...
+            </h1>
+
+
+            <div class="linea-acento"></div>
+
+
+            <div class="datos-principales">
+
+
+                <div class="dato-ficha">
+
+                    <span>
+                        JUGADO
+                    </span>
+
+                    <strong id="ficha-fecha">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="dato-ficha">
+
+                    <span>
+                        TIEMPO DE JUEGO
+                    </span>
+
+                    <strong id="ficha-horas">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="dato-ficha">
+
+                    <span>
+                        PLATAFORMA
+                    </span>
+
+                    <strong id="ficha-plataforma">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="dato-ficha">
+
+                    <span>
+                        AÑO DE LANZAMIENTO
+                    </span>
+
+                    <strong id="ficha-anio">
+                        --
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         VALORACIÓN
+         ===================================== -->
+
+    <section class="seccion-valoracion">
+
+
+        <div class="encabezado-valoracion">
+
+
+            <!-- TEXTO -->
+
+            <div class="texto-encabezado-valoracion">
+
+                <p class="etiqueta">
+                    MI VALORACIÓN
+                </p>
+
+
+                <h2 id="titulo-valoracion">
+                    Mi puntuación
+                </h2>
+
+
+                <p class="explicacion-valoracion">
+
+                    Mi valoración personal dividida en los aspectos
+                    que considero más importantes de un videojuego.
+
+                </p>
+
+            </div>
+
+
+            <!-- NOTA FINAL -->
+
+<div class="contenedor-nota-final">
+
+    <div class="nota-final">
+
+        <!-- ESTRELLA DESTACADO -->
+        <div
+            class="estrella-destacado-ficha"
+            id="estrella-destacado-ficha"
+            aria-hidden="true"
+        >
+            ★
+        </div>
+
+        <span>
+            NOTA FINAL
+        </span>
+
+        <strong id="ficha-nota-final">
+            --
+        </strong>
+
+        <small>
+            sobre 10
+        </small>
+
+    </div>
+
+</div>
+
+
+        </div>
+
+
+        <!--
+            JavaScript generará aquí
+            automáticamente las nueve
+            puntuaciones.
+        -->
+
+        <div
+            class="lista-valoraciones"
+            id="lista-valoraciones"
+        >
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         ANÁLISIS
+         ===================================== -->
+
+    <section
+        class="analisis-juego"
+        id="analisis"
+    >
+
+
+        <!-- CABECERA -->
+
+        <div class="cabecera-analisis">
+
+            <p class="etiqueta">
+                MI ANÁLISIS
+            </p>
+
+
+            <h2 id="titulo-analisis">
+                Mi experiencia
+            </h2>
+
+
+            <p>
+                Mi experiencia personal después de terminar el juego.
+            </p>
+
+        </div>
+
+
+        <!-- TEXTO -->
+
+        <article
+            class="texto-analisis"
+            id="contenido-analisis"
+        >
+        </article>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================
+     PIE DE PÁGINA
+     ===================================== -->
+
+<footer class="pie">
+
+    <div class="logo">
+        CHECKPOINT <span>SELECT</span>
+    </div>
+
+    <p>
+        Mi historia a través de los videojuegos.
+    </p>
+
+</footer>
+
+
+
+<!-- =====================================
+     JAVASCRIPT
+     ===================================== -->
+
+<script src="imagenes-db.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script src="juego.js"></script>
+
+</body>
+</html>

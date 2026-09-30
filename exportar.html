@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exportar Checkpoint Select</title>
+</head>
+
+<body>
+
+    <h1>Exportar Checkpoint Select</h1>
+
+    <button id="exportar">
+        EXPORTAR MIS JUEGOS
+    </button>
+
+    <p id="estado"></p>
+
+
+<script src="imagenes-db.js"></script>
+
+<script>
+
+const boton =
+    document.querySelector("#exportar");
+
+const estado =
+    document.querySelector("#estado");
+
+
+boton.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            const datosGuardados =
+                localStorage.getItem(
+                    "checkpoint-juegos"
+                );
+
+
+            if (!datosGuardados) {
+
+                estado.textContent =
+                    "No se han encontrado juegos.";
+
+                return;
+
+            }
+
+
+            const juegos =
+                JSON.parse(datosGuardados);
+
+
+            const exportacion = [];
+
+
+            for (const juego of juegos) {
+
+                const portada =
+                    await obtenerImagenCheckpoint(
+                        clavePortadaJuego(juego.id)
+                    );
+
+
+                const fondo =
+                    await obtenerImagenCheckpoint(
+                        claveFondoJuego(juego.id)
+                    );
+
+
+                exportacion.push({
+
+                    ...juego,
+
+                    imagenPortada:
+                        portada || null,
+
+                    imagenFondo:
+                        fondo || null
+
+                });
+
+            }
+
+
+            const contenido =
+                JSON.stringify(
+                    exportacion,
+                    null,
+                    2
+                );
+
+
+            const archivo =
+                new Blob(
+                    [contenido],
+                    {
+                        type:
+                            "application/json"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    archivo
+                );
+
+
+            const enlace =
+                document.createElement("a");
+
+
+            enlace.href =
+                url;
+
+
+            enlace.download =
+                "checkpoint-select-backup.json";
+
+
+            enlace.click();
+
+
+            URL.revokeObjectURL(
+                url
+            );
+
+
+            estado.textContent =
+                juegos.length +
+                " juegos exportados correctamente.";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            estado.textContent =
+                "Error al exportar.";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
