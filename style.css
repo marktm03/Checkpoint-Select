@@ -8471,3 +8471,525 @@ option {
         justify-self: flex-start;
     }
 }
+
+.admin-intro-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.admin-intro-contenido .boton-principal {
+    flex-shrink: 0;
+}
+
+@media (max-width: 650px) {
+    .admin-intro-contenido {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/* CAMPO DE CONTRASEÑA */
+
+.campo-password {
+    position: relative;
+    width: 100%;
+}
+
+.campo-password input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 48px;
+}
+
+.campo-password .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 32px;
+    height: 32px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+.campo-password .toggle-password:hover {
+    color: #ff6433;
+}
+
+
+/* ==========================================
+   CHECKPOINT SELECT - LOGIN
+   ========================================== */
+
+.pagina-login {
+    min-height: 100vh;
+    margin: 0;
+    padding: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 35%,
+            #24272e 0%,
+            #14171c 55%,
+            #101216 100%
+        );
+
+    color: #ffffff;
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+.pagina-login * {
+    box-sizing: border-box;
+}
+
+/* CONTENEDOR */
+
+.login-contenedor {
+    width: 100%;
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* LOGOTIPO */
+
+.login-marca {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-marca h1 {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: #ffffff;
+}
+
+.login-marca h1 span {
+    color: #ff6433;
+}
+
+.login-marca p {
+    margin-top: 10px;
+    color: #9ca3af;
+    font-size: 15px;
+}
+
+/* TARJETA */
+
+.login-tarjeta {
+    width: 100%;
+    padding: 42px;
+
+    background:
+        linear-gradient(
+            160deg,
+            #202329,
+            #181b20
+        );
+
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.35);
+}
+
+/* ENCABEZADO */
+
+.login-encabezado {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-encabezado h2 {
+    margin: 0;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.login-encabezado p {
+    margin-top: 10px;
+    color: #9ca3af;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* FORMULARIO */
+
+.pagina-login #login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.login-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.login-campo label {
+    color: #e5e7eb;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.pagina-login #login-form input {
+    width: 100%;
+    height: 54px;
+    padding: 0 15px;
+
+    background: #111318;
+    border: 1px solid #353941;
+    border-radius: 9px;
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.pagina-login #login-form input:focus {
+    border-color: #ff6433;
+
+    box-shadow:
+        0 0 0 3px rgba(255,100,51,0.12);
+}
+
+.pagina-login #login-form input::placeholder {
+    color: #737985;
+}
+
+/* CONTRASEÑA Y OJO */
+
+.pagina-login .campo-password {
+    position: relative;
+    width: 100%;
+}
+
+.pagina-login .campo-password input {
+    padding-right: 50px;
+}
+
+.pagina-login .campo-password .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+.pagina-login .campo-password .toggle-password:hover {
+    color: #ff6433;
+}
+
+/* BOTÓN INICIAR SESIÓN */
+
+.pagina-login .login-boton {
+    width: 100%;
+    height: 54px;
+    margin-top: 4px;
+
+    background: #ff6433;
+    border: none;
+    border-radius: 9px;
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.pagina-login .login-boton:hover {
+    background: #ff784d;
+    transform: translateY(-2px);
+}
+
+/* ERROR DE INICIO DE SESIÓN */
+
+.pagina-login #login-error {
+    margin: 15px 0 0;
+
+    color: #ff7777;
+    font-size: 13px;
+    text-align: center;
+}
+
+.pagina-login #login-error:empty {
+    display: none;
+}
+
+/* PIE */
+
+.login-pie {
+    margin-top: 30px;
+
+    color: #666d78;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* MÓVILES */
+
+@media (max-width: 480px) {
+
+    .pagina-login {
+        padding: 18px;
+    }
+
+    .login-tarjeta {
+        padding: 26px 22px;
+    }
+
+    .login-marca h1 {
+        font-size: 25px;
+    }
+
+    .login-encabezado h2 {
+        font-size: 23px;
+    }
+}
+
+
+/* ==========================================
+   BOTÓN BUSCADOR
+   ========================================== */
+
+.control-buscador {
+    display: flex;
+    align-items: center;
+}
+
+.boton-buscador {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background:
+        linear-gradient(
+            160deg,
+            #202329,
+            #181b20
+        );
+
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+
+    color: #a9adb5;
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.boton-buscador:hover,
+.boton-buscador.activo {
+    color: #ff6433;
+    border-color: #ff6433;
+}
+
+
+/* ==========================================
+   BUSCADOR DESPLEGABLE
+   ========================================== */
+
+.buscador-desplegable {
+    display: none;
+    width: 100%;
+    margin: 22px 0 28px;
+}
+
+.buscador-desplegable.abierto {
+    display: block;
+}
+
+.buscador-desplegable input {
+    width: 100%;
+    height: 46px;
+    padding: 0 18px;
+
+    background: linear-gradient(
+        160deg,
+        #202329,
+        #181b20
+    );
+
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+    box-sizing: border-box;
+}
+
+.buscador-desplegable input:focus {
+    border-color: #ff6433;
+}
+
+.buscador-desplegable input::placeholder {
+    color: #858b95;
+}
+
+
+
+/* ==========================================
+   VISTA SUPERSENCILLA
+   ========================================== */
+
+/* 8 portadas por fila */
+
+.vista-supersencilla .grid-juegos {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* Cada portada ocupa su columna */
+
+.vista-supersencilla .enlace-juego,
+.vista-supersencilla .contenedor-tarjeta,
+.vista-supersencilla .tarjeta-juego {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+}
+
+/* Tarjetas con bordes redondeados */
+
+.vista-supersencilla .tarjeta-juego {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Mantener las proporciones de la portada */
+
+.vista-supersencilla .contenedor-portada {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.vista-supersencilla .portada-juego {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Ocultar toda la información */
+
+.vista-supersencilla .info-juego,
+.vista-supersencilla .panel-notas,
+.vista-supersencilla .nota-portada,
+.vista-supersencilla .boton-destacado,
+.vista-supersencilla .boton-menu-juego,
+.vista-supersencilla .menu-opciones-juego {
+    display: none !important;
+}
+
+/* Evitar alturas reservadas para la información */
+
+.vista-supersencilla .contenedor-tarjeta,
+.vista-supersencilla .tarjeta-juego {
+    height: auto;
+}
+
+/* Efecto al pasar el ratón */
+
+.vista-supersencilla .tarjeta-juego {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vista-supersencilla .enlace-juego:hover .tarjeta-juego {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Adaptación a distintas pantallas */
+
+@media (max-width: 1200px) {
+    .vista-supersencilla .grid-juegos {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 800px) {
+    .vista-supersencilla .grid-juegos {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vista-supersencilla .grid-juegos {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+    }
+}
+

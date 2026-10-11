@@ -2302,7 +2302,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const anioActual = new Date().getFullYear();
 
-    for (let anio = anioActual; anio >= 1980; anio--) {
+    for (let anio = anioActual; anio >= 2022; anio--) {
 
         const opcionInicio = document.createElement("option");
         opcionInicio.value = anio;

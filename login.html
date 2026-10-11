@@ -7,32 +7,129 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="pagina-login">
 
-    <main>
-        <h1>CHECKPOINT <span>SELECT</span></h1>
+    <main class="login-contenedor">
 
-        <h2>Iniciar sesión</h2>
+        <!-- LOGOTIPO -->
 
-        <form id="login-form">
-            <input
-                type="email"
-                id="email"
-                placeholder="Correo electrónico"
-                required
-            >
+        <div class="login-marca">
 
-            <input
-                type="password"
-                id="password"
-                placeholder="Contraseña"
-                required
-            >
+            <h1>
+                CHECKPOINT <span>SELECT</span>
+            </h1>
 
-            <button type="submit">Entrar</button>
-        </form>
+            <p>
+                Tu colección. Tu historia.
+            </p>
 
-        <p id="login-error"></p>
+        </div>
+
+
+        <!-- TARJETA DE INICIO DE SESIÓN -->
+
+        <section class="login-tarjeta">
+
+            <div class="login-encabezado">
+
+                <h2>Bienvenido de nuevo</h2>
+
+                <p>
+                    Inicia sesión para acceder a tu colección.
+                </p>
+
+            </div>
+
+
+            <form id="login-form">
+
+                <!-- CORREO -->
+
+                <div class="login-campo">
+
+                    <label for="email">
+                        Correo electrónico
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="tu@correo.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CONTRASEÑA -->
+
+                <div class="login-campo">
+
+                    <label for="password">
+                        Contraseña
+                    </label>
+
+                    <div class="campo-password">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Introduce tu contraseña"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="toggle-password"
+                            class="toggle-password"
+                            aria-label="Mostrar contraseña"
+                            aria-pressed="false"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INICIAR SESIÓN -->
+
+                <button
+                    type="submit"
+                    class="login-boton"
+                >
+                    INICIAR SESIÓN
+                </button>
+
+            </form>
+
+
+            <p id="login-error"></p>
+
+        </section>
+
+
+        <p class="login-pie">
+            CHECKPOINT SELECT © 2026
+        </p>
+
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

@@ -20,3 +20,32 @@ loginForm.addEventListener("submit", async (event) => {
 
     window.location.href = "index.html";
 });
+
+// ==========================================
+// MOSTRAR / OCULTAR CONTRASEÑA
+// ==========================================
+
+const passwordInput = document.getElementById("password");
+const togglePassword = document.getElementById("toggle-password");
+
+if (passwordInput && togglePassword) {
+
+    togglePassword.addEventListener("click", () => {
+
+        const estaOculta = passwordInput.type === "password";
+
+        passwordInput.type = estaOculta ? "text" : "password";
+
+        togglePassword.setAttribute(
+            "aria-label",
+            estaOculta ? "Ocultar contraseña" : "Mostrar contraseña"
+        );
+
+        togglePassword.setAttribute(
+            "aria-pressed",
+            String(estaOculta)
+        );
+
+    });
+
+}

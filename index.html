@@ -7,9 +7,10 @@
 
     <title>Checkpoint Select</title>
 
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <header class="cabecera">
@@ -32,8 +33,8 @@
             id="cambiar-usuario"
             class="cambiar-usuario"
         >
-            <span class="icono-usuario">
-                ♙
+            <span class="icono-usuario" id="icono-usuario">
+             ♙
             </span>
 
             <span id="nombre-usuario">
@@ -307,151 +308,174 @@
                 </div>
 
 
-                <!-- FAVORITOS -->
+                
+<!-- FAVORITOS -->
 
-                <div class="control-favoritos">
+<div class="control-favoritos">
 
-                    <label class="filtro-favoritos">
+    <label class="filtro-favoritos">
 
-                        <input
-                            type="checkbox"
-                            id="solo-favoritos"
-                        >
+        <input
+            type="checkbox"
+            id="solo-favoritos"
+        >
 
-                        <span class="check-favoritos">
+        <span class="check-favoritos">
 
-                            <svg viewBox="0 0 24 24">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M12 2.7
+                       14.8 8.4
+                       21.1 9.3
+                       16.6 13.7
+                       17.7 20
+                       12 17
+                       6.3 20
+                       7.4 13.7
+                       2.9 9.3
+                       9.2 8.4
+                       Z"
+                />
+            </svg>
 
-                                <path
-                                    d="M12 2.7
-                                       14.8 8.4
-                                       21.1 9.3
-                                       16.6 13.7
-                                       17.7 20
-                                       12 17
-                                       6.3 20
-                                       7.4 13.7
-                                       2.9 9.3
-                                       9.2 8.4
-                                       Z"
-                                />
+        </span>
 
-                            </svg>
+        <span class="texto-favoritos">
+            Favoritos
+        </span>
 
-                        </span>
+    </label>
 
-                        <span class="texto-favoritos">
-                            Mostrar solo favoritos
-                        </span>
+</div>
 
-                    </label>
+<!-- BUSCADOR -->
 
-                </div>
+<div class="control-buscador">
 
+    <button
+        type="button"
+        class="boton-buscador"
+        id="boton-buscador"
+        title="Buscar videojuegos"
+        aria-label="Buscar videojuegos"
+        aria-expanded="false"
+    >
+        <svg
+            width="19"
+            height="19"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <circle cx="11" cy="11" r="7"/>
+            <path d="M20 20l-4-4"/>
+        </svg>
+    </button>
 
-                <!-- CAMBIO DE VISTA -->
-
-                <div class="selector-vista">
-
-                    <button
-                        class="boton-vista activo"
-                        id="vista-sencilla"
-                        type="button"
-                        aria-label="Vista sencilla"
-                        data-tooltip="Vista sencilla"
-                    >
-
-                        <svg viewBox="0 0 24 24">
-
-                            <rect
-                                x="3"
-                                y="3"
-                                width="7"
-                                height="7"
-                                rx="1"
-                            />
-
-                            <rect
-                                x="14"
-                                y="3"
-                                width="7"
-                                height="7"
-                                rx="1"
-                            />
-
-                            <rect
-                                x="3"
-                                y="14"
-                                width="7"
-                                height="7"
-                                rx="1"
-                            />
-
-                            <rect
-                                x="14"
-                                y="14"
-                                width="7"
-                                height="7"
-                                rx="1"
-                            />
-
-                        </svg>
-
-                    </button>
+</div>
 
 
-                    <span class="separador-vista"></span>
+
+                
+<!-- CAMBIO DE VISTA -->
+
+<div class="selector-vista">
+
+    <!-- VISTA SUPERSENCILLA: 9 CUADRADOS -->
+
+    <button
+        class="boton-vista"
+        id="vista-supersencilla"
+        type="button"
+        aria-label="Vista supersencilla"
+        data-tooltip="Vista supersencilla"
+    >
+        <svg viewBox="0 0 24 24">
+            <rect x="2" y="2" width="5" height="5" rx="0.7"/>
+            <rect x="9.5" y="2" width="5" height="5" rx="0.7"/>
+            <rect x="17" y="2" width="5" height="5" rx="0.7"/>
+
+            <rect x="2" y="9.5" width="5" height="5" rx="0.7"/>
+            <rect x="9.5" y="9.5" width="5" height="5" rx="0.7"/>
+            <rect x="17" y="9.5" width="5" height="5" rx="0.7"/>
+
+            <rect x="2" y="17" width="5" height="5" rx="0.7"/>
+            <rect x="9.5" y="17" width="5" height="5" rx="0.7"/>
+            <rect x="17" y="17" width="5" height="5" rx="0.7"/>
+        </svg>
+    </button>
+
+    <span class="separador-vista"></span>
+
+    <!-- VISTA SENCILLA: 4 CUADRADOS -->
+
+    <button
+        class="boton-vista activo"
+        id="vista-sencilla"
+        type="button"
+        aria-label="Vista sencilla"
+        data-tooltip="Vista sencilla"
+    >
+        <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+    </button>
+
+    <span class="separador-vista"></span>
+
+    <!-- VISTA DETALLADA -->
+
+    <button
+        class="boton-vista"
+        id="vista-detallada"
+        type="button"
+        aria-label="Vista detallada"
+        data-tooltip="Vista detallada"
+    >
+        <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="5" height="5" rx="1"/>
+            <line x1="11" y1="6.5" x2="21" y2="6.5"/>
+            <rect x="3" y="15" width="5" height="5" rx="1"/>
+            <line x1="11" y1="17.5" x2="21" y2="17.5"/>
+        </svg>
+    </button>
+
+</div>
 
 
-                    <button
-                        class="boton-vista"
-                        id="vista-detallada"
-                        type="button"
-                        aria-label="Vista detallada"
-                        data-tooltip="Vista detallada"
-                    >
-
-                        <svg viewBox="0 0 24 24">
-
-                            <rect
-                                x="3"
-                                y="4"
-                                width="5"
-                                height="5"
-                                rx="1"
-                            />
-
-                            <line
-                                x1="11"
-                                y1="6.5"
-                                x2="21"
-                                y2="6.5"
-                            />
-
-                            <rect
-                                x="3"
-                                y="15"
-                                width="5"
-                                height="5"
-                                rx="1"
-                            />
-
-                            <line
-                                x1="11"
-                                y1="17.5"
-                                x2="21"
-                                y2="17.5"
-                            />
-
-                        </svg>
-
-                    </button>
-
-                </div>
-
+            
             </div>
 
         </div>
+
+
+        <!-- ======================================
+             BUSCADOR DE VIDEOJUEGOS
+             ====================================== -->
+
+        <div class="buscador-desplegable" id="buscador-desplegable">
+
+            <input
+                type="search"
+                id="input-buscador"
+                placeholder="Buscar videojuego por nombre..."
+                aria-label="Buscar videojuego por nombre"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- ======================================
+             AQUÍ SE INSERTAN LOS JUEGOS
+             ====================================== -->
+
 
 
         <!-- ======================================

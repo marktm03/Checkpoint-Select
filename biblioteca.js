@@ -353,21 +353,26 @@ async function cargarJuegosDesdeSupabase() {
 
 
         // ======================================
-        // NOMBRE DEL USUARIO
-        // ======================================
+// NOMBRE E ICONO DEL USUARIO
+// ======================================
 
-        const nombreUsuario =
-            document.getElementById(
-                "nombre-usuario"
-            );
+const nombreUsuario =
+    document.getElementById("nombre-usuario");
 
-        if (nombreUsuario) {
+const iconoUsuario =
+    document.getElementById("icono-usuario");
 
-            nombreUsuario.textContent =
-                usuarioEsEstela
-                    ? "Estela"
-                    : "Marcos";
-        }
+// Nombre del usuario
+if (nombreUsuario) {
+    nombreUsuario.textContent =
+        usuarioEsEstela ? "Estela" : "Marcos";
+}
+
+// Icono del usuario
+if (iconoUsuario) {
+    iconoUsuario.textContent =
+        usuarioEsEstela ? "♛" : "♚";
+}
 
 
         // ======================================
@@ -1755,6 +1760,186 @@ if (longitudTitulo > 38) {
 
 
 // ==========================================
+// ESTADO DE LOS AÑOS PLEGADOS
+// ==========================================
+
+const aniosPlegados = new Set();
+
+
+// ==========================================
+// GUARDAR Y RESTAURAR ESTADO DE LA BIBLIOTECA
+// ==========================================
+
+const CLAVE_ESTADO_BIBLIOTECA = "checkpointEstadoBiblioteca";
+
+const tipoNavegacion =
+    performance.getEntriesByType("navigation")[0]?.type;
+
+const volverConAtras =
+    tipoNavegacion === "back_forward";
+
+const estadoBibliotecaGuardado =
+    volverConAtras
+        ? history.state?.[CLAVE_ESTADO_BIBLIOTECA] || null
+        : null;
+
+let bibliotecaPreparada = false;
+let restaurandoBiblioteca = false;
+
+function guardarEstadoBiblioteca() {
+
+    if (!bibliotecaPreparada || restaurandoBiblioteca) {
+        return;
+    }
+
+    const plataforma =
+        document.getElementById("selector-plataforma");
+
+    const buscador =
+        document.getElementById("input-buscador");
+
+    const panelBuscador =
+        document.getElementById("buscador-desplegable");
+
+    const estado = {
+        anio: selectorAnio.value,
+        plataforma: plataforma?.value || "todas",
+        orden: selectorOrden.value,
+        direccion: botonDireccion.dataset.direccion,
+        favoritos: soloFavoritos.checked,
+        aniosPlegados: [...aniosPlegados],
+        busqueda: buscador?.value || "",
+        buscadorAbierto:
+            panelBuscador?.classList.contains("abierto") || false,
+        scrollY: window.scrollY
+    };
+
+    try {
+        history.replaceState(
+            {
+                ...(history.state || {}),
+                [CLAVE_ESTADO_BIBLIOTECA]: estado
+            },
+            "",
+            location.href
+        );
+    } catch (error) {
+        console.warn("Error guardando la biblioteca:", error);
+    }
+}
+
+function restaurarEstadoBiblioteca(estado) {
+
+    if (!estado) {
+        return;
+    }
+
+    function restaurarSelector(selector, valor) {
+
+        if (!selector || valor == null) {
+            return;
+        }
+
+        const existe = [...selector.options].some(
+            opcion => opcion.value === String(valor)
+        );
+
+        if (existe) {
+            selector.value = String(valor);
+        }
+    }
+
+    restaurarSelector(selectorAnio, estado.anio);
+
+    restaurarSelector(
+        document.getElementById("selector-plataforma"),
+        estado.plataforma
+    );
+
+    restaurarSelector(selectorOrden, estado.orden);
+
+    const direccion =
+        estado.direccion === "desc" ? "desc" : "asc";
+
+    botonDireccion.dataset.direccion = direccion;
+
+    botonDireccion.classList.toggle(
+        "descendente",
+        direccion === "desc"
+    );
+
+    soloFavoritos.checked = Boolean(estado.favoritos);
+
+    aniosPlegados.clear();
+
+    if (Array.isArray(estado.aniosPlegados)) {
+        estado.aniosPlegados.forEach(anio => {
+            aniosPlegados.add(String(anio));
+        });
+    }
+
+    const buscador =
+        document.getElementById("input-buscador");
+
+    const panel =
+        document.getElementById("buscador-desplegable");
+
+    const boton =
+        document.getElementById("boton-buscador");
+
+    if (buscador) {
+        buscador.value = estado.busqueda || "";
+    }
+
+    const abierto = Boolean(estado.buscadorAbierto);
+
+    panel?.classList.toggle("abierto", abierto);
+    boton?.classList.toggle("activo", abierto);
+
+    boton?.setAttribute(
+        "aria-expanded",
+        String(abierto)
+    );
+}
+
+// Guardar al abandonar la página.
+
+window.addEventListener(
+    "pagehide",
+    guardarEstadoBiblioteca
+);
+
+// Guardar al desplazarse por la biblioteca.
+
+let scrollPendiente = false;
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (
+            !bibliotecaPreparada ||
+            restaurandoBiblioteca ||
+            scrollPendiente
+        ) {
+            return;
+        }
+
+        scrollPendiente = true;
+
+        requestAnimationFrame(() => {
+
+            scrollPendiente = false;
+
+            guardarEstadoBiblioteca();
+        });
+    },
+    { passive: true }
+);
+
+
+
+// ==========================================
 // MOSTRAR JUEGOS
 // ==========================================
 
@@ -2046,52 +2231,75 @@ async function mostrarJuegos(
         // PLEGAR / DESPLEGAR
         // ==================================
 
-        encabezado.addEventListener(
-            "click",
-            () => {
+        
+// ==================================
+// PLEGAR / DESPLEGAR
+// ==================================
 
-                const estaPlegado =
-                    encabezado
-                        .classList
-                        .toggle(
-                            "plegado"
-                        );
+// Recuperar el estado anterior del año
 
+const inicialmentePlegado =
+    aniosPlegados.has(anio);
 
-                tarjetasDelAnio.forEach(
-                    (tarjeta) => {
+function establecerEstadoAnio(plegado) {
 
-                        tarjeta.style.display =
-                            estaPlegado
-                                ? "none"
-                                : "";
-                    }
-                );
+    encabezado.classList.toggle(
+        "plegado",
+        plegado
+    );
 
+    tarjetasDelAnio.forEach((tarjeta) => {
+        tarjeta.style.display =
+            plegado ? "none" : "";
+    });
 
-                const flecha =
-                    encabezado.querySelector(
-                        ".flecha-anio"
-                    );
-
-
-                if (flecha) {
-
-                    flecha.textContent =
-                        estaPlegado
-                            ? "▶"
-                            : "▼";
-                }
-
-
-                encabezado.setAttribute(
-                    "aria-expanded",
-                    estaPlegado
-                        ? "false"
-                        : "true"
-                );
-            }
+    const flecha =
+        encabezado.querySelector(
+            ".flecha-anio"
         );
+
+    if (flecha) {
+        flecha.textContent =
+            plegado ? "▶" : "▼";
+    }
+
+    encabezado.setAttribute(
+        "aria-expanded",
+        String(!plegado)
+    );
+}
+
+// Aplicar el estado al crear el encabezado
+
+establecerEstadoAnio(
+    inicialmentePlegado
+);
+
+// Guardar los cambios al hacer clic
+
+encabezado.addEventListener(
+    "click",
+    () => {
+
+        const nuevoEstado =
+            !encabezado.classList.contains(
+                "plegado"
+            );
+
+        if (nuevoEstado) {
+            aniosPlegados.add(anio);
+        } else {
+            aniosPlegados.delete(anio);
+        }
+
+        establecerEstadoAnio(
+            nuevoEstado
+        );
+
+        guardarEstadoBiblioteca();
+    }
+);
+
     }
 }
 
@@ -2745,6 +2953,31 @@ async function actualizarBiblioteca() {
             );
     }
 
+    
+// ======================================
+// FILTRAR POR TÍTULO
+// ======================================
+
+const textoBusqueda =
+    document.getElementById("input-buscador")
+        ?.value
+        .trim()
+        .toLocaleLowerCase("es") || "";
+
+if (textoBusqueda) {
+
+    juegosFiltrados =
+        juegosFiltrados.filter(juego => {
+
+            const titulo =
+                String(juego.titulo || "")
+                    .toLocaleLowerCase("es");
+
+            return titulo.includes(textoBusqueda);
+        });
+}
+
+
 
     // ======================================
     // ORDENAR
@@ -2763,6 +2996,8 @@ async function actualizarBiblioteca() {
     await mostrarJuegos(
         juegosOrdenados
     );
+
+    guardarEstadoBiblioteca();
 }
 
 
@@ -2902,142 +3137,138 @@ document.addEventListener(
 );
 
 
-// ==========================================
-// CAMBIO DE VISTA
-// ==========================================
 
-const botonVistaSencilla =
-    document.getElementById(
-        "vista-sencilla"
-    );
+    // ==========================================
+    // CAMBIO DE VISTA
+    // ==========================================
 
-const botonVistaDetallada =
-    document.getElementById(
-        "vista-detallada"
-    );
+    const botonVistaSuperSencilla =
+        document.getElementById("vista-supersencilla");
 
+    const botonVistaSencilla =
+        document.getElementById("vista-sencilla");
 
-if (
-    botonVistaSencilla &&
-    botonVistaDetallada
-) {
-
-    botonVistaSencilla.addEventListener(
-        "click",
-        () => {
-
-            botonVistaSencilla
-                .classList
-                .add(
-                    "activo"
-                );
-
-            botonVistaDetallada
-                .classList
-                .remove(
-                    "activo"
-                );
-
-            document.body
-                .classList
-                .remove(
-                    "vista-detallada"
-                );
-
-
-            localStorage.setItem(
-                "vistaBiblioteca",
-                "sencilla"
-            );
-        }
-    );
-
-
-    botonVistaDetallada.addEventListener(
-        "click",
-        () => {
-
-            botonVistaDetallada
-                .classList
-                .add(
-                    "activo"
-                );
-
-            botonVistaSencilla
-                .classList
-                .remove(
-                    "activo"
-                );
-
-            document.body
-                .classList
-                .add(
-                    "vista-detallada"
-                );
-
-
-            localStorage.setItem(
-                "vistaBiblioteca",
-                "detallada"
-            );
-        }
-    );
-
-
-    // ======================================
-    // RECUPERAR ÚLTIMA VISTA
-    // ======================================
-
-    const vistaGuardada =
-        localStorage.getItem(
-            "vistaBiblioteca"
-        );
+    const botonVistaDetallada =
+        document.getElementById("vista-detallada");
 
 
     if (
-        vistaGuardada ===
-        "detallada"
+        botonVistaSuperSencilla &&
+        botonVistaSencilla &&
+        botonVistaDetallada
     ) {
 
-        document.body
-            .classList
-            .add(
+        // ======================================
+        // ACTIVAR UNA VISTA
+        // ======================================
+
+        function activarVista(tipoVista) {
+
+            // Eliminar las clases de las otras vistas
+
+            document.body.classList.remove(
+                "vista-supersencilla",
+                "vista-sencilla",
                 "vista-detallada"
             );
 
-        botonVistaDetallada
-            .classList
-            .add(
-                "activo"
-            );
+            // Desactivar los tres botones
 
-        botonVistaSencilla
-            .classList
-            .remove(
-                "activo"
-            );
+            botonVistaSuperSencilla.classList.remove("activo");
+            botonVistaSencilla.classList.remove("activo");
+            botonVistaDetallada.classList.remove("activo");
 
-    } else {
 
-        document.body
-            .classList
-            .remove(
-                "vista-detallada"
-            );
+            // ======================================
+            // VISTA SUPERSENCILLA
+            // ======================================
 
-        botonVistaSencilla
-            .classList
-            .add(
-                "activo"
-            );
+            if (tipoVista === "supersencilla") {
 
-        botonVistaDetallada
-            .classList
-            .remove(
-                "activo"
+                document.body.classList.add(
+                    "vista-supersencilla"
+                );
+
+                botonVistaSuperSencilla.classList.add(
+                    "activo"
+                );
+
+            }
+
+            // ======================================
+            // VISTA DETALLADA
+            // ======================================
+
+            else if (tipoVista === "detallada") {
+
+                document.body.classList.add(
+                    "vista-detallada"
+                );
+
+                botonVistaDetallada.classList.add(
+                    "activo"
+                );
+
+            }
+
+            // ======================================
+            // VISTA SENCILLA
+            // ======================================
+
+            else {
+
+                document.body.classList.add(
+                    "vista-sencilla"
+                );
+
+                botonVistaSencilla.classList.add(
+                    "activo"
+                );
+
+                tipoVista = "sencilla";
+            }
+
+
+            // Guardar la vista elegida
+
+            localStorage.setItem(
+                "vistaBiblioteca",
+                tipoVista
             );
+        }
+
+
+        // ======================================
+        // EVENTOS DE LOS BOTONES
+        // ======================================
+
+        botonVistaSuperSencilla.addEventListener(
+            "click",
+            () => activarVista("supersencilla")
+        );
+
+        botonVistaSencilla.addEventListener(
+            "click",
+            () => activarVista("sencilla")
+        );
+
+        botonVistaDetallada.addEventListener(
+            "click",
+            () => activarVista("detallada")
+        );
+
+
+        // ======================================
+        // RECUPERAR ÚLTIMA VISTA
+        // ======================================
+
+        const vistaGuardada =
+            localStorage.getItem("vistaBiblioteca");
+
+        activarVista(
+            vistaGuardada || "sencilla"
+        );
     }
-}
 
 
 // ==========================================
@@ -3084,48 +3315,89 @@ if (botonCambiarUsuario) {
 // INICIAR BIBLIOTECA
 // ==========================================
 
+
 async function iniciarBiblioteca() {
 
     try {
 
-        // 1. Cargar juegos
+        restaurandoBiblioteca = true;
+
+        // 1. Cargar juegos desde Supabase
 
         await cargarJuegosDesdeSupabase();
 
-        // 2. Actualizar estadísticas globales
+        // 2. Actualizar estadísticas
 
-            actualizarEstadisticasGlobales();
+        actualizarEstadisticasGlobales();
 
-
-        // 2. Orden inicial
+        // 3. Orden inicial
 
         ordenarJuegosPorFecha();
 
-
-        // 3. Crear selector de años
+        // 4. Crear selector de años
 
         crearSelectorAnios();
 
+        // 5. Recuperar filtros al volver con Atrás
 
-        // 4. Mostrar biblioteca
+        if (estadoBibliotecaGuardado) {
+
+            restaurarEstadoBiblioteca(
+                estadoBibliotecaGuardado
+            );
+        }
+
+        // 6. Mostrar biblioteca
 
         await actualizarBiblioteca();
 
+        // 7. Recuperar posición de desplazamiento
+
+        if (
+            estadoBibliotecaGuardado &&
+            Number.isFinite(estadoBibliotecaGuardado.scrollY)
+        ) {
+
+            const posicion =
+                estadoBibliotecaGuardado.scrollY;
+
+            requestAnimationFrame(() => {
+
+                requestAnimationFrame(() => {
+
+                    window.scrollTo({
+                        top: posicion,
+                        left: 0,
+                        behavior: "instant"
+                    });
+
+                    restaurandoBiblioteca = false;
+                    bibliotecaPreparada = true;
+
+                    guardarEstadoBiblioteca();
+                });
+            });
+
+        } else {
+
+            restaurandoBiblioteca = false;
+            bibliotecaPreparada = true;
+
+            guardarEstadoBiblioteca();
+        }
 
     } catch (error) {
+
+        restaurandoBiblioteca = false;
 
         console.error(
             "Error cargando la biblioteca:",
             error
         );
 
+        if (juegos.length === 0) {
 
-        if (
-            juegos.length === 0
-        ) {
-
-            mensajeVacio.style.display =
-                "block";
+            mensajeVacio.style.display = "block";
         }
     }
 }
@@ -3136,3 +3408,67 @@ async function iniciarBiblioteca() {
 // ==========================================
 
 iniciarBiblioteca();
+
+
+
+// ==========================================
+// ABRIR Y CERRAR BUSCADOR
+// ==========================================
+
+const botonBuscador =
+    document.getElementById("boton-buscador");
+
+const buscadorDesplegable =
+    document.getElementById("buscador-desplegable");
+
+const inputBuscador =
+    document.getElementById("input-buscador");
+
+if (
+    botonBuscador &&
+    buscadorDesplegable &&
+    inputBuscador
+) {
+
+    botonBuscador.addEventListener(
+        "click",
+        async () => {
+
+            const abierto =
+                buscadorDesplegable.classList.toggle(
+                    "abierto"
+                );
+
+            botonBuscador.classList.toggle(
+                "activo",
+                abierto
+            );
+
+            botonBuscador.setAttribute(
+                "aria-expanded",
+                String(abierto)
+            );
+
+            if (abierto) {
+
+                inputBuscador.focus();
+
+            } else {
+
+                inputBuscador.value = "";
+
+                await actualizarBiblioteca();
+            }
+
+            guardarEstadoBiblioteca();
+        }
+    );
+
+    // Buscar mientras escribes.
+
+    inputBuscador.addEventListener(
+        "input",
+        actualizarBiblioteca
+    );
+}
+
