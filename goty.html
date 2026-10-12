@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkpoint GOTY | Checkpoint Select</title>
+
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="pagina-goty">
+
+    <!-- ==========================================
+         CABECERA
+         ========================================== -->
+
+    <header class="cabecera">
+
+        <a href="index.html" class="logo">
+            CHECKPOINT <span>SELECT</span>
+        </a>
+
+        <nav class="menu">
+
+            <a href="index.html">
+                Inicio
+            </a>
+
+            <a href="index.html#coleccion">
+                Videojuegos
+            </a>
+
+            <a href="index.html" class="volver-goty">
+                ← Volver a la biblioteca
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main class="goty-main">
+
+        <!-- ==========================================
+             PRESENTACIÓN
+             ========================================== -->
+
+        <section class="goty-intro">
+
+            <p class="etiqueta">
+                LOS PREMIOS DE CHECKPOINT SELECT
+            </p>
+
+            <div class="goty-encabezado">
+
+                <div>
+
+                    <h1>
+                        CHECKPOINT <span>GOTY</span>
+                    </h1>
+
+                    <p class="goty-descripcion">
+                        Los videojuegos que han marcado mi año.
+                    </p>
+
+                </div>
+
+                <div class="goty-anio">
+                    <span>AÑO</span>
+                    <strong id="goty-anio-actual">----</strong>
+                </div>
+
+            </div>
+
+            <div class="goty-linea"></div>
+
+        </section>
+
+
+        <!-- ==========================================
+             CONTROLES
+             ========================================== -->
+
+        <section class="goty-controles">
+
+            <div>
+                <p class="etiqueta" id="goty-controles-etiqueta">
+                    MI SELECCIÓN ANUAL
+                </p>
+
+                <h2 id="goty-controles-titulo">
+                    Los premios
+                </h2>
+            </div>
+
+            <button
+                type="button"
+                class="boton-principal"
+                id="goty-autorrellenar"
+                disabled
+            >
+                AUTORRELLENAR PREMIOS
+            </button>
+
+        </section>
+
+
+        <!-- ==========================================
+             PESTAÑAS
+             ========================================== -->
+
+        <div class="goty-pestanas" role="tablist" aria-label="Secciones de Checkpoint GOTY">
+
+            <button
+                type="button"
+                class="goty-pestana activa"
+                data-grupo="personal"
+                role="tab"
+                aria-selected="true"
+                aria-controls="goty-categorias"
+            >
+                🏆 PREMIOS PERSONALES
+            </button>
+
+            <button
+                type="button"
+                class="goty-pestana"
+                data-grupo="valoracion"
+                role="tab"
+                aria-selected="false"
+                aria-controls="goty-categorias"
+            >
+                ⭐ PREMIOS POR VALORACIÓN
+            </button>
+
+            <button
+                type="button"
+                class="goty-pestana"
+                data-grupo="rankings"
+                role="tab"
+                aria-selected="false"
+                aria-controls="goty-rankings"
+            >
+                📊 RANKINGS DEL AÑO
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================
+             PREMIOS: CATEGORÍAS Y PODIOS
+             ========================================== -->
+
+        <section
+            class="goty-categorias"
+            id="goty-categorias"
+            aria-label="Premios del año"
+        >
+            <!-- Las categorías se generan desde goty.js -->
+        </section>
+
+
+        <!-- ==========================================
+             RANKINGS DEL AÑO
+             ========================================== -->
+
+        <section
+            class="goty-rankings"
+            id="goty-rankings"
+            aria-label="Rankings del año"
+            hidden
+        >
+
+            <div class="goty-rankings-grid">
+
+                <!-- RANKING AUTOMÁTICO POR NOTA -->
+
+                <div class="goty-ranking-bloque">
+
+                    <div class="goty-ranking-encabezado">
+
+                        <h2>
+                            📊 RANKING POR NOTA
+                        </h2>
+
+                        <p>
+                            Todos los videojuegos terminados este año,
+                            ordenados de mayor a menor valoración.
+                            Puedes cambiar el orden de los juegos
+                            que tengan la misma nota.
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="goty-ranking-lista"
+                        id="goty-ranking-notas"
+                    >
+                        <!-- Ranking generado desde goty.js -->
+                    </div>
+
+                </div>
+
+
+                <!-- TOP 10 COMPLETAMENTE MANUAL -->
+
+                <div class="goty-ranking-bloque">
+
+                    <div class="goty-ranking-encabezado">
+
+                        <h2>
+                            🏆 MI TOP 10 PERSONAL
+                        </h2>
+
+                        <p>
+                            Mis diez videojuegos favoritos del año.
+                            Elegidos y ordenados manualmente,
+                            independientemente de sus notas.
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="goty-ranking-lista"
+                        id="goty-ranking-personal"
+                    >
+                        <!-- Diez puestos vacíos generados desde goty.js -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================================
+         FOOTER
+         ========================================== -->
+
+    <footer class="pie">
+
+        <div class="logo">
+            CHECKPOINT <span>SELECT</span>
+        </div>
+
+        <p>
+            Mi historia a través de los videojuegos.
+        </p>
+
+    </footer>
+
+
+    <!-- ==========================================
+         SCRIPTS
+         ========================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="goty.js"></script>
+
+</body>
+
+</html>

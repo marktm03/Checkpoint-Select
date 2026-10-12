@@ -8993,3 +8993,1300 @@ option {
     }
 }
 
+/* ==========================================
+   CHECKPOINT GOTY - MENÚ SUPERIOR
+   ========================================== */
+
+.menu-goty {
+    position: relative;
+}
+
+/* BOTÓN PRINCIPAL */
+
+.menu .boton-menu-goty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 11px 16px;
+
+    background: linear-gradient(
+        135deg,
+        #ff6a21,
+        #ff8137
+    );
+
+    color: #ffffff;
+
+    border: 1px solid #ff8137;
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.menu .boton-menu-goty:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 20px rgba(255, 106, 33, 0.25);
+}
+
+.flecha-goty {
+    font-size: 12px;
+    transition: transform 0.2s ease;
+}
+
+.boton-menu-goty[aria-expanded="true"] .flecha-goty {
+    transform: rotate(180deg);
+}
+
+/* DESPLEGABLE */
+
+.desplegable-goty {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+
+    width: 210px;
+    padding: 12px;
+
+    background: #181b20;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.4);
+
+    z-index: 200;
+}
+
+.desplegable-goty[hidden] {
+    display: none;
+}
+
+.titulo-desplegable-goty {
+    color: #9299a5;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+
+    margin: 4px 8px 12px;
+}
+
+/* OPCIONES DE AÑO */
+
+.enlace-anio-goty {
+    display: block;
+    padding: 11px 12px;
+
+    color: #f5f7fb;
+    font-size: 13px;
+    font-weight: 600;
+
+    border-radius: 8px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.enlace-anio-goty:hover {
+    background: rgba(255, 106, 33, 0.12);
+    color: #ff8137;
+}
+
+/* ==========================================
+   CHECKPOINT GOTY - PÁGINA PRINCIPAL
+   ========================================== */
+
+.goty-main {
+    width: min(1400px, calc(100% - 60px));
+    margin: 0 auto;
+    min-height: 75vh;
+    padding: 45px 0 100px;
+}
+
+/* PRESENTACIÓN */
+
+.goty-intro {
+    margin-bottom: 35px;
+}
+
+.goty-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 18px;
+}
+
+.goty-encabezado h1 {
+    font-size: clamp(42px, 5vw, 76px);
+    font-weight: 900;
+    letter-spacing: -3px;
+    line-height: 1.1;
+}
+
+.goty-encabezado h1 span {
+    color: #ff6a21;
+}
+
+.goty-descripcion {
+    color: #a9b5c9;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-top: 22px;
+}
+
+.goty-linea {
+    width: 100%;
+    height: 2px;
+    margin-top: 25px;
+
+    background: linear-gradient(
+        90deg,
+        #ff6a21,
+        rgba(255, 106, 33, 0.15),
+        transparent
+    );
+}
+
+/* AÑO */
+
+.goty-anio {
+    min-width: 175px;
+    padding: 22px 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    background: linear-gradient(
+        160deg,
+        #202329,
+        #181b20
+    );
+
+    border: 1px solid rgba(255, 106, 33, 0.3);
+    border-radius: 15px;
+}
+
+.goty-anio span {
+    color: #9299a5;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.goty-anio strong {
+    color: #ff6a21;
+    font-size: 38px;
+    font-weight: 900;
+}
+
+/* CONTROLES */
+
+.goty-controles {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 20px;
+}
+
+.goty-controles h2 {
+    margin-top: 8px;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.goty-controles .boton-principal:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* CONTENEDOR DE PREMIOS */
+
+.goty-categorias {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+    row-gap: 40px;
+}
+
+/* ADAPTACIÓN A PANTALLAS PEQUEÑAS */
+
+@media (max-width: 800px) {
+
+    .goty-main {
+        width: calc(100% - 32px);
+        padding-top: 50px;
+    }
+
+    .goty-encabezado {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .goty-encabezado h1 {
+        letter-spacing: -1.5px;
+    }
+
+    .goty-categorias {
+        grid-template-columns: 1fr;
+    }
+
+    .goty-controles {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+
+/* CABECERA DE CADA PREMIO */
+
+.goty-tarjeta-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    min-height: 42px;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.goty-tarjeta-titulo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.goty-icono-categoria {
+    font-size: 23px;
+    flex-shrink: 0;
+}
+
+.goty-tarjeta-titulo h3 {
+    color: #f5f7fb;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    line-height: 1.4;
+}
+
+.goty-numero-categoria {
+    color: #777f8d;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+/* PODIO */
+
+.goty-podio {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 20px;
+}
+
+.goty-puesto {
+    width: 180px;
+    min-width: 0;
+    text-align: center;
+}
+
+.goty-puesto-1 {
+    width: 200px;
+}
+
+.goty-posicion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    margin-bottom: 12px;
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.6px;
+}
+
+.goty-posicion span {
+    font-size: 17px;
+}
+
+/* COLORES DE LOS PUESTOS */
+
+.goty-puesto-1 .goty-posicion {
+    color: #f4c95d;
+}
+
+.goty-puesto-2 .goty-posicion {
+    color: #c4ccd7;
+}
+
+.goty-puesto-3 .goty-posicion {
+    color: #cd936a;
+}
+
+/* ESPACIO DE PORTADAS */
+
+.goty-portada-vacia {
+    width: 100%;
+max-width: 200px;
+    aspect-ratio: 2 / 3;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    background: linear-gradient(
+        160deg,
+        #14171c,
+        #101216
+    );
+
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+/* TOP 1 MÁS DESTACADO */
+
+.goty-puesto-1 .goty-portada-vacia {
+    border: 2px solid rgba(255, 106, 33, 0.65);
+
+    background: linear-gradient(
+        160deg,
+        rgba(255, 106, 33, 0.14),
+        #101216 65%
+    );
+
+    box-shadow:
+        0 0 18px rgba(255, 106, 33, 0.45),
+        0 0 48px rgba(255, 106, 33, 0.25),
+        0 0 85px rgba(255, 106, 33, 0.12);
+}
+
+.goty-icono-vacio {
+    color: #626b78;
+    font-size: 29px;
+    font-weight: 300;
+}
+
+.goty-puesto-1 .goty-icono-vacio {
+    color: #f4c95d;
+    font-size: 35px;
+}
+
+.goty-texto-vacio {
+    color: #707987;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.goty-nombre-juego {
+    min-height: 42px;
+    margin-top: 12px;
+
+    color: #a9b5c9;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+.goty-puesto-1 .goty-nombre-juego {
+    color: #f5f7fb;
+    font-size: 14px;
+}
+
+/* PANTALLAS PEQUEÑAS */
+
+@media (max-width: 600px) {
+
+    .goty-tarjeta {
+    min-width: 0;
+    padding: 18px;
+    background: linear-gradient(160deg, #202329, #181b20);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .goty-podio {
+        gap: 8px;
+    }
+
+    .goty-tarjeta-titulo h3 {
+        font-size: 11px;
+    }
+
+    .goty-texto-vacio {
+        font-size: 7px;
+    }
+
+}
+
+/* PESTAÑAS CHECKPOINT GOTY */
+
+.goty-pestanas {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.goty-pestana {
+    padding: 15px 22px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: #9299a5;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.goty-pestana:hover {
+    color: #ffffff;
+}
+
+.goty-pestana.activa {
+    color: #ff6a21;
+    border-bottom-color: #ff6a21;
+}
+
+@media (max-width: 600px) {
+    .goty-pestanas {
+        gap: 0;
+    }
+
+    .goty-pestana {
+        flex: 1;
+        padding: 13px 8px;
+        font-size: 10px;
+    }
+}
+
+/* ==========================================
+   CHECKPOINT GOTY - SELECTOR HORIZONTAL
+========================================== */
+
+.goty-puesto-clicable {
+    cursor: pointer;
+}
+
+.goty-puesto-clicable:hover .goty-portada-vacia {
+    border-color: #ff6a21;
+}
+
+.goty-puesto-clicable:focus-visible {
+    outline: 2px solid #ff6a21;
+    outline-offset: 5px;
+    border-radius: 8px;
+}
+
+.goty-selector {
+    margin-top: 24px;
+    padding: 18px;
+    background: #12151b;
+    border: 1px solid rgba(255, 106, 33, 0.3);
+    border-radius: 12px;
+}
+
+.goty-selector-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    color: #ff6a21;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.goty-selector-cerrar {
+    border: none;
+    background: transparent;
+    color: #a9b5c9;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.goty-selector-lista {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 2px 14px;
+    scrollbar-color: #ff6a21 #202329;
+    scrollbar-width: thin;
+}
+
+.goty-opcion-juego {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 96px;
+    width: 96px;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #f5f7fb;
+    text-align: center;
+    cursor: pointer;
+}
+
+.goty-opcion-portada {
+    position: relative;
+    width: 96px;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background: #202329;
+    border: 2px solid transparent;
+    border-radius: 7px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.goty-opcion-juego:hover .goty-opcion-portada {
+    border-color: #ff6a21;
+    transform: translateY(-3px);
+}
+
+.goty-opcion-portada > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.goty-opcion-notas {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 6px 4px;
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.95) 25%
+    );
+}
+
+.goty-nota-categoria,
+.goty-nota-general {
+    display: block;
+    padding: 3px 2px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.goty-nota-categoria {
+    background: #ff6a21;
+    color: #111111;
+}
+
+.goty-nota-general {
+    background: rgba(24, 27, 32, 0.92);
+    color: #ffffff;
+}
+
+.goty-opcion-nombre {
+    margin-top: 7px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.goty-portada-seleccionada {
+    padding: 0;
+    border-style: solid;
+}
+
+.goty-imagen-portada {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Portadas seleccionadas sin bordes discontinuos */
+
+.goty-portada-vacia.goty-portada-seleccionada {
+    border-style: solid;
+}
+
+/* ==========================================
+   BORDES DE LOS PREMIOS GOTY
+   ========================================== */
+
+/* TOP 2 - Plata */
+.goty-puesto-2 .goty-portada-seleccionada {
+    border: 2px solid rgba(192, 200, 215, 0.65);
+    box-shadow: 0 0 12px rgba(192, 200, 215, 0.08);
+}
+
+/* TOP 3 - Bronce */
+.goty-puesto-3 .goty-portada-seleccionada {
+    border: 2px solid rgba(205, 147, 106, 0.65);
+    box-shadow: 0 0 12px rgba(205, 147, 106, 0.08);
+}
+
+/* ==========================================
+   EFECTO HOVER EN LOS PODIOS
+   ========================================== */
+
+.goty-puesto-clicable .goty-portada-vacia {
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.goty-puesto-clicable:hover .goty-portada-vacia {
+    transform: translateY(-5px);
+}
+
+/* TOP 1 - Intensificar ligeramente el brillo */
+.goty-puesto-1:hover .goty-portada-vacia {
+    box-shadow:
+        0 0 22px rgba(255, 106, 33, 0.55),
+        0 0 55px rgba(255, 106, 33, 0.32),
+        0 0 90px rgba(255, 106, 33, 0.15);
+}
+
+/* TOP 2 - Brillo plateado al pasar el ratón */
+.goty-puesto-2:hover .goty-portada-seleccionada {
+    box-shadow: 0 0 20px rgba(192, 200, 215, 0.25);
+}
+
+/* TOP 3 - Brillo bronce al pasar el ratón */
+.goty-puesto-3:hover .goty-portada-seleccionada {
+    box-shadow: 0 0 20px rgba(205, 147, 106, 0.25);
+}
+
+.goty-categorias[hidden],
+.goty-rankings[hidden],
+#goty-autorrellenar[hidden] {
+    display: none !important;
+}
+
+
+/* ==========================================
+   CHECKPOINT GOTY - RANKINGS DEL AÑO
+   ========================================== */
+
+.pagina-goty .goty-rankings {
+    padding: 28px 0 65px;
+}
+
+.pagina-goty .goty-rankings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+    align-items: start;
+}
+
+.pagina-goty .goty-ranking-bloque {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    background: rgba(12, 15, 21, 0.55);
+}
+
+.pagina-goty .goty-ranking-encabezado {
+    margin-bottom: 22px;
+}
+
+.pagina-goty .goty-ranking-encabezado h2 {
+    margin: 0 0 10px;
+    font-size: 19px;
+    font-weight: 900;
+    color: #f5f5f7;
+}
+
+.pagina-goty .goty-ranking-encabezado p {
+    margin: 0;
+    color: #9ca3b3;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.pagina-goty .goty-ranking-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.pagina-goty .goty-ranking-fila {
+    display: grid;
+    grid-template-columns: 32px 43px minmax(0, 1fr) 54px 80px;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    min-height: 70px;
+    padding: 9px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 9px;
+    background: #191d25;
+}
+
+.pagina-goty .goty-ranking-fila-1 {
+    border-color: rgba(255, 112, 36, 0.55);
+    background: rgba(255, 112, 36, 0.09);
+}
+
+.pagina-goty .goty-ranking-fila-2 {
+    border-color: rgba(192, 201, 216, 0.25);
+}
+
+.pagina-goty .goty-ranking-fila-3 {
+    border-color: rgba(205, 132, 76, 0.25);
+}
+
+.pagina-goty .goty-ranking-posicion {
+    color: #a7aebd;
+    font-size: 15px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+.pagina-goty .goty-ranking-fila-1 .goty-ranking-posicion {
+    color: #ff7428;
+}
+
+.pagina-goty .goty-ranking-portada {
+    width: 43px;
+    height: 59px;
+    overflow: hidden;
+    border-radius: 5px;
+    background: #101218;
+}
+
+.pagina-goty .goty-ranking-portada img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.pagina-goty .goty-ranking-portada-vacia {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #444a55;
+    color: #777e8b;
+    font-size: 22px;
+}
+
+.pagina-goty .goty-ranking-informacion {
+    min-width: 0;
+}
+
+.pagina-goty .goty-ranking-nombre {
+    display: block;
+    color: #f1f2f5;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.pagina-goty .goty-ranking-nota {
+    color: #ff7428;
+    font-size: 13px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+.pagina-goty .goty-ranking-acciones {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.pagina-goty .goty-ranking-boton {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 27px;
+    min-height: 27px;
+    padding: 5px;
+    border: 1px solid #343a45;
+    border-radius: 6px;
+    background: #252a34;
+    color: #e9ebef;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.pagina-goty .goty-ranking-boton:hover:not(:disabled) {
+    border-color: #ff7428;
+    color: #ff7428;
+}
+
+.pagina-goty .goty-ranking-boton:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.pagina-goty .goty-ranking-elegir {
+    padding: 6px 8px;
+    color: #ff7428;
+    font-size: 10px;
+}
+
+.pagina-goty .goty-ranking-quitar {
+    color: #ff7777;
+}
+
+.pagina-goty .goty-ranking-bloqueado {
+    opacity: 0.45;
+    font-size: 12px;
+}
+
+.pagina-goty .goty-ranking-vacio {
+    padding: 25px;
+    color: #a7aebd;
+    text-align: center;
+}
+
+/* SELECTOR DEL TOP 10 */
+
+.pagina-goty .goty-ranking-selector {
+    padding: 18px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 112, 36, 0.4);
+    border-radius: 10px;
+    background: #12151c;
+}
+
+.pagina-goty .goty-ranking-selector-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 15px;
+    color: #ff7428;
+    font-size: 12px;
+}
+
+.pagina-goty .goty-ranking-buscador {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    margin-bottom: 14px;
+    border: 1px solid #343a45;
+    border-radius: 7px;
+    outline: none;
+    background: #1c2029;
+    color: white;
+}
+
+.pagina-goty .goty-ranking-buscador:focus {
+    border-color: #ff7428;
+}
+
+.pagina-goty .goty-ranking-selector-lista {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.pagina-goty .goty-ranking-opcion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    padding: 8px;
+    border: 1px solid #343a45;
+    border-radius: 8px;
+    background: #1c2029;
+    color: #f5f5f7;
+    cursor: pointer;
+    text-align: center;
+}
+
+.pagina-goty .goty-ranking-opcion:hover {
+    border-color: #ff7428;
+}
+
+.pagina-goty .goty-ranking-opcion img {
+    display: block;
+    width: 100%;
+    max-width: 90px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.pagina-goty .goty-ranking-opcion span {
+    font-size: 10px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.pagina-goty .goty-ranking-opcion strong {
+    color: #ff7428;
+    font-size: 12px;
+}
+
+/* ADAPTACIÓN A PANTALLAS PEQUEÑAS */
+
+@media (max-width: 1100px) {
+    .pagina-goty .goty-rankings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .pagina-goty .goty-ranking-bloque {
+        padding: 12px;
+    }
+
+    .pagina-goty .goty-ranking-fila {
+        grid-template-columns: 25px 36px minmax(0, 1fr) 43px 65px;
+        gap: 6px;
+        padding: 7px;
+    }
+
+    .pagina-goty .goty-ranking-portada {
+        width: 36px;
+        height: 50px;
+    }
+
+    .pagina-goty .goty-ranking-nombre {
+        font-size: 11px;
+    }
+
+    .pagina-goty .goty-ranking-selector-lista {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+
+/* ==========================================
+   GOTY - RANKING POR NOTA COMPACTO
+   ========================================== */
+
+/* Solo modificamos la tabla izquierda */
+.pagina-goty #goty-ranking-notas {
+    gap: 3px;
+}
+
+/* Filas mucho más compactas */
+.pagina-goty #goty-ranking-notas .goty-ranking-fila {
+    grid-template-columns: 32px minmax(0, 1fr) 58px 34px;
+    gap: 10px;
+    min-height: 0;
+    height: 32px;
+    padding: 3px 10px;
+    border-radius: 4px;
+}
+
+/* Ocultar completamente las portadas */
+.pagina-goty #goty-ranking-notas .goty-ranking-portada {
+    display: none;
+}
+
+/* Posición */
+.pagina-goty #goty-ranking-notas .goty-ranking-posicion {
+    font-size: 12px;
+}
+
+/* Nombre del videojuego */
+.pagina-goty #goty-ranking-notas .goty-ranking-nombre {
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Nota final */
+.pagina-goty #goty-ranking-notas .goty-ranking-nota {
+    font-size: 12px;
+    text-align: right;
+}
+
+/* Controles de empate */
+.pagina-goty #goty-ranking-notas .goty-ranking-acciones {
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 2px;
+}
+
+.pagina-goty #goty-ranking-notas .goty-ranking-mover {
+    min-width: 15px;
+    min-height: 21px;
+    padding: 2px;
+    font-size: 11px;
+}
+
+/* Candado más discreto */
+.pagina-goty #goty-ranking-notas .goty-ranking-bloqueado {
+    font-size: 10px;
+    opacity: 0.3;
+}
+
+/* Menos espacio superior */
+.pagina-goty .goty-ranking-bloque:first-child
+.goty-ranking-encabezado {
+    margin-bottom: 14px;
+}
+
+
+/* ==========================================
+   GOTY - TOP 10 PERSONAL COMPACTO
+   ========================================== */
+
+/* Reducir separación entre filas */
+.pagina-goty #goty-ranking-personal {
+    gap: 3px;
+}
+
+/* Filas compactas */
+.pagina-goty #goty-ranking-personal .goty-ranking-fila {
+    grid-template-columns: 28px 30px minmax(0, 1fr) 45px 92px;
+    gap: 8px;
+    min-height: 0;
+    height: 43px;
+    padding: 4px 9px;
+    border-radius: 4px;
+}
+
+/* Portadas pequeñas */
+.pagina-goty #goty-ranking-personal .goty-ranking-portada {
+    width: 27px;
+    height: 37px;
+    border-radius: 3px;
+}
+
+/* Número de posición */
+.pagina-goty #goty-ranking-personal .goty-ranking-posicion {
+    font-size: 12px;
+}
+
+/* Nombre del videojuego */
+.pagina-goty #goty-ranking-personal .goty-ranking-nombre {
+    font-size: 11px;
+    font-weight: 650;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Nota */
+.pagina-goty #goty-ranking-personal .goty-ranking-nota {
+    font-size: 12px;
+    text-align: right;
+}
+
+/* Botones en una sola línea */
+.pagina-goty #goty-ranking-personal .goty-ranking-acciones {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 3px;
+}
+
+/* Botón elegir/cambiar */
+.pagina-goty #goty-ranking-personal .goty-ranking-elegir {
+    padding: 4px 5px;
+    min-height: 23px;
+    min-width: 0;
+    font-size: 9px;
+}
+
+/* Flechas y botón quitar */
+.pagina-goty #goty-ranking-personal .goty-ranking-mover,
+.pagina-goty #goty-ranking-personal .goty-ranking-quitar {
+    min-width: 20px;
+    min-height: 23px;
+    padding: 2px;
+    font-size: 11px;
+}
+
+/* Evitar que los botones se salgan en móviles */
+@media (max-width: 600px) {
+    .pagina-goty #goty-ranking-personal .goty-ranking-fila {
+        grid-template-columns: 22px 25px minmax(0, 1fr) 35px 82px;
+        gap: 5px;
+        padding: 4px 5px;
+    }
+
+    .pagina-goty #goty-ranking-personal .goty-ranking-portada {
+        width: 24px;
+        height: 33px;
+    }
+
+    .pagina-goty #goty-ranking-personal .goty-ranking-nombre {
+        font-size: 10px;
+    }
+}
+
+
+/* ==========================================
+   GOTY - TOP 10 PERSONAL DEFINITIVO
+   ========================================== */
+
+/* Separación entre filas */
+.pagina-goty #goty-ranking-personal {
+    gap: 3px;
+}
+
+/* Filas compactas, con espacio reservado
+   para la nota y todos los botones */
+.pagina-goty #goty-ranking-personal .goty-ranking-fila {
+    display: grid;
+    grid-template-columns:
+        32px
+        minmax(0, 1fr)
+        55px
+        145px;
+    align-items: center;
+    gap: 10px;
+    min-height: 0;
+    height: 34px;
+    padding: 3px 10px;
+    border-radius: 4px;
+}
+
+/* Eliminar portadas y sus espacios */
+.pagina-goty #goty-ranking-personal .goty-ranking-portada {
+    display: none;
+}
+
+/* Número del puesto */
+.pagina-goty #goty-ranking-personal .goty-ranking-posicion {
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Nombre del videojuego */
+.pagina-goty #goty-ranking-personal .goty-ranking-informacion {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.pagina-goty #goty-ranking-personal .goty-ranking-nombre {
+    display: block;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Nota a la derecha del nombre */
+.pagina-goty #goty-ranking-personal .goty-ranking-nota {
+    font-size: 12px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Contenedor de botones */
+.pagina-goty #goty-ranking-personal .goty-ranking-acciones {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    min-width: 0;
+}
+
+/* Botón ELEGIR / CAMBIAR */
+.pagina-goty #goty-ranking-personal .goty-ranking-elegir {
+    flex: 0 0 59px;
+    width: 59px;
+    min-width: 59px;
+    height: 24px;
+    min-height: 24px;
+    padding: 0 3px;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+/* Botones subir, bajar y quitar */
+.pagina-goty #goty-ranking-personal .goty-ranking-mover,
+.pagina-goty #goty-ranking-personal .goty-ranking-quitar {
+    flex: 0 0 24px;
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px;
+    padding: 0;
+    font-size: 12px;
+}
+
+/* Adaptación para móviles */
+@media (max-width: 600px) {
+    .pagina-goty #goty-ranking-personal .goty-ranking-fila {
+        grid-template-columns:
+            23px
+            minmax(0, 1fr)
+            38px
+            125px;
+        gap: 5px;
+        padding: 3px 5px;
+    }
+
+    .pagina-goty #goty-ranking-personal .goty-ranking-nombre {
+        font-size: 10px;
+    }
+
+    .pagina-goty #goty-ranking-personal .goty-ranking-acciones {
+        gap: 2px;
+    }
+
+    .pagina-goty #goty-ranking-personal .goty-ranking-elegir {
+        flex-basis: 49px;
+        width: 49px;
+        min-width: 49px;
+        font-size: 8px;
+    }
+
+    .pagina-goty #goty-ranking-personal .goty-ranking-mover,
+    .pagina-goty #goty-ranking-personal .goty-ranking-quitar {
+        flex-basis: 22px;
+        width: 22px;
+        min-width: 22px;
+    }
+}

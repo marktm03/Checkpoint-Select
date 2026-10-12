@@ -2488,6 +2488,115 @@ function crearSelectorAnios() {
     );
 }
 
+// ==========================================
+// CHECKPOINT GOTY - MENÚ DE AÑOS
+// ==========================================
+
+function configurarMenuGoty() {
+
+    const botonGoty =
+        document.getElementById("boton-menu-goty");
+
+    const desplegableGoty =
+        document.getElementById("desplegable-goty");
+
+    const listaAniosGoty =
+        document.getElementById("lista-anios-goty");
+
+    if (!botonGoty || !desplegableGoty || !listaAniosGoty) {
+        return;
+    }
+
+    // Obtener años de los juegos finalizados
+
+    const anios = juegos
+        .filter(juego => juego.fechaFin)
+        .map(juego => Number(juego.fechaFin.split("-")[0]))
+        .filter(anio => Number.isInteger(anio) && anio >= 2022);
+
+    const aniosUnicos = [...new Set(anios)]
+        .sort((a, b) => b - a);
+
+    // Crear enlaces a cada año
+
+    listaAniosGoty.innerHTML = "";
+
+    if (aniosUnicos.length === 0) {
+
+        const mensaje = document.createElement("p");
+
+        mensaje.textContent = "Todavía no hay años disponibles.";
+        mensaje.style.cssText =
+            "color:#9299a5;font-size:12px;padding:10px;";
+
+        listaAniosGoty.appendChild(mensaje);
+
+    } else {
+
+        aniosUnicos.forEach(anio => {
+
+            const enlace = document.createElement("a");
+
+            enlace.href = `goty.html?anio=${anio}`;
+            enlace.className = "enlace-anio-goty";
+            enlace.textContent = anio;
+
+            listaAniosGoty.appendChild(enlace);
+
+        });
+
+    }
+
+    // Abrir y cerrar desplegable
+
+    botonGoty.addEventListener("click", () => {
+
+        const abierto = !desplegableGoty.hidden;
+
+        desplegableGoty.hidden = abierto;
+
+        botonGoty.setAttribute(
+            "aria-expanded",
+            String(!abierto)
+        );
+
+    });
+
+    // Cerrar al pulsar fuera
+
+    document.addEventListener("click", (event) => {
+
+        if (!event.target.closest(".menu-goty")) {
+
+            desplegableGoty.hidden = true;
+
+            botonGoty.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    });
+
+    // Cerrar con Escape
+
+    document.addEventListener("keydown", (event) => {
+
+        if (event.key === "Escape") {
+
+            desplegableGoty.hidden = true;
+
+            botonGoty.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    });
+
+}
 
 // ==========================================
 // ORDENAR BIBLIOTECA
@@ -3336,7 +3445,11 @@ async function iniciarBiblioteca() {
 
         // 4. Crear selector de años
 
-        crearSelectorAnios();
+crearSelectorAnios();
+
+// 4.1. Crear menú de Checkpoint GOTY
+
+configurarMenuGoty();
 
         // 5. Recuperar filtros al volver con Atrás
 
