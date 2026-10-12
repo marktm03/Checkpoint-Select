@@ -299,6 +299,12 @@ img {
     background-image: url("img/portada-estela.png");
 }
 
+/* BANNER DE ZAKARIA */
+
+.hero.portada-zakaria {
+    background-image: url("img/img3z.png");
+}
+
 .hero::after {
     content: "";
 

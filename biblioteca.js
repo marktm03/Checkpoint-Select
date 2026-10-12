@@ -34,6 +34,7 @@ const soloFavoritos =
 let juegos = [];
 
 let usuarioEsEstela = false;
+let usuarioEsZakaria = false;
 
 
 // ==========================================
@@ -42,6 +43,9 @@ let usuarioEsEstela = false;
 
 const ID_ESTELA =
     "bb88520e-c78e-4fd4-a6d1-bf1e2db29f49";
+
+const ID_ZAKARIA =
+    "cb0f027a-8993-4ea7-a09e-783b0e27a05d";
 
 
 // ==========================================
@@ -320,7 +324,10 @@ async function cargarJuegosDesdeSupabase() {
         // ======================================
 
         usuarioEsEstela =
-            user.id === ID_ESTELA;
+    user.id === ID_ESTELA;
+
+        usuarioEsZakaria =
+    user.id === ID_ZAKARIA;
 
 
         // ======================================
@@ -341,18 +348,23 @@ async function cargarJuegosDesdeSupabase() {
 
         if (hero) {
 
-            hero.classList.toggle(
-                "portada-estela",
-                usuarioEsEstela
-            );
+    hero.classList.toggle(
+        "portada-estela",
+        usuarioEsEstela
+    );
 
-            hero.classList.add(
-                "hero-listo"
-            );
-        }
+    hero.classList.toggle(
+        "portada-zakaria",
+        usuarioEsZakaria
+    );
+
+    hero.classList.add(
+        "hero-listo"
+    );
+}
 
 
-        // ======================================
+// ======================================
 // NOMBRE E ICONO DEL USUARIO
 // ======================================
 
@@ -362,16 +374,24 @@ const nombreUsuario =
 const iconoUsuario =
     document.getElementById("icono-usuario");
 
-// Nombre del usuario
 if (nombreUsuario) {
+
     nombreUsuario.textContent =
-        usuarioEsEstela ? "Estela" : "Marcos";
+        usuarioEsEstela
+            ? "Estela"
+            : usuarioEsZakaria
+                ? "Zakaria"
+                : "Marcos";
 }
 
-// Icono del usuario
 if (iconoUsuario) {
+
     iconoUsuario.textContent =
-        usuarioEsEstela ? "♛" : "♚";
+        usuarioEsEstela
+            ? "♛"
+            : usuarioEsZakaria
+                ? "💣"
+                : "♚";
 }
 
 
